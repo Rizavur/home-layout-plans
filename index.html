@@ -4,118 +4,189 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home layout plans A–E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#f6f4f0; --panel:#fffdf9; --ink:#2b2724; --muted:#7a716a; --line:#e4ddd3; --accent:#9a7b4f; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow:hidden; }
+  :root { --bg:#f4f0ea; --ink:#26221e; --muted:#857a70; --line:rgba(70,55,40,.14); --gold:#b08a4f; --gold2:#d6b47a; --char:#1d1a17;
+          --glass:rgba(255,252,247,.78); --glass-b:rgba(255,255,255,.55); --shadow:0 10px 30px rgba(40,28,15,.14); --r:16px;
+          --serif:'Cormorant Garamond', Georgia, serif; --sans:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font:14px/1.45 var(--sans); overflow:hidden; -webkit-font-smoothing:antialiased; }
+  button { font-family:inherit; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @keyframes shimmer { 0% { background-position:-200% 0; } 100% { background-position:200% 0; } }
+  @keyframes pulse { 0%,100% { box-shadow:0 0 0 0 rgba(176,138,79,.45); } 50% { box-shadow:0 0 0 10px rgba(176,138,79,0); } }
+
+  /* ---------- landing ---------- */
+  #landing { position:fixed; inset:0; z-index:30; overflow:auto; background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(214,180,122,.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(176,138,79,.18), transparent 60%), var(--bg);
+      transition:opacity .45s ease, transform .45s ease; }
+  #landing.hidden { opacity:0; transform:scale(1.02); pointer-events:none; }
+  #landing::before { content:''; position:fixed; inset:0; pointer-events:none; opacity:.35;
+      background-image:linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size:48px 48px;
+      mask-image:radial-gradient(ellipse at 70% 20%, #000 0%, transparent 65%); -webkit-mask-image:radial-gradient(ellipse at 70% 20%, #000 0%, transparent 65%); }
+  .lwrap { position:relative; max-width:1120px; margin:0 auto; padding:64px 24px 72px; }
+  .eyebrow { display:inline-flex; gap:8px; align-items:center; color:var(--gold); font-size:12px; letter-spacing:.16em; text-transform:uppercase; font-weight:600; animation:fadeUp .6s both; }
+  .eyebrow::before { content:''; width:26px; height:1px; background:var(--gold); }
+  #landing h2 { font-family:var(--serif); font-weight:600; font-size:clamp(40px, 6vw, 64px); line-height:1.02; margin:14px 0 14px; letter-spacing:-.01em; animation:fadeUp .6s .08s both; }
+  #landing h2 em { font-style:italic; color:var(--gold); }
+  .lead { color:#5b5149; max-width:640px; font-size:16px; margin:0 0 26px; animation:fadeUp .6s .16s both; }
+  .hero-cta { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:38px; animation:fadeUp .6s .24s both; }
+  .btn { display:inline-flex; align-items:center; gap:8px; border:0; border-radius:999px; padding:12px 20px; font-weight:600; font-size:14px; cursor:pointer; transition:transform .18s, box-shadow .18s, background .18s; }
+  .btn.primary { background:var(--char); color:#fff; box-shadow:0 8px 20px rgba(29,26,23,.25); }
+  .btn.primary:hover { transform:translateY(-2px); box-shadow:0 12px 26px rgba(29,26,23,.3); }
+  .btn.ghost { background:rgba(255,255,255,.7); color:var(--ink); border:1px solid var(--line); }
+  .btn.ghost:hover { background:#fff; transform:translateY(-2px); }
+  .btn .arr { transition:transform .18s; } .btn:hover .arr { transform:translateX(3px); }
+  #cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
+  .card { position:relative; text-align:left; background:rgba(255,253,249,.9); border:1px solid var(--line); border-radius:20px; padding:22px 22px 18px; cursor:pointer; color:inherit;
+          box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 4px 14px rgba(40,28,15,.05); transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, border-color .25s; opacity:0; animation:fadeUp .6s both; overflow:hidden; }
+  .card::after { content:''; position:absolute; inset:0; border-radius:20px; pointer-events:none; background:linear-gradient(120deg, transparent 30%, rgba(214,180,122,.18) 50%, transparent 70%); background-size:200% 100%; opacity:0; transition:opacity .3s; }
+  .card:hover { transform:translateY(-4px); box-shadow:var(--shadow); border-color:rgba(176,138,79,.45); }
+  .card:hover::after { opacity:1; animation:shimmer 1.6s linear infinite; }
+  .card .letter { font-family:var(--serif); font-size:56px; line-height:.9; color:var(--gold); font-weight:600; float:right; margin:-4px 0 0 10px; opacity:.9; }
+  .card .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); }
+  .card h3 { font-family:var(--serif); font-size:25px; font-weight:600; margin:4px 0 10px; line-height:1.15; }
+  .card ul { margin:0 0 16px; padding:0; list-style:none; color:#5b5149; font-size:13.5px; }
+  .card li { padding:4px 0 4px 18px; position:relative; } .card li::before { content:''; position:absolute; left:2px; top:11px; width:6px; height:6px; border-radius:50%; background:var(--gold2); }
+  .card .go { display:inline-flex; align-items:center; gap:8px; background:var(--char); color:#fff; border-radius:999px; padding:10px 16px; font-weight:600; font-size:13px; transition:gap .2s, background .2s; }
+  .card:hover .go { gap:12px; background:#000; }
+  .fine { color:var(--muted); font-size:12px; margin-top:30px; max-width:760px; }
+
+  /* ---------- viewer ---------- */
   #app { position:fixed; inset:0; display:flex; }
-  #stage { position:relative; flex:1; min-width:0; }
-  canvas { display:block; width:100%; height:100%; touch-action:none; }
-  #panel { width:320px; max-width:86vw; background:var(--panel); border-left:1px solid var(--line); display:flex; flex-direction:column; transition: transform .25s ease; z-index:5; }
-  #panel header { padding:14px 16px 10px; border-bottom:1px solid var(--line); }
-  #panel h1 { font-size:16px; margin:0 0 2px; font-weight:650; }
-  #panel .sub { color:var(--muted); font-size:12px; }
-  #scroll { overflow:auto; padding:10px 12px 18px; flex:1; }
-  .sec { margin:10px 4px 6px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600; }
-  .views button { display:block; width:100%; text-align:left; border:1px solid transparent; background:none; padding:7px 9px; border-radius:7px; color:var(--ink); font:inherit; cursor:pointer; }
-  .views button:hover { background:#f1ece4; }
-  .views button.on { background:#efe6d8; border-color:#e0d2bb; font-weight:600; }
-  select { width:100%; padding:8px; border-radius:8px; border:1px solid var(--line); background:#fff; font:inherit; color:var(--ink); }
-  label.tg { display:flex; align-items:center; gap:8px; padding:5px 6px; cursor:pointer; }
-  label.tg input { accent-color: var(--accent); width:16px; height:16px; }
-  .info { font-size:12.5px; color:#4d4640; background:#f6f1ea; border-radius:8px; padding:10px; margin:8px 4px; }
-  #toggle { position:absolute; top:12px; right:12px; z-index:6; border:1px solid var(--line); background:var(--panel); border-radius:999px; padding:8px 14px; font:inherit; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
-  #title { position:absolute; left:12px; top:12px; z-index:4; background:rgba(255,253,249,.92); border:1px solid var(--line); border-radius:10px; padding:7px 12px; font-weight:600; max-width:60%; }
-  #hint { position:absolute; left:12px; bottom:12px; z-index:4; color:var(--muted); font-size:12px; background:rgba(255,253,249,.85); border-radius:8px; padding:5px 9px; }
-  #labels { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
-  .lbl { position:absolute; transform:translate(-50%,-50%); white-space:nowrap; font-size:12px; font-weight:600; color:#2b2724; background:rgba(255,253,249,.88); border:1px solid #e0d6c8; border-radius:6px; padding:2px 7px; }
+  #stage { position:relative; flex:1; min-width:0; background:#ebe6de; }
+  canvas { display:block; width:100%; height:100%; touch-action:none; outline:none; }
+  .glass { background:var(--glass); backdrop-filter:blur(14px) saturate(1.2); -webkit-backdrop-filter:blur(14px) saturate(1.2); border:1px solid var(--glass-b); box-shadow:var(--shadow); }
+  #topbar { position:absolute; left:14px; right:14px; top:14px; z-index:6; display:flex; gap:10px; align-items:center; pointer-events:none; }
+  #topbar > * { pointer-events:auto; }
+  #homeBtn { width:42px; height:42px; border-radius:12px; border:0; cursor:pointer; font-size:18px; display:grid; place-items:center; transition:transform .15s; }
+  #homeBtn:hover { transform:scale(1.06); }
+  #planPills { display:flex; padding:4px; border-radius:14px; gap:2px; }
+  #planPills button { border:0; background:none; cursor:pointer; min-width:38px; height:34px; border-radius:10px; font-weight:700; color:var(--muted); font-size:14px; transition:background .2s, color .2s; position:relative; }
+  #planPills button:hover { color:var(--ink); background:rgba(255,255,255,.7); }
+  #planPills button.on { background:var(--char); color:#fff; }
+  #titleWrap { flex:1; min-width:0; padding:8px 14px; border-radius:14px; display:flex; flex-direction:column; justify-content:center; }
+  #viewRoom { font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); font-weight:700; }
+  #title { font-family:var(--serif); font-weight:600; font-size:20px; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #title.swap { animation:fadeUp .45s both; }
+  #toggle { height:42px; border-radius:12px; border:0; padding:0 14px; cursor:pointer; font-weight:600; }
+  #stepper { position:absolute; left:50%; bottom:16px; transform:translateX(-50%); z-index:6; display:flex; align-items:center; gap:4px; padding:5px; border-radius:999px; }
+  #stepper button { border:0; background:none; cursor:pointer; height:38px; border-radius:999px; padding:0 14px; font-weight:600; color:var(--ink); transition:background .15s; }
+  #stepper button:hover { background:rgba(255,255,255,.85); }
+  #stepper .count { font-size:12px; color:var(--muted); min-width:54px; text-align:center; font-variant-numeric:tabular-nums; }
+  #tools { position:absolute; right:14px; bottom:16px; z-index:6; display:flex; gap:2px; border-radius:14px; padding:5px; }
+  #tools button { border:0; background:none; color:var(--ink); font-size:13px; padding:8px 10px; border-radius:10px; cursor:pointer; white-space:nowrap; transition:background .15s; }
+  #tools button:hover { background:rgba(255,255,255,.85); }
+  #tools button.on { background:var(--char); color:#fff; }
+  #tools button.on kbd { color:#cbbfae; border-color:rgba(255,255,255,.25); }
+  #tools kbd { font:10.5px ui-monospace,monospace; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 3px; margin-left:3px; }
+  #hint { position:absolute; left:14px; bottom:16px; z-index:5; color:#5b5149; font-size:12px; padding:8px 12px; border-radius:12px; max-width:min(380px, calc(100% - 640px)); transition:opacity .4s; }
+  #labels { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:3; }
+  .lbl { position:absolute; transform:translate(-50%,-50%); white-space:nowrap; font-size:12px; font-weight:600; color:var(--ink); background:rgba(255,252,247,.92); border:1px solid var(--line); border-radius:8px; padding:3px 8px; box-shadow:0 2px 6px rgba(0,0,0,.06); }
   .lbl.dim { color:#8a4b12; border-color:#e9c9a3; font-weight:500; }
-  #loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); z-index:3; }
-  body.night { --bg:#14120f; }
-  @media (max-width: 760px) {
-    #panel { position:fixed; right:0; top:0; bottom:0; box-shadow:-6px 0 24px rgba(0,0,0,.15); }
-    #panel.closed { transform: translateX(100%); }
-    #title { max-width:58%; font-size:13px; }
-  }
-  @media (min-width: 761px) { #toggle { display:none; } }
-
-  #landing { position:fixed; inset:0; z-index:20; background:var(--bg); overflow:auto; }
-  #landing.hidden { display:none; }
-  .lwrap { max-width:1080px; margin:0 auto; padding:40px 20px 60px; }
-  .eyebrow { color:var(--accent); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
-  #landing h2 { font-size:30px; margin:6px 0 8px; font-weight:650; }
-  .lead { color:#4d4640; max-width:680px; margin:0 0 22px; }
-  #cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; cursor:pointer; transition: transform .15s, box-shadow .15s; text-align:left; font:inherit; color:inherit; }
-  .card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(60,40,20,.08); }
-  .card .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; color:#fff; background:var(--accent); border-radius:6px; padding:2px 8px; }
-  .card h3 { margin:10px 0 6px; font-size:17px; }
-  .card ul { margin:0; padding-left:18px; color:#4d4640; font-size:13px; }
-  .card li { margin:3px 0; }
-  .card .go { margin-top:12px; color:var(--accent); font-weight:600; font-size:13px; }
-  .fine { color:var(--muted); font-size:12px; margin-top:22px; max-width:760px; }
-  button.link { background:none; border:none; color:var(--accent); font:inherit; font-size:12.5px; padding:6px 0 0; cursor:pointer; display:block; }
-
-  #tools { position:absolute; right:12px; bottom:12px; z-index:6; display:flex; gap:4px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:4px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
-  #tools button { border:0; background:none; color:var(--ink); font:inherit; font-size:13px; padding:7px 9px; border-radius:8px; cursor:pointer; white-space:nowrap; }
-  #tools button.on { background:#efe6d8; font-weight:600; }
-  #tools kbd { font:11px ui-monospace,monospace; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 3px; margin-left:2px; }
-  @media (max-width:760px) { #tools kbd, #tools span { display:none; } #tools button { font-size:17px; padding:8px 10px; } }
-  #navBtnOld { position:absolute; right:12px; bottom:12px; z-index:6; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px; padding:9px 15px; font:inherit; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
-  #navBtn:hover { background:#f1ece4; }
-  @media (max-width: 760px) { #hint { display:none; } }
-  #hint { right:auto; max-width:calc(100% - 420px); }
-
+  #loading { position:absolute; inset:0; z-index:8; display:none; flex-direction:column; gap:14px; align-items:center; justify-content:center; color:var(--muted); background:rgba(244,240,234,.82); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); font-weight:500; animation:fadeIn .25s both; }
+  #loading::before { content:''; width:38px; height:38px; border-radius:50%; border:3px solid rgba(176,138,79,.25); border-top-color:var(--gold); animation:spin .8s linear infinite; }
+  #panel { width:340px; max-width:88vw; display:flex; flex-direction:column; z-index:7; border-left:1px solid var(--line); background:rgba(255,252,247,.94); transition:transform .3s cubic-bezier(.2,.8,.2,1); }
+  #panel header { padding:18px 18px 12px; border-bottom:1px solid var(--line); }
+  #panel .sub { color:var(--gold); font-size:11px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; }
+  #panel h1 { font-family:var(--serif); font-size:24px; font-weight:600; margin:4px 0 0; line-height:1.15; }
+  #planSel { display:none; }
+  #scroll { overflow:auto; padding:8px 14px 24px; flex:1; }
+  .sec { margin:16px 4px 8px; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700; }
+  select#mode { width:100%; padding:10px 12px; border-radius:12px; border:1px solid var(--line); background:#fff; font:inherit; color:var(--ink); cursor:pointer; }
+  .switches { display:grid; gap:2px; }
+  label.tg { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:7px 6px; cursor:pointer; border-radius:10px; transition:background .15s; }
+  label.tg:hover { background:rgba(176,138,79,.08); }
+  label.tg input { appearance:none; -webkit-appearance:none; width:36px; height:21px; border-radius:999px; background:#d9d1c6; position:relative; cursor:pointer; transition:background .2s; flex:none; order:2; }
+  label.tg input::after { content:''; position:absolute; top:2px; left:2px; width:17px; height:17px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2); transition:transform .2s cubic-bezier(.2,.8,.2,1); }
+  label.tg input:checked { background:var(--gold); }
+  label.tg input:checked::after { transform:translateX(15px); }
+  .views button { display:block; width:100%; text-align:left; border:0; background:none; padding:8px 10px; border-radius:10px; color:var(--ink); font:inherit; cursor:pointer; transition:background .15s, padding .15s; }
+  .views button:hover { background:rgba(176,138,79,.09); }
+  .views .vlist button.on { background:var(--char); color:#fff; font-weight:600; }
   .vgroup { border-bottom:1px solid var(--line); }
-  .vhead { display:flex !important; justify-content:space-between; align-items:center; font-weight:600 !important; padding:9px 8px !important; }
-  .vhead em { font-style:normal; font-size:11px; color:var(--muted); background:#f1ece4; border-radius:999px; padding:1px 7px; }
-  .vhead::after { content:'▸'; margin-left:8px; color:var(--muted); transition:transform .15s; }
+  .vhead { display:flex !important; justify-content:space-between; align-items:center; font-weight:600 !important; padding:11px 8px !important; }
+  .vhead em { font-style:normal; font-size:11px; color:var(--muted); background:rgba(176,138,79,.12); border-radius:999px; padding:1px 8px; margin-left:auto; }
+  .vhead::after { content:'›'; margin-left:10px; color:var(--muted); font-size:18px; line-height:1; transition:transform .2s; }
   .vgroup.open .vhead::after { transform:rotate(90deg); }
-  .vlist { display:none; padding:0 0 6px 10px; }
-  .vgroup.open .vlist { display:block; }
+  .vlist { display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease; padding-left:8px; }
+  .vlist > .inner { overflow:hidden; }
+  .vgroup.open .vlist { grid-template-rows:1fr; padding-bottom:6px; }
   .vlist button { font-size:13px; }
+  .info { font-size:12.5px; color:#4d4640; background:rgba(176,138,79,.08); border:1px solid rgba(176,138,79,.18); border-radius:12px; padding:12px; margin:6px 4px; }
+  body.night { --bg:#14120f; }
+  body.night #stage { background:#14120f; }
+  @media (max-width: 860px) {
+    #panel { position:fixed; right:0; top:0; bottom:0; box-shadow:-10px 0 30px rgba(0,0,0,.18); }
+    #panel.closed { transform: translateX(105%); }
+    #hint { display:none; }
+    #tools kbd, #tools .t { display:none; }
+    #tools { bottom:72px; }
+    #stepper { bottom:14px; }
+    #title { font-size:17px; }
+    #planPills button { min-width:32px; }
+  }
+  @media (min-width: 861px) { #toggle { display:none; } }
 </style>
 </head>
 <body>
-
 <div id="landing">
   <div class="lwrap">
     <div class="eyebrow">5-room HDB · modern luxury</div>
-    <h2>Layout plans</h2>
-    <p class="lead">Five ways to lay out the flat. Open a plan to walk through it in 3D – every plan has the same four <b>CMP</b> comparison views, so you can flip between plans and look at the same spot.</p>
+    <h2>Five ways to live<br>in <em>your new home</em></h2>
+    <p class="lead">Walk through each layout in 3D. Every plan shares the same four <b>CMP</b> camera views, so you can switch plans and compare the exact same spot.</p>
+    <div class="hero-cta">
+      <button class="btn primary" id="startBtn">Start with Plan A <span class="arr">→</span></button>
+      <button class="btn ghost" id="compareBtn">Compare living rooms <span class="arr">→</span></button>
+    </div>
     <div id="cards"></div>
-    <p class="fine">Browser mock-ups rebuilt from the build scripts – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
+    <p class="fine">Browser mock-ups – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
   </div>
 </div>
 <div id="app">
   <div id="stage">
-    <div id="loading" style="display:none">Loading model…</div>
-    <div id="title"></div>
-    <button id="toggle">Views ▸</button>
-    <div id="labels"></div>
-    <div id="tools">
-      <button data-tool="orbit" title="Orbit (O)">⟲ <span>Orbit</span> <kbd>O</kbd></button>
-      <button data-tool="pan" title="Pan (H)">✋ <span>Pan</span> <kbd>H</kbd></button>
-      <button data-tool="zoom" title="Zoom (Z)">🔍 <span>Zoom</span> <kbd>Z</kbd></button>
-      <button data-tool="look" title="Look around (L)">👁 <span>Look</span> <kbd>L</kbd></button>
-      <button data-tool="extents" title="Zoom extents (Shift+Z)">⤢ <span>Extents</span> <kbd>⇧Z</kbd></button>
+    <div id="loading">Loading model…</div>
+    <div id="topbar">
+      <button id="homeBtn" class="glass" title="All plans">⌂</button>
+      <div id="planPills" class="glass"></div>
+      <div id="titleWrap" class="glass"><div id="viewRoom"></div><div id="title"></div></div>
+      <button id="toggle" class="glass">☰ Views</button>
     </div>
-    <div id="hint"></div>
+    <div id="labels"></div>
+    <div id="stepper" class="glass">
+      <button id="prevView" title="Previous view ( [ )">‹ Prev</button>
+      <span class="count" id="viewCount"></span>
+      <button id="nextView" title="Next view ( ] )">Next ›</button>
+    </div>
+    <div id="tools" class="glass">
+      <button data-tool="orbit" title="Orbit (O)">⟲ <span class="t">Orbit</span> <kbd>O</kbd></button>
+      <button data-tool="pan" title="Pan (H)">✋ <span class="t">Pan</span> <kbd>H</kbd></button>
+      <button data-tool="zoom" title="Zoom (Z)">🔍 <span class="t">Zoom</span> <kbd>Z</kbd></button>
+      <button data-tool="look" title="Look around (L)">👁 <span class="t">Look</span> <kbd>L</kbd></button>
+      <button data-tool="extents" title="Zoom extents (Shift+Z)">⤢ <span class="t">Fit</span> <kbd>⇧Z</kbd></button>
+    </div>
+    <div id="hint" class="glass"></div>
   </div>
   <aside id="panel" class="closed">
-    <header><div class="sub">5-room HDB</div><select id="planSel" style="margin-top:6px;font-weight:600"></select><button id="home" class="link">← All plans</button></header>
+    <header><div class="sub">Layout explorer</div><h1 id="panelTitle">Plan</h1><select id="planSel"></select><button id="home" style="display:none"></button></header>
     <div id="scroll">
       <div class="sec" id="modeLabel">Layout option</div>
       <select id="mode"></select>
       <div class="sec">Show</div>
-      <label class="tg"><input type="checkbox" id="t_fc" checked> False ceiling &amp; lights</label>
-      <label class="tg"><input type="checkbox" id="t_lab"> Room names &amp; key dimensions</label>
-      <label class="tg"><input type="checkbox" id="t_pwr"> Power points (indicative)</label>
-      <label class="tg"><input type="checkbox" id="t_ac"> Aircon trunking (indicative)</label>
-      <label class="tg"><input type="checkbox" id="t_cur" checked> Curtains</label>
-      <label class="tg"><input type="checkbox" id="t_night"> Night mood</label>
-      <label class="tg"><input type="checkbox" id="t_hq"> High-quality rendering (shadows, textures)</label>
-      <div class="sec">Views</div>
+      <div class="switches">
+      <label class="tg">False ceiling &amp; lights <input type="checkbox" id="t_fc" checked></label>
+      <label class="tg">Room names &amp; dimensions <input type="checkbox" id="t_lab"></label>
+      <label class="tg">Power points <input type="checkbox" id="t_pwr"></label>
+      <label class="tg">Aircon trunking <input type="checkbox" id="t_ac"></label>
+      <label class="tg">Curtains <input type="checkbox" id="t_cur" checked></label>
+      <label class="tg">Night mood <input type="checkbox" id="t_night"></label>
+      <label class="tg">High-quality rendering <input type="checkbox" id="t_hq"></label>
+      </div>
+      <div class="sec">Views by room</div>
       <div class="views" id="views"></div>
       <div class="sec">About this plan</div>
       <div class="info" id="info"></div>
@@ -131,7 +202,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794585382';
+const BUILD = '1794585660';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -307,6 +378,25 @@ function setFov(v) {
   camera.fov = vf; camera.updateProjectionMatrix(); invalidate();
 }
 const panel = document.getElementById('panel');
+let tween = null;
+function ease(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+function currentTarget() { return nav === 'look' ? camera.position.clone().add(lookDir().multiplyScalar(1500)) : controls.target.clone(); }
+function flyTo(eye, tgt, fov, ms, done) {
+  if (ms <= 0) { camera.position.copy(eye); controls.target.copy(tgt); camera.fov = fov; camera.updateProjectionMatrix(); camera.lookAt(tgt); done(); return; }
+  tween = { p0: camera.position.clone(), t0: currentTarget(), f0: camera.fov, p1: eye, t1: tgt, f1: fov, start: performance.now(), ms, done };
+  // arc: rise a little when travelling far so the camera floats over walls
+  tween.lift = Math.min(2500, tween.p0.distanceTo(eye) * 0.25);
+  nav = 'tween'; controls.enabled = false; invalidate();
+}
+function stepTween(now) {
+  if (!tween) return false;
+  const k = Math.min(1, (now - tween.start) / tween.ms), e = ease(k);
+  camera.position.lerpVectors(tween.p0, tween.p1, e); camera.position.y += Math.sin(Math.PI * e) * tween.lift;
+  const tg = new THREE.Vector3().lerpVectors(tween.t0, tween.t1, e);
+  controls.target.copy(tg); camera.fov = tween.f0 + (tween.f1 - tween.f0) * e; camera.updateProjectionMatrix(); camera.lookAt(tg);
+  if (k >= 1) { const d = tween.done; tween = null; d(); }
+  return true;
+}
 function goView(i) {
   const v = D.views[i]; state.view = v; state.vi = i;
   if (v.mode && D.modes[v.mode]) state.mode = v.mode;
@@ -315,14 +405,19 @@ function goView(i) {
   if (v.tag === 'services') { state.pwr = true; state.ac = true; }
   const eye = new THREE.Vector3(v.eye[0], v.eye[2], v.eye[1]); const tgt = new THREE.Vector3(v.target[0], v.target[2], v.target[1]);
   if (v.tag === 'plan') eye.set(v.target[0], 80000, v.target[1] + 1);
-  camera.position.copy(eye); controls.target.copy(tgt); camera.up.set(0, 1, 0);
-  setFov(v); controls.update();
-  setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true);
+  camera.up.set(0, 1, 0);
+  const oldFov = camera.fov; setFov(v); const fov = camera.fov; camera.fov = oldFov; camera.updateProjectionMatrix();
+  const instant = state.first || !state.prevPos; state.first = false;
+  flyTo(eye, tgt, fov, instant ? 0 : 900, () => { controls.update(); setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true); applyVisibility(); });
+  state.prevPos = true;
   btns.forEach((b, j) => b && b.classList.toggle('on', j === i)); revealGroup(i);
-  document.getElementById('title').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + v.name;
+  const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study|Dining|Foyer|Master|Bedroom [23]|OPEN kitchen|Kitchen \(closed\)|Hall|Entrance partition) – /, '');
+  tl.classList.remove('swap'); void tl.offsetWidth; tl.classList.add('swap');
+  document.getElementById('viewRoom').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + roomOf(v.name);
+  document.getElementById('viewCount').textContent = (i + 1) + ' / ' + D.views.length;
   try { history.replaceState(null, '', '#' + state.plan + '-' + i); } catch (e) {}
   applyVisibility();
-  if (window.innerWidth <= 760) panel.classList.add('closed');
+  if (window.innerWidth <= 860) panel.classList.add('closed');
 }
 
 // ---------- Look-around mode (like SketchUp's Look Around / eye tool) ----------
@@ -356,7 +451,7 @@ function setTool(m, fromView) {
     controls.update();
   }
   document.querySelectorAll('#tools button').forEach(b => b.classList.toggle('on', b.dataset.tool === m));
-  hint.textContent = HINTS[m] || '';
+  hint.textContent = HINTS[m] || ''; hint.style.opacity = 1; clearTimeout(hint._t); hint._t = setTimeout(() => { hint.style.opacity = 0; }, 6000);
 }
 const setNav = setTool;
 function zoomExtents() {
@@ -433,10 +528,10 @@ function buildViewList() {
     const h = document.createElement('button'); h.className = 'vhead'; h.innerHTML = '<span></span><em>' + idx.length + '</em>';
     h.querySelector('span').textContent = g;
     h.onclick = () => { const open = !sec.classList.contains('open'); document.querySelectorAll('.vgroup').forEach(s => s.classList.remove('open')); sec.classList.toggle('open', open); openGroup = open ? g : null; };
-    const list = document.createElement('div'); list.className = 'vlist';
+    const list = document.createElement('div'); list.className = 'vlist'; const inner = document.createElement('div'); inner.className = 'inner'; list.appendChild(inner);
     for (const i of idx) {
       const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study|Dining|Foyer|Master|Bedroom [23]|OPEN kitchen|Kitchen \(closed\)|Hall|Entrance partition) – /, '');
-      b.title = D.views[i].name; b.onclick = () => goView(i); list.appendChild(b); btns[i] = b;
+      b.title = D.views[i].name; b.onclick = () => goView(i); inner.appendChild(b); btns[i] = b;
     }
     sec.appendChild(h); sec.appendChild(list); vbox.appendChild(sec);
   }
@@ -453,7 +548,9 @@ async function openPlan(key, viewName, viewIndex) {
   try {
     if (!cache[key]) { const r = await fetch('plan_' + key + '.json?v=' + BUILD, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); cache[key] = await r.json(); }
   } catch (e) { loading.textContent = 'Could not load this plan (' + e.message + '). Please reload the page.'; return; }
-  D = cache[key]; state.plan = key; planSel.value = key;
+  D = cache[key]; state.plan = key; planSel.value = key; state.first = true;
+  pills.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.key === key));
+  document.getElementById('panelTitle').textContent = PLANS.find(p => p.key === key).title;
   clearModel(); buildModel();
   modeSel.innerHTML = '';
   for (const k of Object.keys(D.modes)) { const o = document.createElement('option'); o.value = k; o.textContent = D.modes[k].label; modeSel.appendChild(o); }
@@ -465,23 +562,40 @@ async function openPlan(key, viewName, viewIndex) {
   if (viewName) { const j = D.views.findIndex(v => v.name === viewName); if (j >= 0) start = j; }
   if (viewIndex != null && D.views[viewIndex]) start = viewIndex;
   loading.style.display = 'none';
-  if (window.innerWidth > 760) panel.classList.remove('closed');
+  if (window.innerWidth > 860) panel.classList.remove('closed');
   resize(); goView(start);
 }
 // keep the same view when switching plans (works for CMP and shared views)
 planSel.onchange = () => { const name = state.view ? state.view.name : null; openPlan(planSel.value, name); };
 document.getElementById('home').onclick = () => { document.getElementById('landing').classList.remove('hidden'); try { history.replaceState(null, '', '#plans'); } catch (e) {} };
 document.getElementById('toggle').onclick = () => panel.classList.toggle('closed');
+document.getElementById('home').onclick = () => {};
 const hqBox = document.getElementById('t_hq'); hqBox.checked = HQ;
 hqBox.onchange = () => { HQ = hqBox.checked; try { localStorage.setItem('hq', HQ ? '1' : '0'); } catch (e) {} if (state.plan) { const vi = state.vi; clearModel(); buildModel(); goView(vi); } };
 const cards = document.getElementById('cards');
-for (const p of PLANS) {
-  const c = document.createElement('button'); c.className = 'card';
-  c.innerHTML = '<span class="tag">' + p.short + '</span><h3></h3><ul></ul><div class="go">Open in 3D →</div>';
+PLANS.forEach((p, n) => {
+  const c = document.createElement('button'); c.className = 'card'; c.style.animationDelay = (0.25 + n * 0.08) + 's';
+  c.innerHTML = '<div class="letter"></div><span class="tag"></span><h3></h3><ul></ul><span class="go">Explore <b></b> in 3D <span class="arr">→</span></span>';
+  c.querySelector('.letter').textContent = p.key.toUpperCase(); c.querySelector('.tag').textContent = p.short;
   c.querySelector('h3').textContent = p.title.replace(/^Plan [A-E] – /, '');
+  c.querySelector('.go b').textContent = p.short;
   for (const b of p.bullets) { const li = document.createElement('li'); li.textContent = b; c.querySelector('ul').appendChild(li); }
   c.onclick = () => openPlan(p.key, null); cards.appendChild(c);
-}
+});
+document.getElementById('startBtn').onclick = () => openPlan('a', null);
+document.getElementById('compareBtn').onclick = () => openPlan('a', 'CMP 1 · Living from dining side');
+const pills = document.getElementById('planPills');
+for (const p of PLANS) { const b = document.createElement('button'); b.textContent = p.key.toUpperCase(); b.title = p.title; b.dataset.key = p.key;
+  b.onclick = () => { if (p.key !== state.plan) openPlan(p.key, state.view ? state.view.name : null); }; pills.appendChild(b); }
+document.getElementById('homeBtn').onclick = () => { document.getElementById('landing').classList.remove('hidden'); try { history.replaceState(null, '', '#plans'); } catch (e) {} };
+document.getElementById('prevView').onclick = () => stepView(-1);
+document.getElementById('nextView').onclick = () => stepView(1);
+function stepView(d) { if (!D) return; goView((state.vi + d + D.views.length) % D.views.length); }
+window.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+  if (e.key === ']' || e.key === 'PageDown') { stepView(1); e.preventDefault(); }
+  if (e.key === '[' || e.key === 'PageUp') { stepView(-1); e.preventDefault(); }
+});
 function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; if (state.view) setFov(state.view); camera.updateProjectionMatrix(); invalidate(); }
 window.addEventListener('resize', resize); resize();
 function route() {
@@ -494,7 +608,7 @@ route();
 let lastAbove = null;
 renderer.setAnimationLoop(() => {
   if (!D) return;
-  walkStep();
+  if (stepTween(performance.now())) dirty = true; else walkStep();
   if (nav === 'orbit' && controls.update()) dirty = true;      // damping still settling
   if (!dirty) return;                                          // nothing changed: skip the frame (saves GPU/CPU)
   dirty = false;
