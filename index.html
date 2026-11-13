@@ -112,6 +112,12 @@
   #scroll { overflow:auto; padding:8px 14px 24px; flex:1; scrollbar-width:thin; scrollbar-color:#2a2a2e transparent; }
   .sec { margin:20px 6px 8px; font:500 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--dim); }
   select#mode { width:100%; padding:11px 12px; border-radius:12px; border:1px solid var(--line2); background:#151519; font:inherit; color:var(--ink); cursor:pointer; }
+  #themes { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  #themes button { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid var(--line2); background:#151519; color:#d7d3cd; font:500 12.5px var(--sans); cursor:pointer; text-align:left; transition:background .25s, color .25s, border-color .25s, transform .3s var(--ease); }
+  #themes button:hover { border-color:rgba(255,255,255,.3); transform:translateY(-1px); }
+  #themes button.on { background:#f4f2ee; color:#0a0a0b; border-color:#f4f2ee; }
+  #themes .sw { display:flex; flex:none; } #themes .sw i { width:12px; height:12px; border-radius:50%; margin-left:-4px; box-shadow:0 0 0 1.5px #151519; } #themes .sw i:first-child { margin-left:0; }
+  #themes button.on .sw i { box-shadow:0 0 0 1.5px #f4f2ee; }
   .switches { display:grid; gap:1px; }
   label.tg { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 8px; cursor:pointer; border-radius:10px; color:#d7d3cd; transition:background .2s; }
   label.tg:hover { background:rgba(255,255,255,.04); }
@@ -184,6 +190,8 @@
   <aside id="panel" class="closed">
     <header><div class="sub">Layout explorer</div><h1 id="panelTitle">Plan</h1><select id="planSel"></select><button id="home" style="display:none"></button></header>
     <div id="scroll">
+      <div class="sec">Theme</div>
+      <div id="themes"></div>
       <div class="sec" id="modeLabel">Layout option</div>
       <select id="mode"></select>
       <div class="sec">Show</div>
@@ -212,7 +220,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794586969';
+const BUILD = '1794587323';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -296,9 +304,68 @@ let layers = {}; let emissiveMats = []; let matCache = {}; const root = new THRE
 let dimGroup = new THREE.Group(); scene.add(dimGroup);
 const lineMat = new THREE.LineBasicMaterial({ color: 0xc0631a });
 function decode(b64) { const bin = atob(b64); const buf = new ArrayBuffer(bin.length); const u8 = new Uint8Array(buf); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return new Int16Array(buf); }
+// ---- Interior themes: recolour shared materials across every plan ----
+const THEMES = {
+  lux: { name: 'Modern Lux', sw: ['#ece9e4', '#604230', '#c4a874'], m: {} },
+  japandi: { name: 'Japandi', sw: ['#eee9e0', '#b08c64', '#3a3836'], m: {
+    Wall_Paint_White: [238, 233, 224], Wall_Paint_Partition: [238, 233, 224], Floor_Homogeneous_Cream_600x600: [200, 175, 140],
+    Walnut_Veneer_Dark: [176, 140, 100], Walnut_Fluted_Dark: [160, 126, 88], Light_Oak: [196, 164, 122],
+    Marble_Calacatta_White: [226, 220, 208], Art_Marble_Gold_Vein: [205, 196, 180], Sintered_Stone_Grey_Veined: [214, 206, 192], Quartz_Top_White: [224, 218, 206],
+    Champagne_Gold_Brushed: [44, 42, 40], Lux_Charcoal_Matt: [58, 54, 50], Lux_Charcoal_Fluted: [70, 64, 58], Main_Door_Charcoal_Lacquer: [60, 56, 52],
+    Lux_Greige: [184, 172, 154], Door_Matt_Greige_Lacquer: [196, 184, 166], Acoustic_Panel_Felt_Greige: [150, 128, 100], Joinery_White_Matt: [222, 212, 196], Door_Frame_White: [232, 226, 214],
+    Sofa_Boucle_Greige: [214, 204, 186], Sofa_Cushion_Oat: [226, 218, 202], Cushion_Linen_Taupe: [176, 160, 134], Cushion_Velvet_Caramel: [150, 152, 128], Throw_Knit_Taupe: [120, 104, 84],
+    Rug_Border_Taupe: [170, 150, 120], Rug_Field_Oatmeal: [220, 208, 186], Leather_Cognac_Dining: [176, 150, 116], Leather_Cognac_Piping: [120, 98, 72], Leather_Caramel: [150, 120, 90],
+    Curtain_Light_Grey: [228, 220, 204], Travertine_Honed_Warm: [208, 192, 166], Headboard_Fabric_Beige: [190, 172, 146], Duvet_Warm_Grey: [222, 214, 198], Boucle_Sage_Green: [150, 158, 130] } },
+  nordic: { name: 'Nordic', sw: ['#f6f6f4', '#d6c4a6', '#96aaba'], m: {
+    Wall_Paint_White: [246, 246, 244], Wall_Paint_Partition: [246, 246, 244], Floor_Homogeneous_Cream_600x600: [214, 198, 172],
+    Walnut_Veneer_Dark: [214, 196, 166], Walnut_Fluted_Dark: [200, 182, 152], Light_Oak: [218, 198, 166],
+    Marble_Calacatta_White: [240, 240, 238], Art_Marble_Gold_Vein: [228, 230, 232], Sintered_Stone_Grey_Veined: [232, 232, 230], Quartz_Top_White: [238, 238, 236],
+    Champagne_Gold_Brushed: [175, 178, 182], Lux_Charcoal_Matt: [96, 102, 108], Lux_Charcoal_Fluted: [110, 116, 122], Main_Door_Charcoal_Lacquer: [90, 96, 102],
+    Lux_Greige: [190, 192, 190], Door_Matt_Greige_Lacquer: [214, 214, 210], Acoustic_Panel_Felt_Greige: [140, 150, 158], Joinery_White_Matt: [244, 244, 241],
+    Sofa_Boucle_Greige: [196, 200, 202], Sofa_Cushion_Oat: [222, 224, 224], Cushion_Linen_Taupe: [150, 170, 186], Cushion_Velvet_Caramel: [176, 190, 170], Throw_Knit_Taupe: [128, 140, 150],
+    Rug_Border_Taupe: [160, 166, 170], Rug_Field_Oatmeal: [228, 226, 220], Leather_Cognac_Dining: [180, 182, 182], Leather_Cognac_Piping: [140, 142, 144], Leather_Caramel: [196, 178, 150],
+    Curtain_Light_Grey: [238, 238, 234], Travertine_Honed_Warm: [230, 226, 218], Headboard_Fabric_Beige: [186, 192, 196], Duvet_Warm_Grey: [230, 232, 232], Boucle_Sage_Green: [150, 170, 160] } },
+  midcentury: { name: 'Mid-century', sw: ['#f0eade', '#78482a', '#d6a03c'], m: {
+    Wall_Paint_White: [240, 234, 222], Wall_Paint_Partition: [240, 234, 222], Floor_Homogeneous_Cream_600x600: [176, 128, 84],
+    Walnut_Veneer_Dark: [120, 72, 40], Walnut_Fluted_Dark: [104, 62, 34], Light_Oak: [168, 112, 64],
+    Marble_Calacatta_White: [234, 228, 216], Art_Marble_Gold_Vein: [200, 140, 70], Champagne_Gold_Brushed: [184, 146, 80],
+    Lux_Charcoal_Matt: [52, 58, 56], Lux_Charcoal_Fluted: [64, 70, 66], Lux_Greige: [128, 122, 96], Door_Matt_Greige_Lacquer: [176, 150, 110], Acoustic_Panel_Felt_Greige: [96, 110, 80],
+    Joinery_White_Matt: [236, 228, 212], Sofa_Boucle_Greige: [70, 104, 100], Sofa_Cushion_Oat: [88, 124, 118], Cushion_Linen_Taupe: [214, 160, 60], Cushion_Velvet_Caramel: [190, 90, 50], Throw_Knit_Taupe: [214, 170, 90],
+    Rug_Border_Taupe: [120, 80, 50], Rug_Field_Oatmeal: [220, 196, 150], Curtain_Light_Grey: [226, 214, 190], Travertine_Honed_Warm: [204, 186, 160],
+    Headboard_Fabric_Beige: [128, 126, 92], Duvet_Warm_Grey: [228, 220, 200], Boucle_Sage_Green: [96, 120, 104] } },
+  dark: { name: 'Dark Luxe', sw: ['#3a3836', '#7a5a3c', '#c8a86e'], m: {
+    Wall_Paint_White: [120, 112, 104], Wall_Paint_Partition: [120, 112, 104], Floor_Homogeneous_Cream_600x600: [150, 140, 128], Wall_Kitchen_Tile_300x600: [96, 94, 92],
+    Walnut_Veneer_Dark: [70, 46, 34], Walnut_Fluted_Dark: [60, 40, 30], Light_Oak: [110, 80, 56],
+    Marble_Calacatta_White: [44, 44, 46], Art_Marble_Gold_Vein: [62, 60, 60], Sintered_Stone_Grey_Veined: [70, 68, 66], Quartz_Top_White: [80, 78, 76],
+    Lux_Charcoal_Matt: [36, 34, 34], Lux_Charcoal_Fluted: [44, 42, 42], Main_Door_Charcoal_Lacquer: [36, 34, 34], Door_Frame_White: [100, 94, 88],
+    Lux_Greige: [90, 82, 76], Door_Matt_Greige_Lacquer: [110, 100, 92], Acoustic_Panel_Felt_Greige: [70, 64, 60], Joinery_White_Matt: [70, 66, 64],
+    Sofa_Boucle_Greige: [150, 134, 118], Sofa_Cushion_Oat: [170, 154, 136], Cushion_Linen_Taupe: [110, 60, 50], Cushion_Velvet_Caramel: [60, 74, 60], Throw_Knit_Taupe: [80, 70, 62],
+    Rug_Border_Taupe: [60, 54, 50], Rug_Field_Oatmeal: [120, 108, 96], Leather_Cognac_Dining: [96, 58, 38], Leather_Cognac_Piping: [60, 36, 24],
+    Curtain_Light_Grey: [120, 112, 104], Travertine_Honed_Warm: [150, 136, 118], Headboard_Fabric_Beige: [96, 86, 78], Duvet_Warm_Grey: [170, 160, 148] } },
+};
+let theme = 'lux'; try { const t = localStorage.getItem('theme'); if (THEMES[t]) theme = t; } catch (e) {}
+function matRGB(name) { return THEMES[theme].m[name] || D.mats[name].c; }
+function applyTheme(key) {
+  theme = key; try { localStorage.setItem('theme', key); } catch (e) {}
+  document.querySelectorAll('#themes button').forEach(b => b.classList.toggle('on', b.dataset.t === key));
+  if (!D) return;
+  for (const [name, mat] of Object.entries(matCache)) {
+    if (!D.mats[name]) continue; const c = matRGB(name);
+    mat.color.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace); if (D.mats[name].e) mat.emissive.copy(mat.color);
+  }
+  invalidate();
+}
+(function buildThemes() {
+  const box = document.getElementById('themes');
+  for (const [k, t] of Object.entries(THEMES)) {
+    const b = document.createElement('button'); b.dataset.t = k; b.className = k === theme ? 'on' : '';
+    b.innerHTML = '<span class="sw">' + t.sw.map(c => '<i style="background:' + c + '"></i>').join('') + '</span>';
+    b.appendChild(document.createTextNode(t.name)); b.onclick = () => applyTheme(k); box.appendChild(b);
+  }
+})();
 function material(name) {
   if (matCache[name]) return matCache[name];
-  const m = D.mats[name]; const col = new THREE.Color().setRGB(m.c[0] / 255, m.c[1] / 255, m.c[2] / 255, THREE.SRGBColorSpace);
+  const m = D.mats[name]; const rgb = matRGB(name); const col = new THREE.Color().setRGB(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255, THREE.SRGBColorSpace);
   const glassy = m.a < 0.99;
   const shiny = /Mirror|Chrome|Glass|Screen|Hob_Black/.test(name), metal = /Chrome|Steel|Gold|Brass|Silver|Metal_Black|Frame_Alum/.test(name);
   const polished = /Marble|Sintered|Quartz|Ceramic|Lacquer/.test(name);
@@ -421,7 +488,7 @@ function goView(i) {
   flyTo(eye, tgt, fov, instant ? 0 : 900, () => { controls.update(); setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true); applyVisibility(); });
   state.prevPos = true;
   btns.forEach((b, j) => b && b.classList.toggle('on', j === i)); revealGroup(i);
-  const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Hall|Entrance partition|Night|Compare \d) – /, '');
+  const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Kitchen|Hall|Entrance screen|Night|Compare \d) – /, '');
   tl.textContent = tl.textContent.charAt(0).toUpperCase() + tl.textContent.slice(1); tl.classList.remove('swap'); void tl.offsetWidth; tl.classList.add('swap');
   document.getElementById('viewRoom').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + roomOf(v.name);
   document.getElementById('viewCount').textContent = (i + 1) + ' / ' + D.views.length;
@@ -540,7 +607,7 @@ function buildViewList() {
     h.onclick = () => { const open = !sec.classList.contains('open'); document.querySelectorAll('.vgroup').forEach(s => s.classList.remove('open')); sec.classList.toggle('open', open); openGroup = open ? g : null; };
     const list = document.createElement('div'); list.className = 'vlist'; const inner = document.createElement('div'); inner.className = 'inner'; list.appendChild(inner);
     for (const i of idx) {
-      const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Hall|Entrance partition|Night|Compare \d) – /, '');
+      const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Kitchen|Hall|Entrance screen|Night|Compare \d) – /, '');
       b.textContent = b.textContent.charAt(0).toUpperCase() + b.textContent.slice(1); b.title = D.views[i].name; b.onclick = () => goView(i); inner.appendChild(b); btns[i] = b;
     }
     sec.appendChild(h); sec.appendChild(list); vbox.appendChild(sec);
@@ -593,7 +660,7 @@ PLANS.forEach((p, n) => {
   c.onclick = () => openPlan(p.key, null); cards.appendChild(c);
 });
 cards.addEventListener('pointermove', (e) => { const c = e.target.closest('.card'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
-document.getElementById('compareBtn').onclick = () => openPlan('a', 'Compare 1 – living from dining side');
+document.getElementById('compareBtn').onclick = () => openPlan('a', 'Compare 1 – living from dining');
 const pills = document.getElementById('planPills');
 for (const p of PLANS) { const b = document.createElement('button'); b.textContent = p.key.toUpperCase(); b.title = p.title; b.dataset.key = p.key;
   b.onclick = () => { if (p.key !== state.plan) openPlan(p.key, state.view ? state.view.name : null); }; pills.appendChild(b); }
