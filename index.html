@@ -56,9 +56,15 @@
   .fine { color:var(--muted); font-size:12px; margin-top:22px; max-width:760px; }
   button.link { background:none; border:none; color:var(--accent); font:inherit; font-size:12.5px; padding:6px 0 0; cursor:pointer; display:block; }
 
-  #navBtn { position:absolute; right:12px; bottom:12px; z-index:6; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px; padding:9px 15px; font:inherit; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  #tools { position:absolute; right:12px; bottom:12px; z-index:6; display:flex; gap:4px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:4px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  #tools button { border:0; background:none; color:var(--ink); font:inherit; font-size:13px; padding:7px 9px; border-radius:8px; cursor:pointer; white-space:nowrap; }
+  #tools button.on { background:#efe6d8; font-weight:600; }
+  #tools kbd { font:11px ui-monospace,monospace; color:var(--muted); border:1px solid var(--line); border-radius:4px; padding:0 3px; margin-left:2px; }
+  @media (max-width:760px) { #tools kbd, #tools span { display:none; } #tools button { font-size:17px; padding:8px 10px; } }
+  #navBtnOld { position:absolute; right:12px; bottom:12px; z-index:6; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px; padding:9px 15px; font:inherit; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
   #navBtn:hover { background:#f1ece4; }
-  @media (max-width: 760px) { #hint { right:150px; } }
+  @media (max-width: 760px) { #hint { display:none; } }
+  #hint { right:auto; max-width:calc(100% - 420px); }
 </style>
 </head>
 <body>
@@ -78,7 +84,13 @@
     <div id="title"></div>
     <button id="toggle">Views ▸</button>
     <div id="labels"></div>
-    <button id="navBtn" title="Switch between Look around and Orbit"></button>
+    <div id="tools">
+      <button data-tool="orbit" title="Orbit (O)">⟲ <span>Orbit</span> <kbd>O</kbd></button>
+      <button data-tool="pan" title="Pan (H)">✋ <span>Pan</span> <kbd>H</kbd></button>
+      <button data-tool="zoom" title="Zoom (Z)">🔍 <span>Zoom</span> <kbd>Z</kbd></button>
+      <button data-tool="look" title="Look around (L)">👁 <span>Look</span> <kbd>L</kbd></button>
+      <button data-tool="extents" title="Zoom extents (Shift+Z)">⤢ <span>Extents</span> <kbd>⇧Z</kbd></button>
+    </div>
     <div id="hint"></div>
   </div>
   <aside id="panel" class="closed">
@@ -110,7 +122,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794583886';
+const BUILD = '1794584065';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -300,8 +312,9 @@ function goView(i) {
 }
 
 // ---------- Look-around mode (like SketchUp's Look Around / eye tool) ----------
-let nav = 'look';
-const navBtn = document.getElementById('navBtn'), hint = document.getElementById('hint');
+let nav = 'look';     // 'look' or 'orbit' (orbit = OrbitControls driving the camera)
+let tool = 'look';
+const hint = document.getElementById('hint');
 const look = { yaw: 0, pitch: 0, ptrs: new Map(), lastPinch: 0 };
 function syncLookFromCamera() {
   const d = new THREE.Vector3().subVectors(controls.target, camera.position).normalize();
@@ -309,19 +322,45 @@ function syncLookFromCamera() {
 }
 function lookDir() { return new THREE.Vector3(Math.sin(look.yaw) * Math.cos(look.pitch), Math.sin(look.pitch), Math.cos(look.yaw) * Math.cos(look.pitch)); }
 function applyLook() { camera.lookAt(camera.position.clone().add(lookDir())); }
-function setNav(m, fromView) {
-  const was = nav; nav = m;
-  if (m === 'look') { syncLookFromCamera(); controls.enabled = false; applyLook(); }
+const HINTS = {
+  look: 'Look around (L): drag to turn your head · scroll to zoom the lens · W A S D / arrows to walk',
+  orbit: 'Orbit (O): drag to rotate · scroll to zoom · right-drag or Shift-drag to pan',
+  pan: 'Pan (H): drag to slide the view · scroll to zoom · right-drag to orbit',
+  zoom: 'Zoom (Z): drag up/down to zoom · scroll also zooms towards the cursor',
+};
+function setTool(m, fromView) {
+  const was = nav; tool = m;
+  if (m === 'look') { nav = 'look'; syncLookFromCamera(); controls.enabled = false; applyLook(); }
   else {
+    nav = 'orbit';
     if (!fromView && was === 'look') controls.target.copy(camera.position.clone().add(lookDir().multiplyScalar(1500)));
-    controls.enabled = true; controls.update();
+    controls.enabled = true;
+    controls.mouseButtons = { LEFT: m === 'pan' ? THREE.MOUSE.PAN : m === 'zoom' ? THREE.MOUSE.DOLLY : THREE.MOUSE.ROTATE,
+                              MIDDLE: THREE.MOUSE.ROTATE, RIGHT: m === 'pan' ? THREE.MOUSE.ROTATE : THREE.MOUSE.PAN };
+    controls.touches = { ONE: m === 'pan' ? THREE.TOUCH.PAN : THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+    controls.zoomToCursor = true;
+    controls.update();
   }
-  navBtn.textContent = m === 'look' ? '⟲ Switch to Orbit' : '👁 Switch to Look around';
-  hint.textContent = m === 'look'
-    ? 'Look around: drag to turn your head · scroll / pinch to zoom the lens · W A S D or arrow keys to walk'
-    : 'Orbit: drag to rotate · scroll / pinch to zoom · right-drag or two fingers to pan';
+  document.querySelectorAll('#tools button').forEach(b => b.classList.toggle('on', b.dataset.tool === m));
+  hint.textContent = HINTS[m] || '';
 }
-navBtn.onclick = () => setNav(nav === 'look' ? 'orbit' : 'look');
+const setNav = setTool;
+function zoomExtents() {
+  const box = new THREE.Box3().setFromObject(root); if (box.isEmpty()) return;
+  const c = box.getCenter(new THREE.Vector3()); const size = box.getSize(new THREE.Vector3()).length();
+  const dir = (nav === 'look' ? lookDir() : new THREE.Vector3().subVectors(controls.target, camera.position).normalize());
+  if (dir.y > -0.25) { dir.y = -0.6; dir.normalize(); }
+  const dist = size / (2 * Math.tan(camera.fov * Math.PI / 360)) * 0.9;
+  controls.target.copy(c); camera.position.copy(c.clone().addScaledVector(dir, -dist));
+  setTool(tool === 'look' ? 'orbit' : tool, true); applyVisibility();
+}
+document.querySelectorAll('#tools button').forEach(b => b.onclick = () => { if (b.dataset.tool === 'extents') zoomExtents(); else setTool(b.dataset.tool); });
+window.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT' || e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key.toLowerCase();
+  if (k === 'z' && e.shiftKey) { zoomExtents(); e.preventDefault(); return; }
+  if (k === 'o') setTool('orbit'); else if (k === 'h') setTool('pan'); else if (k === 'z') setTool('zoom'); else if (k === 'l') setTool('look');
+});
 const el = renderer.domElement;
 el.addEventListener('pointerdown', (e) => { if (nav !== 'look') return; el.setPointerCapture(e.pointerId); look.ptrs.set(e.pointerId, [e.clientX, e.clientY]); look.lastPinch = 0; });
 el.addEventListener('pointermove', (e) => {
@@ -344,11 +383,12 @@ const keys = new Set();
 window.addEventListener('keydown', (e) => { if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); });
 window.addEventListener('keyup', (e) => keys.delete(e.key.toLowerCase()));
 function walkStep() {
-  if (nav !== 'look' || keys.size === 0) return;
+  if (keys.size === 0) return;
+  if (nav !== 'look') syncLookFromCamera();
   const f = new THREE.Vector3(Math.sin(look.yaw), 0, Math.cos(look.yaw)), r = new THREE.Vector3(-f.z, 0, f.x), v = new THREE.Vector3();
   if (keys.has('w') || keys.has('arrowup')) v.add(f); if (keys.has('s') || keys.has('arrowdown')) v.sub(f);
   if (keys.has('d') || keys.has('arrowright')) v.add(r); if (keys.has('a') || keys.has('arrowleft')) v.sub(r);
-  if (v.lengthSq() > 0) { camera.position.addScaledVector(v.normalize(), 25); applyLook(); }
+  if (v.lengthSq() > 0) { const step = v.normalize().multiplyScalar(25); camera.position.add(step); if (nav === 'look') applyLook(); else { controls.target.add(step); } }
 }
 
 const cache = {};
@@ -398,7 +438,7 @@ function route() {
 window.addEventListener('hashchange', () => { const m = /^#([a-e])(?:-(\d+))?$/.exec(location.hash || ''); if (m && (m[1] !== state.plan)) route(); });
 route();
 let lastAbove = null;
-renderer.setAnimationLoop(() => { if (!D) return; if (nav === 'orbit') controls.update(); else walkStep();
+renderer.setAnimationLoop(() => { if (!D) return; walkStep(); if (nav === 'orbit') controls.update();
   const above = camera.position.y > 2600; if (above !== lastAbove) { lastAbove = above; applyVisibility(); }
   renderer.render(scene, camera); if (state.lab) placeLabels(); });
 </script>
