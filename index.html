@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home layout plans A–E</title>
+<style>
+  :root { --bg:#f6f4f0; --panel:#fffdf9; --ink:#2b2724; --muted:#7a716a; --line:#e4ddd3; --accent:#9a7b4f; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--ink); font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; overflow:hidden; }
+  #app { position:fixed; inset:0; display:flex; }
+  #stage { position:relative; flex:1; min-width:0; }
+  canvas { display:block; width:100%; height:100%; touch-action:none; }
+  #panel { width:320px; max-width:86vw; background:var(--panel); border-left:1px solid var(--line); display:flex; flex-direction:column; transition: transform .25s ease; z-index:5; }
+  #panel header { padding:14px 16px 10px; border-bottom:1px solid var(--line); }
+  #panel h1 { font-size:16px; margin:0 0 2px; font-weight:650; }
+  #panel .sub { color:var(--muted); font-size:12px; }
+  #scroll { overflow:auto; padding:10px 12px 18px; flex:1; }
+  .sec { margin:10px 4px 6px; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600; }
+  .views button { display:block; width:100%; text-align:left; border:1px solid transparent; background:none; padding:7px 9px; border-radius:7px; color:var(--ink); font:inherit; cursor:pointer; }
+  .views button:hover { background:#f1ece4; }
+  .views button.on { background:#efe6d8; border-color:#e0d2bb; font-weight:600; }
+  select { width:100%; padding:8px; border-radius:8px; border:1px solid var(--line); background:#fff; font:inherit; color:var(--ink); }
+  label.tg { display:flex; align-items:center; gap:8px; padding:5px 6px; cursor:pointer; }
+  label.tg input { accent-color: var(--accent); width:16px; height:16px; }
+  .info { font-size:12.5px; color:#4d4640; background:#f6f1ea; border-radius:8px; padding:10px; margin:8px 4px; }
+  #toggle { position:absolute; top:12px; right:12px; z-index:6; border:1px solid var(--line); background:var(--panel); border-radius:999px; padding:8px 14px; font:inherit; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  #title { position:absolute; left:12px; top:12px; z-index:4; background:rgba(255,253,249,.92); border:1px solid var(--line); border-radius:10px; padding:7px 12px; font-weight:600; max-width:60%; }
+  #hint { position:absolute; left:12px; bottom:12px; z-index:4; color:var(--muted); font-size:12px; background:rgba(255,253,249,.85); border-radius:8px; padding:5px 9px; }
+  #labels { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+  .lbl { position:absolute; transform:translate(-50%,-50%); white-space:nowrap; font-size:12px; font-weight:600; color:#2b2724; background:rgba(255,253,249,.88); border:1px solid #e0d6c8; border-radius:6px; padding:2px 7px; }
+  .lbl.dim { color:#8a4b12; border-color:#e9c9a3; font-weight:500; }
+  #loading { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--muted); z-index:3; }
+  body.night { --bg:#14120f; }
+  @media (max-width: 760px) {
+    #panel { position:fixed; right:0; top:0; bottom:0; box-shadow:-6px 0 24px rgba(0,0,0,.15); }
+    #panel.closed { transform: translateX(100%); }
+    #title { max-width:58%; font-size:13px; }
+  }
+  @media (min-width: 761px) { #toggle { display:none; } }
+
+  #landing { position:fixed; inset:0; z-index:20; background:var(--bg); overflow:auto; }
+  #landing.hidden { display:none; }
+  .lwrap { max-width:1080px; margin:0 auto; padding:40px 20px 60px; }
+  .eyebrow { color:var(--accent); font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
+  #landing h2 { font-size:30px; margin:6px 0 8px; font-weight:650; }
+  .lead { color:#4d4640; max-width:680px; margin:0 0 22px; }
+  #cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; cursor:pointer; transition: transform .15s, box-shadow .15s; text-align:left; font:inherit; color:inherit; }
+  .card:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(60,40,20,.08); }
+  .card .tag { display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; color:#fff; background:var(--accent); border-radius:6px; padding:2px 8px; }
+  .card h3 { margin:10px 0 6px; font-size:17px; }
+  .card ul { margin:0; padding-left:18px; color:#4d4640; font-size:13px; }
+  .card li { margin:3px 0; }
+  .card .go { margin-top:12px; color:var(--accent); font-weight:600; font-size:13px; }
+  .fine { color:var(--muted); font-size:12px; margin-top:22px; max-width:760px; }
+  button.link { background:none; border:none; color:var(--accent); font:inherit; font-size:12.5px; padding:6px 0 0; cursor:pointer; display:block; }
+
+  #navBtn { position:absolute; right:12px; bottom:12px; z-index:6; border:1px solid var(--line); background:var(--panel); color:var(--ink); border-radius:999px; padding:9px 15px; font:inherit; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  #navBtn:hover { background:#f1ece4; }
+  @media (max-width: 760px) { #hint { right:150px; } }
+</style>
+</head>
+<body>
+
+<div id="landing">
+  <div class="lwrap">
+    <div class="eyebrow">5-room HDB · modern luxury</div>
+    <h2>Layout plans</h2>
+    <p class="lead">Five ways to lay out the flat. Open a plan to walk through it in 3D – every plan has the same four <b>CMP</b> comparison views, so you can flip between plans and look at the same spot.</p>
+    <div id="cards"></div>
+    <p class="fine">Browser mock-ups rebuilt from the build scripts – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
+  </div>
+</div>
+<div id="app">
+  <div id="stage">
+    <div id="loading" style="display:none">Loading model…</div>
+    <div id="title"></div>
+    <button id="toggle">Views ▸</button>
+    <div id="labels"></div>
+    <button id="navBtn" title="Switch between Look around and Orbit"></button>
+    <div id="hint"></div>
+  </div>
+  <aside id="panel" class="closed">
+    <header><div class="sub">5-room HDB</div><select id="planSel" style="margin-top:6px;font-weight:600"></select><button id="home" class="link">← All plans</button></header>
+    <div id="scroll">
+      <div class="sec" id="modeLabel">Layout option</div>
+      <select id="mode"></select>
+      <div class="sec">Show</div>
+      <label class="tg"><input type="checkbox" id="t_fc" checked> False ceiling &amp; lights</label>
+      <label class="tg"><input type="checkbox" id="t_lab"> Room names &amp; key dimensions</label>
+      <label class="tg"><input type="checkbox" id="t_pwr"> Power points (indicative)</label>
+      <label class="tg"><input type="checkbox" id="t_ac"> Aircon trunking (indicative)</label>
+      <label class="tg"><input type="checkbox" id="t_cur" checked> Curtains</label>
+      <label class="tg"><input type="checkbox" id="t_night"> Night mood</label>
+      <label class="tg"><input type="checkbox" id="t_hq"> High-quality rendering (shadows, textures)</label>
+      <div class="sec">Views</div>
+      <div class="views" id="views"></div>
+      <div class="sec">About this plan</div>
+      <div class="info" id="info"></div>
+    </div>
+  </aside>
+</div>
+<script type="application/json" id="plans">[{"key": "a", "short": "Plan A", "title": "Plan A \u2013 Base layout (8 Nov)", "bullets": ["Dining for 7 by the household shelter", "Study room beside the kitchen (desks or single bed)", "Bedroom 3: queen bed or 2 standing desks", "Closed kitchen \u00b7 improvements only"]}, {"key": "b", "short": "Plan B", "title": "Plan B \u2013 Lounge & open kitchen (9 Nov)", "bullets": ["Study behind the TV wall, half-glass", "Hall cabinets replaced by a lounge with onyx feature wall", "New entrance glass partition in line with the shelter", "Open or closed kitchen with bi-fold glass"]}, {"key": "c", "short": "Plan C", "title": "Plan C \u2013 Study by shelter, TV swapped", "bullets": ["TV wall moved to the east wall", "Sofas on the west side, art above", "Study by the shelter, wall flush with it", "Open or closed kitchen with bi-fold glass"]}, {"key": "d", "short": "Plan D", "title": "Plan D \u2013 Bedroom 3 as study (v13)", "bullets": ["No study room \u2013 bedroom 3 is the study", "D1 desks only \u00b7 D2 with fold-down wall bed", "v13 hall tall cabinets and marble TV wall", "Open or closed kitchen with bi-fold glass"]}, {"key": "e", "short": "Plan E", "title": "Plan E \u2013 Screenshot living room", "bullets": ["U-shaped lounge seating, round coffee table", "Angled corner TV wall with storage behind", "Dining outside the kitchen, rest as Plan A", "Open or closed kitchen with bi-fold glass"]}]</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+
+const PLANS = JSON.parse(document.getElementById('plans').textContent);
+let D = null;
+const stage = document.getElementById('stage');
+const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
+let HQ = true; try { if (localStorage.getItem('hq') === '0') HQ = false; } catch (e) {}
+const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.5 : 2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+let envTex = null;
+try { const pm = new THREE.PMREMGenerator(renderer); envTex = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); } catch (e) { envTex = null; }
+const camera = new THREE.PerspectiveCamera(60, 1, 30, 400000);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.12; controls.screenSpacePanning = true; controls.zoomSpeed = 0.9;
+const hemi = new THREE.HemisphereLight(0xfff6ea, 0xa89a86, 0.55); scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xffe9cc, 2.6);
+sun.position.set(7300 - 5500, 9000, 4800 - 9500); sun.target.position.set(7300, 0, 4800); scene.add(sun); scene.add(sun.target);
+sun.castShadow = true; sun.shadow.mapSize.set(MOBILE ? 2048 : 4096, MOBILE ? 2048 : 4096);
+Object.assign(sun.shadow.camera, { left: -11000, right: 11000, top: 11000, bottom: -11000, near: 100, far: 40000 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 12; sun.shadow.radius = 3;
+const fill = new THREE.DirectionalLight(0xdfe8ff, 0.25); fill.position.set(9000, 6000, 12000); scene.add(fill);
+const amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(amb);
+// warm room lights for night mood
+const nightLights = [];
+for (const [x, z, y] of [[3200, 2900, 2300], [1150, 5100, 2300], [6150, 5600, 2300], [12900, 2600, 2300], [10000, 1800, 2300], [7000, 1500, 2300], [5900, 8000, 2300], [2700, 7400, 2300], [9900, 6000, 2300], [12000, 6000, 2300]]) {
+  const L = new THREE.PointLight(0xffc27a, 0, 5200, 1.2); L.position.set(x, y, z); scene.add(L); nightLights.push(L);
+}
+// ---------- procedural textures (subtle, colour comes from the material) ----------
+function cnv(n) { const c = document.createElement('canvas'); c.width = c.height = n; return [c, c.getContext('2d')]; }
+function rnd(seed) { let s = seed; return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+function texTiles(n, cols, rows, grout, base) { const [c, g] = cnv(n); g.fillStyle = base; g.fillRect(0, 0, n, n); const r = rnd(7);
+  for (let i = 0; i < 2600; i++) { g.fillStyle = 'rgba(0,0,0,' + (r() * 0.025) + ')'; g.fillRect(r() * n, r() * n, 2 + r() * 6, 2 + r() * 6); }
+  g.strokeStyle = grout; g.lineWidth = Math.max(1.5, n / 400);
+  for (let i = 0; i <= cols; i++) { g.beginPath(); g.moveTo(i * n / cols, 0); g.lineTo(i * n / cols, n); g.stroke(); }
+  for (let j = 0; j <= rows; j++) { g.beginPath(); g.moveTo(0, j * n / rows); g.lineTo(n, j * n / rows); g.stroke(); } return c; }
+function texMarble(n, vein, seed) { const [c, g] = cnv(n); g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n); const r = rnd(seed);
+  for (let k = 0; k < 14; k++) { g.strokeStyle = vein.replace('A', (0.05 + r() * 0.16).toFixed(3)); g.lineWidth = 0.6 + r() * 2.4; g.beginPath();
+    let x = r() * n, y = 0; g.moveTo(x, y); while (y < n) { x += (r() - 0.45) * 40; y += 10 + r() * 30; g.lineTo(x, y); } g.stroke(); } return c; }
+function texGrain(n, dark, seed) { const [c, g] = cnv(n); g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n); const r = rnd(seed);
+  for (let i = 0; i < 260; i++) { const y = r() * n; g.strokeStyle = 'rgba(' + dark + ',' + (0.04 + r() * 0.12).toFixed(3) + ')'; g.lineWidth = 0.5 + r() * 2.5; g.beginPath(); g.moveTo(0, y);
+    for (let x = 0; x <= n; x += 32) g.lineTo(x, y + Math.sin(x / 70 + i) * 3 + (r() - 0.5) * 2); g.stroke(); } return c; }
+function texNoise(n, amt, seed, blob) { const [c, g] = cnv(n); g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n); const r = rnd(seed);
+  for (let i = 0; i < n * n / (blob * blob) * 2.2; i++) { g.fillStyle = 'rgba(0,0,0,' + (r() * amt).toFixed(3) + ')'; g.beginPath(); g.arc(r() * n, r() * n, blob * (0.4 + r()), 0, 7); g.fill(); } return c; }
+const TEX = {}; // name -> [canvasFactory, mm per texture repeat]
+const TEXDEF = [
+  [/^Floor_Homogeneous/, () => texTiles(1024, 2, 2, 'rgba(120,112,100,.55)', '#ffffff'), 1200],
+  [/^Floor_Kitchen/, () => texTiles(1024, 2, 2, 'rgba(110,104,96,.6)', '#ffffff'), 1200],
+  [/^Floor_Yard|^Floor_Toilet/, () => texTiles(1024, 4, 2, 'rgba(90,90,90,.55)', '#ffffff'), 1200],
+  [/^Wall_Toilet|^Wall_Kitchen/, () => texTiles(1024, 4, 2, 'rgba(120,120,120,.45)', '#ffffff'), 1200],
+  [/Marble|Art_Marble/, () => texMarble(1024, 'rgba(90,92,100,A)', 11), 1600],
+  [/Sintered/, () => texMarble(1024, 'rgba(60,60,64,A)', 23), 1400],
+  [/Walnut|Oak/, () => texGrain(1024, '40,22,10', 5), 900],
+  [/Travertine/, () => texGrain(1024, '120,90,50', 9), 1200],
+  [/Rug|Throw/, () => texNoise(512, 0.10, 3, 3), 400],
+  [/Sofa|Boucle|Cushion|Headboard|Duvet|Linen|Pillow|Velvet|Curtain|Felt|Leather/, () => texNoise(512, 0.07, 4, 2), 300],
+];
+function texFor(name) {
+  if (name in TEX) return TEX[name];
+  let res = null;
+  for (const [re, f, mm] of TEXDEF) if (re.test(name)) { const t = new THREE.CanvasTexture(f()); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; res = [t, mm]; break; }
+  TEX[name] = res; return res;
+}
+function addUV(g, mm) {
+  const p = g.attributes.position.array; const uv = new Float32Array(p.length / 3 * 2);
+  for (let t = 0; t < p.length; t += 9) {
+    const ax = p[t + 3] - p[t], ay = p[t + 4] - p[t + 1], az = p[t + 5] - p[t + 2], bx = p[t + 6] - p[t], by = p[t + 7] - p[t + 1], bz = p[t + 8] - p[t + 2];
+    const nx = Math.abs(ay * bz - az * by), ny = Math.abs(az * bx - ax * bz), nz = Math.abs(ax * by - ay * bx);
+    for (let k = 0; k < 3; k++) { const i = t + k * 3, o = (t / 3 + k) * 2;
+      if (ny >= nx && ny >= nz) { uv[o] = p[i] / mm; uv[o + 1] = p[i + 2] / mm; }
+      else if (nx >= nz) { uv[o] = p[i + 2] / mm; uv[o + 1] = p[i + 1] / mm; }
+      else { uv[o] = p[i] / mm; uv[o + 1] = p[i + 1] / mm; } }
+  }
+  g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+}
+let layers = {}; let emissiveMats = []; let matCache = {}; const root = new THREE.Group(); scene.add(root);
+let dimGroup = new THREE.Group(); scene.add(dimGroup);
+const lineMat = new THREE.LineBasicMaterial({ color: 0xc0631a });
+function decode(b64) { const bin = atob(b64); const buf = new ArrayBuffer(bin.length); const u8 = new Uint8Array(buf); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return new Int16Array(buf); }
+function material(name) {
+  if (matCache[name]) return matCache[name];
+  const m = D.mats[name]; const col = new THREE.Color().setRGB(m.c[0] / 255, m.c[1] / 255, m.c[2] / 255, THREE.SRGBColorSpace);
+  const glassy = m.a < 0.99;
+  const shiny = /Mirror|Chrome|Glass|Screen|Hob_Black/.test(name), metal = /Chrome|Steel|Gold|Brass|Silver|Metal_Black|Frame_Alum/.test(name);
+  const polished = /Marble|Sintered|Quartz|Ceramic|Lacquer/.test(name);
+  const mat = new THREE.MeshStandardMaterial({ color: col, roughness: shiny ? 0.08 : metal ? 0.32 : polished ? 0.28 : /Walnut|Oak|Travertine/.test(name) ? 0.6 : 0.9,
+    metalness: metal ? 0.75 : 0.0, transparent: glassy, opacity: glassy ? Math.max(0.16, m.a * 0.7) : 1, depthWrite: !glassy, side: THREE.DoubleSide, envMapIntensity: 0.8 });
+  if (HQ) { const tx = texFor(name); if (tx) mat.map = tx[0]; }
+  if (m.e) { mat.emissive = col.clone(); mat.emissiveIntensity = 0.35; emissiveMats.push(mat); }
+  matCache[name] = mat; return mat;
+}
+function clearModel() {
+  root.traverse(o => { if (o.geometry) o.geometry.dispose(); });
+  for (const m of Object.values(matCache)) m.dispose();
+  root.clear(); dimGroup.clear(); layers = {}; emissiveMats = []; matCache = {};
+}
+function buildModel() {
+  for (const ch of D.chunks) {
+    const q = decode(ch.b64); const pos = new Float32Array(q.length); for (let i = 0; i < q.length; i++) pos[i] = q[i];
+    let g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    try { g = toCreasedNormals(g, Math.PI / 5); } catch (e) { g.computeVertexNormals(); }
+    const tx = HQ ? texFor(ch.mat) : null; if (tx) addUV(g, tx[1]);
+    const mm = D.mats[ch.mat]; const mesh = new THREE.Mesh(g, material(ch.mat));
+    if (mm.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else { mesh.castShadow = HQ; }
+    mesh.receiveShadow = HQ && !mm.e;
+    if (!layers[ch.layer]) { layers[ch.layer] = new THREE.Group(); layers[ch.layer].name = ch.layer; root.add(layers[ch.layer]); }
+    layers[ch.layer].add(mesh);
+  }
+  for (const [a, b] of D.dims) dimGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a[0], 60, a[1]), new THREE.Vector3(b[0], 60, b[1])]), lineMat));
+}
+const state = { plan: null, mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false, view: null, vi: 0 };
+const modeSel = document.getElementById('mode');
+const planSel = document.getElementById('planSel');
+for (const p of PLANS) { const o = document.createElement('option'); o.value = p.key; o.textContent = p.title; planSel.appendChild(o); }
+planSel.onchange = () => openPlan(planSel.value, null);
+function applyVisibility() {
+  if (!D) return;
+  const tag = state.view ? state.view.tag : '';
+  const overhead = tag === 'top' || tag === 'plan' || tag === 'services' || camera.position.y > 2600;
+  const hide = new Set(['Beams_Highlight', 'Structural_Highlight', ...D.modes[state.mode].hide]);
+  if (overhead) hide.add('Ceiling');
+  if (!state.fc || tag === 'top' || tag === 'plan' || tag === 'services') { hide.add('False_Ceiling'); hide.add('Lighting'); }
+  if (!state.pwr) hide.add('Power_Points');
+  if (!state.ac) hide.add('Aircon_Trunking');
+  if (!state.cur || tag === 'plan') hide.add('Curtains');
+  for (const [n, g] of Object.entries(layers)) g.visible = !hide.has(n);
+  dimGroup.visible = state.lab;
+  const n = state.night;
+  document.body.classList.toggle('night', n);
+  scene.background = new THREE.Color(n ? 0x14120f : 0xeae6df);
+  scene.environment = HQ ? envTex : null;
+  hemi.intensity = n ? 0.04 : (HQ ? 0.55 : 1.1); sun.intensity = n ? 0.0 : (HQ ? 2.6 : 1.4); fill.intensity = n ? 0.02 : 0.25; amb.intensity = n ? 0.04 : (HQ ? 0.12 : 0.3);
+  sun.castShadow = HQ;
+  for (const L of nightLights) L.intensity = n ? 0.9 : 0;
+  for (const m of Object.values(matCache)) m.envMapIntensity = n ? 0.08 : 0.8;
+  for (const m of emissiveMats) m.emissiveIntensity = n ? 2.4 : 0.35;
+  renderer.toneMappingExposure = n ? 1.25 : 1.0;
+  modeSel.value = state.mode;
+  for (const [id, k] of [['t_fc', 'fc'], ['t_lab', 'lab'], ['t_pwr', 'pwr'], ['t_ac', 'ac'], ['t_cur', 'cur'], ['t_night', 'night']]) document.getElementById(id).checked = state[k];
+  buildLabels();
+}
+modeSel.onchange = () => { state.mode = modeSel.value; applyVisibility(); };
+for (const [id, k] of [['t_fc', 'fc'], ['t_lab', 'lab'], ['t_pwr', 'pwr'], ['t_ac', 'ac'], ['t_cur', 'cur'], ['t_night', 'night']])
+  document.getElementById(id).onchange = (e) => { state[k] = e.target.checked; applyVisibility(); };
+const labelDiv = document.getElementById('labels'); let labelEls = [];
+function buildLabels() {
+  labelDiv.innerHTML = ''; labelEls = [];
+  if (!state.lab || !D) return;
+  for (const [t, x, y] of D.labels) { const e = document.createElement('div'); e.className = 'lbl'; e.textContent = t; labelDiv.appendChild(e); labelEls.push([e, new THREE.Vector3(x, 150, y)]); }
+  for (const [a, b, t] of D.dims) { const e = document.createElement('div'); e.className = 'lbl dim'; e.textContent = t + ' mm'; labelDiv.appendChild(e); labelEls.push([e, new THREE.Vector3((a[0] + b[0]) / 2, 80, (a[1] + b[1]) / 2)]); }
+}
+const tmp = new THREE.Vector3();
+function placeLabels() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for (const [e, p] of labelEls) {
+    tmp.copy(p).project(camera);
+    const vis = tmp.z < 1 && Math.abs(tmp.x) < 1.1 && Math.abs(tmp.y) < 1.1;
+    e.style.display = vis ? '' : 'none';
+    if (vis) { e.style.left = ((tmp.x + 1) / 2 * w) + 'px'; e.style.top = ((1 - tmp.y) / 2 * h) + 'px'; }
+  }
+}
+const vbox = document.getElementById('views'); let btns = [];
+function setFov(v) {
+  const aspect = stage.clientWidth / Math.max(1, stage.clientHeight);
+  let vf = Math.min(v.fov * 0.78, 78);
+  if (aspect < 1) { const hf = Math.min(v.fov, 95) * Math.PI / 180; vf = 2 * Math.atan(Math.tan(hf / 2) / aspect) * 180 / Math.PI; vf = Math.min(vf, 100); }
+  camera.fov = vf; camera.updateProjectionMatrix();
+}
+const panel = document.getElementById('panel');
+function goView(i) {
+  const v = D.views[i]; state.view = v; state.vi = i;
+  if (v.mode && D.modes[v.mode]) state.mode = v.mode;
+  state.night = v.tag === 'night';
+  if (v.tag === 'plan') state.lab = true;
+  if (v.tag === 'services') { state.pwr = true; state.ac = true; }
+  const eye = new THREE.Vector3(v.eye[0], v.eye[2], v.eye[1]); const tgt = new THREE.Vector3(v.target[0], v.target[2], v.target[1]);
+  if (v.tag === 'plan') eye.set(v.target[0], 60000, v.target[1] + 1);
+  camera.position.copy(eye); controls.target.copy(tgt); camera.up.set(0, 1, 0);
+  setFov(v); controls.update();
+  setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit');
+  btns.forEach((b, j) => b.classList.toggle('on', j === i));
+  document.getElementById('title').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + v.name;
+  try { history.replaceState(null, '', '#' + state.plan + '-' + i); } catch (e) {}
+  applyVisibility();
+  if (window.innerWidth <= 760) panel.classList.add('closed');
+}
+
+// ---------- Look-around mode (like SketchUp's Look Around / eye tool) ----------
+let nav = 'look';
+const navBtn = document.getElementById('navBtn'), hint = document.getElementById('hint');
+const look = { yaw: 0, pitch: 0, ptrs: new Map(), lastPinch: 0 };
+function syncLookFromCamera() {
+  const d = new THREE.Vector3().subVectors(controls.target, camera.position).normalize();
+  look.yaw = Math.atan2(d.x, d.z); look.pitch = Math.asin(Math.max(-1, Math.min(1, d.y)));
+}
+function lookDir() { return new THREE.Vector3(Math.sin(look.yaw) * Math.cos(look.pitch), Math.sin(look.pitch), Math.cos(look.yaw) * Math.cos(look.pitch)); }
+function applyLook() { camera.lookAt(camera.position.clone().add(lookDir())); }
+function setNav(m) {
+  nav = m;
+  if (m === 'look') { syncLookFromCamera(); controls.enabled = false; applyLook(); }
+  else { controls.target.copy(camera.position.clone().add(lookDir().multiplyScalar(1500))); controls.enabled = true; controls.update(); }
+  navBtn.textContent = m === 'look' ? '⟲ Switch to Orbit' : '👁 Switch to Look around';
+  hint.textContent = m === 'look'
+    ? 'Look around: drag to turn your head · scroll / pinch to zoom the lens · W A S D or arrow keys to walk'
+    : 'Orbit: drag to rotate · scroll / pinch to zoom · right-drag or two fingers to pan';
+}
+navBtn.onclick = () => setNav(nav === 'look' ? 'orbit' : 'look');
+const el = renderer.domElement;
+el.addEventListener('pointerdown', (e) => { if (nav !== 'look') return; el.setPointerCapture(e.pointerId); look.ptrs.set(e.pointerId, [e.clientX, e.clientY]); look.lastPinch = 0; });
+el.addEventListener('pointermove', (e) => {
+  if (nav !== 'look' || !look.ptrs.has(e.pointerId)) return;
+  const prev = look.ptrs.get(e.pointerId); look.ptrs.set(e.pointerId, [e.clientX, e.clientY]);
+  if (look.ptrs.size === 1) {
+    const k = (camera.fov * Math.PI / 180) / Math.max(1, stage.clientHeight);   // radians per pixel, follows the lens
+    look.yaw -= (e.clientX - prev[0]) * k; look.pitch += (e.clientY - prev[1]) * k;
+    look.pitch = Math.max(-1.45, Math.min(1.45, look.pitch)); applyLook();
+  } else if (look.ptrs.size === 2) {
+    const [a, b] = [...look.ptrs.values()]; const dist = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (look.lastPinch) zoomLens(look.lastPinch / dist); look.lastPinch = dist;
+  }
+});
+const endPtr = (e) => { look.ptrs.delete(e.pointerId); look.lastPinch = 0; };
+el.addEventListener('pointerup', endPtr); el.addEventListener('pointercancel', endPtr);
+function zoomLens(f) { camera.fov = Math.max(20, Math.min(100, camera.fov * f)); camera.updateProjectionMatrix(); }
+el.addEventListener('wheel', (e) => { if (nav !== 'look') return; e.preventDefault(); zoomLens(Math.exp(e.deltaY * 0.0012)); }, { passive: false });
+const keys = new Set();
+window.addEventListener('keydown', (e) => { if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); });
+window.addEventListener('keyup', (e) => keys.delete(e.key.toLowerCase()));
+function walkStep() {
+  if (nav !== 'look' || keys.size === 0) return;
+  const f = new THREE.Vector3(Math.sin(look.yaw), 0, Math.cos(look.yaw)), r = new THREE.Vector3(-f.z, 0, f.x), v = new THREE.Vector3();
+  if (keys.has('w') || keys.has('arrowup')) v.add(f); if (keys.has('s') || keys.has('arrowdown')) v.sub(f);
+  if (keys.has('d') || keys.has('arrowright')) v.add(r); if (keys.has('a') || keys.has('arrowleft')) v.sub(r);
+  if (v.lengthSq() > 0) { camera.position.addScaledVector(v.normalize(), 25); applyLook(); }
+}
+
+const cache = {};
+async function openPlan(key, viewName, viewIndex) {
+  document.getElementById('landing').classList.add('hidden');
+  const loading = document.getElementById('loading'); loading.style.display = 'flex'; loading.textContent = 'Loading ' + key.toUpperCase() + '…';
+  try {
+    if (!cache[key]) { const r = await fetch('plan_' + key + '.json'); if (!r.ok) throw new Error(r.status); cache[key] = await r.json(); }
+  } catch (e) { loading.textContent = 'Could not load this plan (' + e.message + '). Please reload the page.'; return; }
+  D = cache[key]; state.plan = key; planSel.value = key;
+  clearModel(); buildModel();
+  modeSel.innerHTML = '';
+  for (const k of Object.keys(D.modes)) { const o = document.createElement('option'); o.value = k; o.textContent = D.modes[k].label; modeSel.appendChild(o); }
+  state.mode = D.modes.open ? 'open' : Object.keys(D.modes)[0];
+  document.getElementById('modeLabel').textContent = D.modeLabel || 'Layout option';
+  vbox.innerHTML = ''; btns = [];
+  D.views.forEach((v, i) => { const b = document.createElement('button'); b.textContent = v.name; b.onclick = () => goView(i); vbox.appendChild(b); btns.push(b); });
+  document.getElementById('info').textContent = D.info;
+  let start = 0;
+  if (viewName) { const j = D.views.findIndex(v => v.name === viewName); if (j >= 0) start = j; }
+  if (viewIndex != null && D.views[viewIndex]) start = viewIndex;
+  loading.style.display = 'none';
+  if (window.innerWidth > 760) panel.classList.remove('closed');
+  resize(); goView(start);
+}
+// keep the same view when switching plans (works for CMP and shared views)
+planSel.onchange = () => { const name = state.view ? state.view.name : null; openPlan(planSel.value, name); };
+document.getElementById('home').onclick = () => { document.getElementById('landing').classList.remove('hidden'); try { history.replaceState(null, '', '#plans'); } catch (e) {} };
+document.getElementById('toggle').onclick = () => panel.classList.toggle('closed');
+const hqBox = document.getElementById('t_hq'); hqBox.checked = HQ;
+hqBox.onchange = () => { HQ = hqBox.checked; try { localStorage.setItem('hq', HQ ? '1' : '0'); } catch (e) {} if (state.plan) { const vi = state.vi; clearModel(); buildModel(); goView(vi); } };
+const cards = document.getElementById('cards');
+for (const p of PLANS) {
+  const c = document.createElement('button'); c.className = 'card';
+  c.innerHTML = '<span class="tag">' + p.short + '</span><h3></h3><ul></ul><div class="go">Open in 3D →</div>';
+  c.querySelector('h3').textContent = p.title.replace(/^Plan [A-E] – /, '');
+  for (const b of p.bullets) { const li = document.createElement('li'); li.textContent = b; c.querySelector('ul').appendChild(li); }
+  c.onclick = () => openPlan(p.key, null); cards.appendChild(c);
+}
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; if (state.view) setFov(state.view); camera.updateProjectionMatrix(); }
+window.addEventListener('resize', resize); resize();
+function route() {
+  const m = /^#([a-e])(?:-(\d+))?$/.exec(location.hash || '');
+  if (m) openPlan(m[1], null, m[2] != null ? +m[2] : null);
+  else document.getElementById('landing').classList.remove('hidden');
+}
+window.addEventListener('hashchange', () => { const m = /^#([a-e])(?:-(\d+))?$/.exec(location.hash || ''); if (m && (m[1] !== state.plan)) route(); });
+route();
+let lastAbove = null;
+renderer.setAnimationLoop(() => { if (!D) return; if (nav === 'orbit') controls.update(); else walkStep();
+  const above = camera.position.y > 2600; if (above !== lastAbove) { lastAbove = above; applyVisibility(); }
+  renderer.render(scene, camera); if (state.lab) placeLabels(); });
+</script>
+</body>
+</html>
