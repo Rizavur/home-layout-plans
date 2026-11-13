@@ -202,7 +202,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794585866';
+const BUILD = '1794586010';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -411,8 +411,8 @@ function goView(i) {
   flyTo(eye, tgt, fov, instant ? 0 : 900, () => { controls.update(); setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true); applyVisibility(); });
   state.prevPos = true;
   btns.forEach((b, j) => b && b.classList.toggle('on', j === i)); revealGroup(i);
-  const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study|Dining|Foyer|Master|Bedroom [23]|OPEN kitchen|Kitchen \(closed\)|Hall|Entrance partition) – /, '');
-  tl.classList.remove('swap'); void tl.offsetWidth; tl.classList.add('swap');
+  const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Hall|Entrance partition|Night|Compare \d) – /, '');
+  tl.textContent = tl.textContent.charAt(0).toUpperCase() + tl.textContent.slice(1); tl.classList.remove('swap'); void tl.offsetWidth; tl.classList.add('swap');
   document.getElementById('viewRoom').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + roomOf(v.name);
   document.getElementById('viewCount').textContent = (i + 1) + ' / ' + D.views.length;
   try { history.replaceState(null, '', '#' + state.plan + '-' + i); } catch (e) {}
@@ -502,16 +502,16 @@ function walkStep() {
 
 
 const ROOMS = [
-  ['Overview & compare', /^(Overview|Plan|CMP|SERVICES)/],
-  ['Living room', /^(Living|NIGHT · Living)/],
+  ['Overview & compare', /^(Overview|Plan|Compare|Services)/],
+  ['Living room', /^(Living|Night – living)/],
   ['Lounge & hall', /^(Lounge|Hall|Entry|Entrance|TV corner)/],
   ['Study', /^Study|Study door/],
   ['Dining & dry pantry', /^(Dining|Dry pantry)/],
   ['Kitchen', /kitchen/i],
   ['Foyer & household shelter', /^(Foyer|Household shelter)/],
-  ['Bedroom 3', /Bedroom 3|^D1 |^D2 /],
+  ['Bedroom 3', /^Bedroom 3/],
   ['Bedroom 2 (kids)', /^Bedroom 2/],
-  ['Master bedroom', /^(Master|NIGHT · Master)/],
+  ['Master bedroom', /^(Master|Night – master)/],
   ['Bathrooms', /(bathroom|Ensuite)/i],
   ['Service yard', /^Service yard/],
 ];
@@ -530,8 +530,8 @@ function buildViewList() {
     h.onclick = () => { const open = !sec.classList.contains('open'); document.querySelectorAll('.vgroup').forEach(s => s.classList.remove('open')); sec.classList.toggle('open', open); openGroup = open ? g : null; };
     const list = document.createElement('div'); list.className = 'vlist'; const inner = document.createElement('div'); inner.className = 'inner'; list.appendChild(inner);
     for (const i of idx) {
-      const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study|Dining|Foyer|Master|Bedroom [23]|OPEN kitchen|Kitchen \(closed\)|Hall|Entrance partition) – /, '');
-      b.title = D.views[i].name; b.onclick = () => goView(i); inner.appendChild(b); btns[i] = b;
+      const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Hall|Entrance partition|Night|Compare \d) – /, '');
+      b.textContent = b.textContent.charAt(0).toUpperCase() + b.textContent.slice(1); b.title = D.views[i].name; b.onclick = () => goView(i); inner.appendChild(b); btns[i] = b;
     }
     sec.appendChild(h); sec.appendChild(list); vbox.appendChild(sec);
   }
@@ -583,7 +583,7 @@ PLANS.forEach((p, n) => {
   c.onclick = () => openPlan(p.key, null); cards.appendChild(c);
 });
 document.getElementById('startBtn').onclick = () => openPlan('a', null);
-document.getElementById('compareBtn').onclick = () => openPlan('a', 'CMP 1 · Living from dining side');
+document.getElementById('compareBtn').onclick = () => openPlan('a', 'Compare 1 – living from dining side');
 const pills = document.getElementById('planPills');
 for (const p of PLANS) { const b = document.createElement('button'); b.textContent = p.key.toUpperCase(); b.title = p.title; b.dataset.key = p.key;
   b.onclick = () => { if (p.key !== state.plan) openPlan(p.key, state.view ? state.view.name : null); }; pills.appendChild(b); }
