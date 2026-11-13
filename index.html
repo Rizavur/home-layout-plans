@@ -110,6 +110,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
+const BUILD = '1794583886';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -287,7 +288,7 @@ function goView(i) {
   if (v.tag === 'plan') state.lab = true;
   if (v.tag === 'services') { state.pwr = true; state.ac = true; }
   const eye = new THREE.Vector3(v.eye[0], v.eye[2], v.eye[1]); const tgt = new THREE.Vector3(v.target[0], v.target[2], v.target[1]);
-  if (v.tag === 'plan') eye.set(v.target[0], 60000, v.target[1] + 1);
+  if (v.tag === 'plan') eye.set(v.target[0], 80000, v.target[1] + 1);
   camera.position.copy(eye); controls.target.copy(tgt); camera.up.set(0, 1, 0);
   setFov(v); controls.update();
   setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true);
@@ -355,7 +356,7 @@ async function openPlan(key, viewName, viewIndex) {
   document.getElementById('landing').classList.add('hidden');
   const loading = document.getElementById('loading'); loading.style.display = 'flex'; loading.textContent = 'Loading ' + key.toUpperCase() + '…';
   try {
-    if (!cache[key]) { const r = await fetch('plan_' + key + '.json'); if (!r.ok) throw new Error(r.status); cache[key] = await r.json(); }
+    if (!cache[key]) { const r = await fetch('plan_' + key + '.json?v=' + BUILD, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); cache[key] = await r.json(); }
   } catch (e) { loading.textContent = 'Could not load this plan (' + e.message + '). Please reload the page.'; return; }
   D = cache[key]; state.plan = key; planSel.value = key;
   clearModel(); buildModel();
@@ -366,7 +367,7 @@ async function openPlan(key, viewName, viewIndex) {
   vbox.innerHTML = ''; btns = [];
   D.views.forEach((v, i) => { const b = document.createElement('button'); b.textContent = v.name; b.onclick = () => goView(i); vbox.appendChild(b); btns.push(b); });
   document.getElementById('info').textContent = D.info;
-  let start = 0;
+  let start = Math.max(0, D.views.findIndex(v => v.tag === 'plan'));
   if (viewName) { const j = D.views.findIndex(v => v.name === viewName); if (j >= 0) start = j; }
   if (viewIndex != null && D.views[viewIndex]) start = viewIndex;
   loading.style.display = 'none';
