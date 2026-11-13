@@ -290,7 +290,7 @@ function goView(i) {
   if (v.tag === 'plan') eye.set(v.target[0], 60000, v.target[1] + 1);
   camera.position.copy(eye); controls.target.copy(tgt); camera.up.set(0, 1, 0);
   setFov(v); controls.update();
-  setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit');
+  setNav(v.eye[2] < 5000 && v.tag !== 'plan' ? 'look' : 'orbit', true);
   btns.forEach((b, j) => b.classList.toggle('on', j === i));
   document.getElementById('title').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + v.name;
   try { history.replaceState(null, '', '#' + state.plan + '-' + i); } catch (e) {}
@@ -308,10 +308,13 @@ function syncLookFromCamera() {
 }
 function lookDir() { return new THREE.Vector3(Math.sin(look.yaw) * Math.cos(look.pitch), Math.sin(look.pitch), Math.cos(look.yaw) * Math.cos(look.pitch)); }
 function applyLook() { camera.lookAt(camera.position.clone().add(lookDir())); }
-function setNav(m) {
-  nav = m;
+function setNav(m, fromView) {
+  const was = nav; nav = m;
   if (m === 'look') { syncLookFromCamera(); controls.enabled = false; applyLook(); }
-  else { controls.target.copy(camera.position.clone().add(lookDir().multiplyScalar(1500))); controls.enabled = true; controls.update(); }
+  else {
+    if (!fromView && was === 'look') controls.target.copy(camera.position.clone().add(lookDir().multiplyScalar(1500)));
+    controls.enabled = true; controls.update();
+  }
   navBtn.textContent = m === 'look' ? '⟲ Switch to Orbit' : '👁 Switch to Look around';
   hint.textContent = m === 'look'
     ? 'Look around: drag to turn your head · scroll / pinch to zoom the lens · W A S D or arrow keys to walk'
