@@ -122,13 +122,13 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794584505';
+const BUILD = '1794584685';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
 let HQ = true; try { if (localStorage.getItem('hq') === '0') HQ = false; } catch (e) {}
 const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.5 : 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.25 : 1.5));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -142,7 +142,10 @@ controls.enableDamping = true; controls.dampingFactor = 0.12; controls.screenSpa
 const hemi = new THREE.HemisphereLight(0xfff6ea, 0xa89a86, 0.55); scene.add(hemi);
 const sun = new THREE.DirectionalLight(0xffe9cc, 2.6);
 sun.position.set(7300 - 5500, 9000, 4800 - 9500); sun.target.position.set(7300, 0, 4800); scene.add(sun); scene.add(sun.target);
-sun.castShadow = true; sun.shadow.mapSize.set(MOBILE ? 2048 : 4096, MOBILE ? 2048 : 4096);
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+renderer.shadowMap.autoUpdate = false;           // shadows are static: recompute only when the scene changes
+let dirty = true; function invalidate() { dirty = true; }
+controls.addEventListener('change', invalidate);
 Object.assign(sun.shadow.camera, { left: -11000, right: 11000, top: 11000, bottom: -11000, near: 100, far: 40000 });
 sun.shadow.bias = -0.0004; sun.shadow.normalBias = 12; sun.shadow.radius = 3;
 const fill = new THREE.DirectionalLight(0xdfe8ff, 0.25); fill.position.set(9000, 6000, 12000); scene.add(fill);
@@ -150,7 +153,7 @@ const amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(amb);
 // warm room lights for night mood
 const nightLights = [];
 for (const [x, z, y] of [[3200, 2900, 2300], [1150, 5100, 2300], [6150, 5600, 2300], [12900, 2600, 2300], [10000, 1800, 2300], [7000, 1500, 2300], [5900, 8000, 2300], [2700, 7400, 2300], [9900, 6000, 2300], [12000, 6000, 2300]]) {
-  const L = new THREE.PointLight(0xffc27a, 0, 5200, 1.2); L.position.set(x, y, z); scene.add(L); nightLights.push(L);
+  const L = new THREE.PointLight(0xffc27a, 0, 5200, 1.2); L.position.set(x, y, z); L.visible = false; scene.add(L); nightLights.push(L);
 }
 // ---------- procedural textures (subtle, colour comes from the material) ----------
 function cnv(n) { const c = document.createElement('canvas'); c.width = c.height = n; return [c, c.getContext('2d')]; }
@@ -232,6 +235,7 @@ function buildModel() {
     if (!layers[ch.layer]) { layers[ch.layer] = new THREE.Group(); layers[ch.layer].name = ch.layer; root.add(layers[ch.layer]); }
     layers[ch.layer].add(mesh);
   }
+  renderer.shadowMap.needsUpdate = true; invalidate();
   for (const [a, b] of D.dims) dimGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a[0], 60, a[1]), new THREE.Vector3(b[0], 60, b[1])]), lineMat));
 }
 const state = { plan: null, mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false, view: null, vi: 0 };
@@ -257,7 +261,8 @@ function applyVisibility() {
   scene.environment = HQ ? envTex : null;
   hemi.intensity = n ? 0.04 : (HQ ? 0.55 : 1.1); sun.intensity = n ? 0.0 : (HQ ? 2.6 : 1.4); fill.intensity = n ? 0.02 : 0.25; amb.intensity = n ? 0.04 : (HQ ? 0.12 : 0.3);
   sun.castShadow = HQ;
-  for (const L of nightLights) L.intensity = n ? 0.9 : 0;
+  for (const L of nightLights) { L.intensity = n ? 0.9 : 0; L.visible = n; }
+  renderer.shadowMap.needsUpdate = true; invalidate();
   for (const m of Object.values(matCache)) m.envMapIntensity = n ? 0.08 : 0.8;
   for (const m of emissiveMats) m.emissiveIntensity = n ? 2.4 : 0.35;
   renderer.toneMappingExposure = n ? 1.25 : 1.0;
@@ -290,7 +295,7 @@ function setFov(v) {
   const aspect = stage.clientWidth / Math.max(1, stage.clientHeight);
   let vf = Math.min(v.fov * 0.78, 78);
   if (aspect < 1) { const hf = Math.min(v.fov, 95) * Math.PI / 180; vf = 2 * Math.atan(Math.tan(hf / 2) / aspect) * 180 / Math.PI; vf = Math.min(vf, 100); }
-  camera.fov = vf; camera.updateProjectionMatrix();
+  camera.fov = vf; camera.updateProjectionMatrix(); invalidate();
 }
 const panel = document.getElementById('panel');
 function goView(i) {
@@ -321,7 +326,7 @@ function syncLookFromCamera() {
   look.yaw = Math.atan2(d.x, d.z); look.pitch = Math.asin(Math.max(-1, Math.min(1, d.y)));
 }
 function lookDir() { return new THREE.Vector3(Math.sin(look.yaw) * Math.cos(look.pitch), Math.sin(look.pitch), Math.cos(look.yaw) * Math.cos(look.pitch)); }
-function applyLook() { camera.lookAt(camera.position.clone().add(lookDir())); }
+function applyLook() { camera.lookAt(camera.position.clone().add(lookDir())); invalidate(); }
 const HINTS = {
   look: 'Look around (L): drag to turn your head · scroll to zoom the lens · W A S D / arrows to walk',
   orbit: 'Orbit (O): drag to rotate · scroll to zoom · right-drag or Shift-drag to pan',
@@ -377,7 +382,7 @@ el.addEventListener('pointermove', (e) => {
 });
 const endPtr = (e) => { look.ptrs.delete(e.pointerId); look.lastPinch = 0; };
 el.addEventListener('pointerup', endPtr); el.addEventListener('pointercancel', endPtr);
-function zoomLens(f) { camera.fov = Math.max(20, Math.min(100, camera.fov * f)); camera.updateProjectionMatrix(); }
+function zoomLens(f) { camera.fov = Math.max(20, Math.min(100, camera.fov * f)); camera.updateProjectionMatrix(); invalidate(); }
 el.addEventListener('wheel', (e) => { if (nav !== 'look') return; e.preventDefault(); zoomLens(Math.exp(e.deltaY * 0.0012)); }, { passive: false });
 const keys = new Set();
 window.addEventListener('keydown', (e) => { if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return; keys.add(e.key.toLowerCase()); });
@@ -388,7 +393,7 @@ function walkStep() {
   const f = new THREE.Vector3(Math.sin(look.yaw), 0, Math.cos(look.yaw)), r = new THREE.Vector3(-f.z, 0, f.x), v = new THREE.Vector3();
   if (keys.has('w') || keys.has('arrowup')) v.add(f); if (keys.has('s') || keys.has('arrowdown')) v.sub(f);
   if (keys.has('d') || keys.has('arrowright')) v.add(r); if (keys.has('a') || keys.has('arrowleft')) v.sub(r);
-  if (v.lengthSq() > 0) { const step = v.normalize().multiplyScalar(25); camera.position.add(step); if (nav === 'look') applyLook(); else { controls.target.add(step); } }
+  if (v.lengthSq() > 0) { const step = v.normalize().multiplyScalar(25); camera.position.add(step); if (nav === 'look') applyLook(); else { controls.target.add(step); controls.update(); } invalidate(); }
 }
 
 const cache = {};
@@ -428,7 +433,7 @@ for (const p of PLANS) {
   for (const b of p.bullets) { const li = document.createElement('li'); li.textContent = b; c.querySelector('ul').appendChild(li); }
   c.onclick = () => openPlan(p.key, null); cards.appendChild(c);
 }
-function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; if (state.view) setFov(state.view); camera.updateProjectionMatrix(); }
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; if (state.view) setFov(state.view); camera.updateProjectionMatrix(); invalidate(); }
 window.addEventListener('resize', resize); resize();
 function route() {
   const m = /^#([a-e])(?:-(\d+))?$/.exec(location.hash || '');
@@ -438,9 +443,16 @@ function route() {
 window.addEventListener('hashchange', () => { const m = /^#([a-e])(?:-(\d+))?$/.exec(location.hash || ''); if (m && (m[1] !== state.plan)) route(); });
 route();
 let lastAbove = null;
-renderer.setAnimationLoop(() => { if (!D) return; walkStep(); if (nav === 'orbit') controls.update();
+renderer.setAnimationLoop(() => {
+  if (!D) return;
+  walkStep();
+  if (nav === 'orbit' && controls.update()) dirty = true;      // damping still settling
+  if (!dirty) return;                                          // nothing changed: skip the frame (saves GPU/CPU)
+  dirty = false;
   const above = camera.position.y > 2600; if (above !== lastAbove) { lastAbove = above; applyVisibility(); }
-  renderer.render(scene, camera); if (state.lab) placeLabels(); });
+  renderer.render(scene, camera); if (state.lab) placeLabels();
+});
+document.addEventListener('visibilitychange', invalidate);
 </script>
 </body>
 </html>
