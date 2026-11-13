@@ -328,7 +328,7 @@ el.addEventListener('pointermove', (e) => {
   const prev = look.ptrs.get(e.pointerId); look.ptrs.set(e.pointerId, [e.clientX, e.clientY]);
   if (look.ptrs.size === 1) {
     const k = (camera.fov * Math.PI / 180) / Math.max(1, stage.clientHeight);   // radians per pixel, follows the lens
-    look.yaw += (e.clientX - prev[0]) * k; look.pitch += (e.clientY - prev[1]) * k;
+    look.yaw += (e.clientX - prev[0]) * k; look.pitch -= (e.clientY - prev[1]) * k;
     look.pitch = Math.max(-1.45, Math.min(1.45, look.pitch)); applyLook();
   } else if (look.ptrs.size === 2) {
     const [a, b] = [...look.ptrs.values()]; const dist = Math.hypot(a[0] - b[0], a[1] - b[1]);
