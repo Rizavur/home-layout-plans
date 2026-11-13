@@ -32,6 +32,8 @@
            background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
   #vignette { position:fixed; inset:0; pointer-events:none; background:radial-gradient(130% 100% at 50% 30%, transparent 50%, rgba(8,8,10,.7) 100%), linear-gradient(to bottom, rgba(8,8,10,.15), transparent 30%, transparent 60%, var(--bg) 100%); }
   .lwrap { position:relative; z-index:2; max-width:1320px; margin:0 auto; padding:0 28px 60px; }
+  #landing .lwrap { min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
+  .topline { display:flex; justify-content:flex-end; padding:28px 0 16px; animation:rise .8s var(--ease) both; }
   .hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:7vh 0 30px; }
   .chip { display:inline-flex; align-items:center; gap:10px; padding:7px 14px 7px 10px; border-radius:999px; border:1px solid var(--line2); background:rgba(255,255,255,.04); backdrop-filter:blur(8px); color:#cfcbc5; animation:rise .9s var(--ease) both; }
   .chip b { width:7px; height:7px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px var(--acc); animation:blink 2.4s infinite; }
@@ -148,13 +150,7 @@
 <div id="landing">
   <canvas id="fx"></canvas><div id="vignette"></div><div id="grain"></div>
   <div class="lwrap">
-    <section class="hero">
-      <span class="chip mono"><b></b>5-room HDB · layout plans</span>
-      <h2>Five ways to live in <em>your new home</em></h2>
-      <div class="hero-cta">
-        <button class="btn ghost" id="compareBtn">Compare living rooms <span class="arr"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></span></button>
-      </div>
-    </section>
+    <div class="topline"><button class="btn ghost" id="compareBtn">Compare living rooms <span class="arr"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></span></button></div>
     <div id="cards"></div>
     <p class="fine">Browser mock-ups – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
   </div>
@@ -214,7 +210,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794586743';
+const BUILD = '1794586849';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
