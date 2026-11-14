@@ -275,12 +275,12 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794675914';
+const BUILD = '1794676128';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
 let HQ = true; try { if (localStorage.getItem('hq') === '0') HQ = false; } catch (e) {}
-const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true, preserveDrawingBuffer: true });   // keep the frame so screenshots work in every browser
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.25 : 1.5));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
@@ -808,7 +808,9 @@ async function aiCapture(type) {
   const w = stage.clientWidth, h = stage.clientHeight; const s = Math.min(2.5, 1800 / Math.max(w, h)) * 1;
   const W = Math.round(w * s), H = Math.round(h * s); const pr = renderer.getPixelRatio();
   renderer.setPixelRatio(1); renderer.setSize(W, H, false); renderer.render(scene, camera);
-  const url = type === 'image/jpeg' ? renderer.domElement.toDataURL('image/jpeg', 0.92) : renderer.domElement.toDataURL('image/png');
+  const cv = document.createElement('canvas'); cv.width = renderer.domElement.width; cv.height = renderer.domElement.height;
+  const cx = cv.getContext('2d'); cx.fillStyle = '#eae6df'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(renderer.domElement, 0, 0);
+  const url = type === 'image/jpeg' ? cv.toDataURL('image/jpeg', 0.92) : cv.toDataURL('image/png');
   renderer.setPixelRatio(pr); renderer.setSize(w, h, false); invalidate();
   if (!type) aiBlob = await (await fetch(url)).blob(); return url;
 }
