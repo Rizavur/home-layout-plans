@@ -193,7 +193,7 @@
   #fullBtn { width:44px; height:44px; border-radius:14px; display:grid; place-items:center; cursor:pointer; }
   #exitFull { position:fixed; right:14px; top:calc(14px + env(safe-area-inset-top)); z-index:20; display:none; align-items:center; gap:8px; height:40px; padding:0 14px; border-radius:12px; cursor:pointer; font:500 13px var(--sans); }
   body.full #exitFull { display:inline-flex; }
-  body.full #topbar, body.full #tools, body.full #stepper, body.full #hint, body.full #panel { display:none !important; }
+  body.full #topbar, body.full #tools, body.full #hint, body.full #panel { display:none !important; }
   body.nopanel #panel { display:none; }
   #toggle.on { background:#f4f2ee; color:#0a0a0b; }
   /* the 3D area can be narrow even on big screens (iPad, panel open): size the controls by the stage, not the window */
@@ -290,7 +290,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794678070';
+const BUILD = '1794678342';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
