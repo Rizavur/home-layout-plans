@@ -109,6 +109,7 @@
   #panel .sub { font:500 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--acc); }
   #panel h1 { font:500 22px/1.15 var(--disp); letter-spacing:-.03em; margin:6px 0 0; }
   #planSel { display:none; }
+  #panelClose { display:none; width:36px; height:36px; flex:none; border:1px solid var(--line2); border-radius:10px; background:none; color:var(--ink); place-items:center; cursor:pointer; }
   #scroll { overflow:auto; padding:8px 14px 24px; flex:1; scrollbar-width:thin; scrollbar-color:#2a2a2e transparent; }
   .sec { margin:20px 6px 8px; font:500 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--dim); }
   select#mode { width:100%; padding:11px 12px; border-radius:12px; border:1px solid var(--line2); background:#151519; font:inherit; color:var(--ink); cursor:pointer; }
@@ -141,16 +142,32 @@
   .info { font-size:12.5px; color:#aaa6a0; background:rgba(255,255,255,.03); border:1px solid var(--line); border-radius:12px; padding:13px; margin:6px 4px; }
   body.night #stage { background:#14120f; }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+  #viewRoom { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  @media (max-width: 860px) { #panel h1 { font-size:18px; } }
+  #themes { max-height:none; }
   @media (max-width: 860px) {
-    #panel { position:fixed; right:0; top:0; bottom:0; box-shadow:-10px 0 40px rgba(0,0,0,.5); }
+    #panel { position:fixed; right:0; top:0; bottom:0; width:min(340px, 92vw); max-width:none; box-shadow:-10px 0 40px rgba(0,0,0,.5); padding-bottom:env(safe-area-inset-bottom); }
     #panel.closed { transform: translateX(105%); }
+    #panel header { display:flex; align-items:center; gap:10px; padding:14px 14px 12px 18px; } #panel header > div { flex:1; min-width:0; }
+    #panelClose { display:grid !important; }
     #hint { display:none; }
-    #tools kbd, #tools .t { display:none; }
-    #tools { bottom:72px; }
-    #stepper { bottom:14px; }
-    #title { font-size:15px; }
-    #planPills button { min-width:30px; }
+    #topbar { left:10px; right:10px; top:calc(10px + env(safe-area-inset-top)); flex-wrap:wrap; gap:6px; }
+    #homeBtn, #toggle { height:40px; } #homeBtn { width:40px; border-radius:12px; }
+    #planPills { flex:1; border-radius:12px; padding:3px; } #planPills button { flex:1; min-width:0; height:34px; }
+    #toggle { border-radius:12px; padding:0 12px; }
+    #titleWrap { order:5; flex:1 0 100%; min-height:0; padding:7px 12px; border-radius:12px; flex-direction:row; align-items:baseline; gap:8px; }
+    #viewRoom { flex:none; max-width:45%; } #title { font-size:14px; flex:1; min-width:0; }
+    #tools { right:10px; bottom:calc(70px + env(safe-area-inset-bottom)); flex-direction:column; border-radius:12px; padding:4px; }
+    #tools kbd, #tools .t { display:none; } #tools button { padding:9px; }
+    #stepper { bottom:calc(12px + env(safe-area-inset-bottom)); } #stepper button { height:40px; padding:0 14px; }
+    .lbl { font-size:10.5px; padding:2px 7px; }
+    .lwrap { padding:0 14px 40px; } #landing .lwrap { justify-content:flex-start; }
+    .topline { padding:18px 0 14px; } .site { font-size:26px; } .topline .btn { padding:9px 14px; font-size:13px; }
+    #cards { gap:10px; } .card .body { padding:12px 14px 14px; } .card h3 { font-size:17px; margin:4px 0 8px; } .card ul { margin-bottom:12px; }
+    .fine { margin-top:20px; }
   }
+  @media (max-width: 560px) { #cards { grid-template-columns:1fr; } .card ul { display:none; } .card .go { display:none; } .card .body { padding:10px 14px 14px; } .card h3 { margin-bottom:0; } }
+  @media (max-width: 860px) and (orientation: landscape) and (max-height: 480px) { #titleWrap { order:0; flex:1 1 0; } #tools { flex-direction:row; bottom:12px; } }
   @media (min-width: 861px) { #toggle { display:none; } }
 </style>
 </head>
@@ -188,7 +205,7 @@
     <div id="hint" class="glass"></div>
   </div>
   <aside id="panel" class="closed">
-    <header><div class="sub">Layout explorer</div><h1 id="panelTitle">Plan</h1><select id="planSel"></select><button id="home" style="display:none"></button></header>
+    <header><div><div class="sub">Layout</div><h1 id="panelTitle">Plan</h1></div><select id="planSel"></select><button id="home" style="display:none"></button><button id="panelClose" title="Close"><svg class="hi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6l12 12"/></svg></button></header>
     <div id="scroll">
       <div class="sec">Theme</div>
       <div id="themes"></div>
@@ -220,7 +237,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794587730';
+const BUILD = '1794647853';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -305,44 +322,7 @@ let dimGroup = new THREE.Group(); scene.add(dimGroup);
 const lineMat = new THREE.LineBasicMaterial({ color: 0xc0631a });
 function decode(b64) { const bin = atob(b64); const buf = new ArrayBuffer(bin.length); const u8 = new Uint8Array(buf); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); return new Int16Array(buf); }
 // ---- Interior themes: recolour shared materials across every plan ----
-const THEMES = {
-  lux: { name: 'Modern Lux', sw: ['#ece9e4', '#604230', '#c4a874'], m: {} },
-  japandi: { name: 'Japandi', sw: ['#eee9e0', '#b08c64', '#3a3836'], m: {
-    Wall_Paint_White: [238, 233, 224], Wall_Paint_Partition: [238, 233, 224], Floor_Homogeneous_Cream_600x600: [200, 175, 140],
-    Walnut_Veneer_Dark: [176, 140, 100], Walnut_Fluted_Dark: [160, 126, 88], Light_Oak: [196, 164, 122],
-    Marble_Calacatta_White: [226, 220, 208], Art_Marble_Gold_Vein: [205, 196, 180], Sintered_Stone_Grey_Veined: [214, 206, 192], Quartz_Top_White: [224, 218, 206],
-    Champagne_Gold_Brushed: [44, 42, 40], Lux_Charcoal_Matt: [58, 54, 50], Lux_Charcoal_Fluted: [70, 64, 58], Main_Door_Charcoal_Lacquer: [60, 56, 52],
-    Lux_Greige: [184, 172, 154], Door_Matt_Greige_Lacquer: [196, 184, 166], Acoustic_Panel_Felt_Greige: [150, 128, 100], Joinery_White_Matt: [222, 212, 196], Door_Frame_White: [232, 226, 214],
-    Sofa_Boucle_Greige: [214, 204, 186], Sofa_Cushion_Oat: [226, 218, 202], Cushion_Linen_Taupe: [176, 160, 134], Cushion_Velvet_Caramel: [150, 152, 128], Throw_Knit_Taupe: [120, 104, 84],
-    Rug_Border_Taupe: [170, 150, 120], Rug_Field_Oatmeal: [220, 208, 186], Leather_Cognac_Dining: [176, 150, 116], Leather_Cognac_Piping: [120, 98, 72], Leather_Caramel: [150, 120, 90],
-    Curtain_Light_Grey: [228, 220, 204], Travertine_Honed_Warm: [208, 192, 166], Headboard_Fabric_Beige: [190, 172, 146], Duvet_Warm_Grey: [222, 214, 198], Boucle_Sage_Green: [150, 158, 130] } },
-  nordic: { name: 'Nordic', sw: ['#f6f6f4', '#d6c4a6', '#96aaba'], m: {
-    Wall_Paint_White: [246, 246, 244], Wall_Paint_Partition: [246, 246, 244], Floor_Homogeneous_Cream_600x600: [214, 198, 172],
-    Walnut_Veneer_Dark: [214, 196, 166], Walnut_Fluted_Dark: [200, 182, 152], Light_Oak: [218, 198, 166],
-    Marble_Calacatta_White: [240, 240, 238], Art_Marble_Gold_Vein: [228, 230, 232], Sintered_Stone_Grey_Veined: [232, 232, 230], Quartz_Top_White: [238, 238, 236],
-    Champagne_Gold_Brushed: [175, 178, 182], Lux_Charcoal_Matt: [96, 102, 108], Lux_Charcoal_Fluted: [110, 116, 122], Main_Door_Charcoal_Lacquer: [90, 96, 102],
-    Lux_Greige: [190, 192, 190], Door_Matt_Greige_Lacquer: [214, 214, 210], Acoustic_Panel_Felt_Greige: [140, 150, 158], Joinery_White_Matt: [244, 244, 241],
-    Sofa_Boucle_Greige: [196, 200, 202], Sofa_Cushion_Oat: [222, 224, 224], Cushion_Linen_Taupe: [150, 170, 186], Cushion_Velvet_Caramel: [176, 190, 170], Throw_Knit_Taupe: [128, 140, 150],
-    Rug_Border_Taupe: [160, 166, 170], Rug_Field_Oatmeal: [228, 226, 220], Leather_Cognac_Dining: [180, 182, 182], Leather_Cognac_Piping: [140, 142, 144], Leather_Caramel: [196, 178, 150],
-    Curtain_Light_Grey: [238, 238, 234], Travertine_Honed_Warm: [230, 226, 218], Headboard_Fabric_Beige: [186, 192, 196], Duvet_Warm_Grey: [230, 232, 232], Boucle_Sage_Green: [150, 170, 160] } },
-  midcentury: { name: 'Mid-century', sw: ['#f0eade', '#78482a', '#d6a03c'], m: {
-    Wall_Paint_White: [240, 234, 222], Wall_Paint_Partition: [240, 234, 222], Floor_Homogeneous_Cream_600x600: [176, 128, 84],
-    Walnut_Veneer_Dark: [120, 72, 40], Walnut_Fluted_Dark: [104, 62, 34], Light_Oak: [168, 112, 64],
-    Marble_Calacatta_White: [234, 228, 216], Art_Marble_Gold_Vein: [200, 140, 70], Champagne_Gold_Brushed: [184, 146, 80],
-    Lux_Charcoal_Matt: [52, 58, 56], Lux_Charcoal_Fluted: [64, 70, 66], Lux_Greige: [128, 122, 96], Door_Matt_Greige_Lacquer: [176, 150, 110], Acoustic_Panel_Felt_Greige: [96, 110, 80],
-    Joinery_White_Matt: [236, 228, 212], Sofa_Boucle_Greige: [70, 104, 100], Sofa_Cushion_Oat: [88, 124, 118], Cushion_Linen_Taupe: [214, 160, 60], Cushion_Velvet_Caramel: [190, 90, 50], Throw_Knit_Taupe: [214, 170, 90],
-    Rug_Border_Taupe: [120, 80, 50], Rug_Field_Oatmeal: [220, 196, 150], Curtain_Light_Grey: [226, 214, 190], Travertine_Honed_Warm: [204, 186, 160],
-    Headboard_Fabric_Beige: [128, 126, 92], Duvet_Warm_Grey: [228, 220, 200], Boucle_Sage_Green: [96, 120, 104] } },
-  dark: { name: 'Dark Luxe', sw: ['#3a3836', '#7a5a3c', '#c8a86e'], m: {
-    Wall_Paint_White: [120, 112, 104], Wall_Paint_Partition: [120, 112, 104], Floor_Homogeneous_Cream_600x600: [150, 140, 128], Wall_Kitchen_Tile_300x600: [96, 94, 92],
-    Walnut_Veneer_Dark: [70, 46, 34], Walnut_Fluted_Dark: [60, 40, 30], Light_Oak: [110, 80, 56],
-    Marble_Calacatta_White: [44, 44, 46], Art_Marble_Gold_Vein: [62, 60, 60], Sintered_Stone_Grey_Veined: [70, 68, 66], Quartz_Top_White: [80, 78, 76],
-    Lux_Charcoal_Matt: [36, 34, 34], Lux_Charcoal_Fluted: [44, 42, 42], Main_Door_Charcoal_Lacquer: [36, 34, 34], Door_Frame_White: [100, 94, 88],
-    Lux_Greige: [90, 82, 76], Door_Matt_Greige_Lacquer: [110, 100, 92], Acoustic_Panel_Felt_Greige: [70, 64, 60], Joinery_White_Matt: [70, 66, 64],
-    Sofa_Boucle_Greige: [150, 134, 118], Sofa_Cushion_Oat: [170, 154, 136], Cushion_Linen_Taupe: [110, 60, 50], Cushion_Velvet_Caramel: [60, 74, 60], Throw_Knit_Taupe: [80, 70, 62],
-    Rug_Border_Taupe: [60, 54, 50], Rug_Field_Oatmeal: [120, 108, 96], Leather_Cognac_Dining: [96, 58, 38], Leather_Cognac_Piping: [60, 36, 24],
-    Curtain_Light_Grey: [120, 112, 104], Travertine_Honed_Warm: [150, 136, 118], Headboard_Fabric_Beige: [96, 86, 78], Duvet_Warm_Grey: [170, 160, 148] } },
-};
+const THEMES = {"lux":{"name":"Modern Lux","sw":["#ece9e4","#604230","#c4a874"],"m":{},"fam":"lux"},"japandi":{"name":"Japandi","sw":["#eee9e0","#b08c64","#3a3836"],"m":{"Wall_Paint_White":[238,233,224],"Wall_Paint_Partition":[238,233,224],"Floor_Homogeneous_Cream_600x600":[200,175,140],"Walnut_Veneer_Dark":[176,140,100],"Walnut_Fluted_Dark":[160,126,88],"Light_Oak":[196,164,122],"Marble_Calacatta_White":[226,220,208],"Art_Marble_Gold_Vein":[205,196,180],"Sintered_Stone_Grey_Veined":[214,206,192],"Quartz_Top_White":[224,218,206],"Champagne_Gold_Brushed":[44,42,40],"Lux_Charcoal_Matt":[58,54,50],"Lux_Charcoal_Fluted":[70,64,58],"Main_Door_Charcoal_Lacquer":[60,56,52],"Lux_Greige":[184,172,154],"Door_Matt_Greige_Lacquer":[196,184,166],"Acoustic_Panel_Felt_Greige":[150,128,100],"Joinery_White_Matt":[222,212,196],"Door_Frame_White":[232,226,214],"Sofa_Boucle_Greige":[214,204,186],"Sofa_Cushion_Oat":[226,218,202],"Cushion_Linen_Taupe":[176,160,134],"Cushion_Velvet_Caramel":[150,152,128],"Throw_Knit_Taupe":[120,104,84],"Rug_Border_Taupe":[170,150,120],"Rug_Field_Oatmeal":[220,208,186],"Leather_Cognac_Dining":[176,150,116],"Leather_Cognac_Piping":[120,98,72],"Leather_Caramel":[150,120,90],"Curtain_Light_Grey":[228,220,204],"Travertine_Honed_Warm":[208,192,166],"Headboard_Fabric_Beige":[190,172,146],"Duvet_Warm_Grey":[222,214,198],"Boucle_Sage_Green":[150,158,130]},"fam":"japandi"},"nordic":{"name":"Nordic","sw":["#f6f6f4","#d6c4a6","#96aaba"],"m":{"Wall_Paint_White":[246,246,244],"Wall_Paint_Partition":[246,246,244],"Floor_Homogeneous_Cream_600x600":[214,198,172],"Walnut_Veneer_Dark":[214,196,166],"Walnut_Fluted_Dark":[200,182,152],"Light_Oak":[218,198,166],"Marble_Calacatta_White":[240,240,238],"Art_Marble_Gold_Vein":[228,230,232],"Sintered_Stone_Grey_Veined":[232,232,230],"Quartz_Top_White":[238,238,236],"Champagne_Gold_Brushed":[175,178,182],"Lux_Charcoal_Matt":[96,102,108],"Lux_Charcoal_Fluted":[110,116,122],"Main_Door_Charcoal_Lacquer":[90,96,102],"Lux_Greige":[190,192,190],"Door_Matt_Greige_Lacquer":[214,214,210],"Acoustic_Panel_Felt_Greige":[140,150,158],"Joinery_White_Matt":[244,244,241],"Sofa_Boucle_Greige":[196,200,202],"Sofa_Cushion_Oat":[222,224,224],"Cushion_Linen_Taupe":[150,170,186],"Cushion_Velvet_Caramel":[176,190,170],"Throw_Knit_Taupe":[128,140,150],"Rug_Border_Taupe":[160,166,170],"Rug_Field_Oatmeal":[228,226,220],"Leather_Cognac_Dining":[180,182,182],"Leather_Cognac_Piping":[140,142,144],"Leather_Caramel":[196,178,150],"Curtain_Light_Grey":[238,238,234],"Travertine_Honed_Warm":[230,226,218],"Headboard_Fabric_Beige":[186,192,196],"Duvet_Warm_Grey":[230,232,232],"Boucle_Sage_Green":[150,170,160]},"fam":"scandi"},"midcentury":{"name":"Mid-century","sw":["#f0eade","#78482a","#d6a03c"],"m":{"Wall_Paint_White":[240,234,222],"Wall_Paint_Partition":[240,234,222],"Floor_Homogeneous_Cream_600x600":[176,128,84],"Walnut_Veneer_Dark":[120,72,40],"Walnut_Fluted_Dark":[104,62,34],"Light_Oak":[168,112,64],"Marble_Calacatta_White":[234,228,216],"Art_Marble_Gold_Vein":[200,140,70],"Champagne_Gold_Brushed":[184,146,80],"Lux_Charcoal_Matt":[52,58,56],"Lux_Charcoal_Fluted":[64,70,66],"Lux_Greige":[128,122,96],"Door_Matt_Greige_Lacquer":[176,150,110],"Acoustic_Panel_Felt_Greige":[96,110,80],"Joinery_White_Matt":[236,228,212],"Sofa_Boucle_Greige":[70,104,100],"Sofa_Cushion_Oat":[88,124,118],"Cushion_Linen_Taupe":[214,160,60],"Cushion_Velvet_Caramel":[190,90,50],"Throw_Knit_Taupe":[214,170,90],"Rug_Border_Taupe":[120,80,50],"Rug_Field_Oatmeal":[220,196,150],"Curtain_Light_Grey":[226,214,190],"Travertine_Honed_Warm":[204,186,160],"Headboard_Fabric_Beige":[128,126,92],"Duvet_Warm_Grey":[228,220,200],"Boucle_Sage_Green":[96,120,104]},"fam":"midcentury"},"industrial":{"name":"Industrial","sw":["#b4b2ae","#4e3e32","#a86a3e"],"fam":"industrial","m":{"Wall_Paint_White":[188,186,182],"Wall_Paint_Partition":[176,174,170],"Floor_Homogeneous_Cream_600x600":[150,148,144],"Walnut_Veneer_Dark":[80,64,52],"Walnut_Fluted_Dark":[70,56,46],"Light_Oak":[112,92,74],"Oak_Smoked_Mid":[92,74,60],"Marble_Calacatta_White":[200,198,194],"Art_Marble_Gold_Vein":[170,168,164],"Sintered_Stone_Grey_Veined":[150,150,148],"Quartz_Top_White":[176,176,174],"Travertine_Honed_Warm":[168,160,150],"Champagne_Gold_Brushed":[46,46,48],"Brushed_Steel":[150,152,154],"Black_Steel_Powdercoat":[30,30,32],"Sculpture_Bronze":[96,76,58],"Joinery_White_Matt":[200,198,194],"Lux_Greige":[110,108,106],"Lux_Charcoal_Matt":[50,50,52],"Lux_Charcoal_Fluted":[60,60,62],"Door_Matt_Greige_Lacquer":[120,116,112],"Door_Frame_White":[80,80,82],"Main_Door_Charcoal_Lacquer":[42,42,44],"Acoustic_Panel_Felt_Greige":[96,94,92],"Sofa_Boucle_Greige":[162,104,62],"Sofa_Cushion_Oat":[178,120,76],"Cushion_Linen_Taupe":[70,72,76],"Cushion_Velvet_Caramel":[150,138,118],"Throw_Knit_Taupe":[84,84,86],"Boucle_Cushion_Cream":[196,190,180],"Leather_Caramel":[170,108,64],"Leather_Cognac_Dining":[150,94,56],"Leather_Cognac_Piping":[98,60,36],"Headboard_Fabric_Beige":[116,112,108],"Duvet_Warm_Grey":[170,168,164],"Boucle_Sage_Green":[110,118,100],"Bedding_Mustard_Stripe":[176,138,80],"Rug_Field_Oatmeal":[130,128,124],"Rug_Border_Taupe":[66,66,68],"Curtain_Light_Grey":[150,148,144],"Rattan_Cane_Natural":[150,122,88],"Art_Canvas_Ivory":[196,192,186],"Art_Abstract_Sand_Wash":[160,150,140]}},"classic":{"name":"Modern Classic","sw":["#ece6dc","#8a6444","#1f2e4a"],"fam":"classic","m":{"Wall_Paint_White":[236,230,220],"Wall_Paint_Partition":[230,224,214],"Floor_Homogeneous_Cream_600x600":[150,112,78],"Walnut_Veneer_Dark":[118,84,58],"Walnut_Fluted_Dark":[104,74,52],"Light_Oak":[160,120,84],"Oak_Smoked_Mid":[134,98,68],"Marble_Calacatta_White":[240,238,234],"Art_Marble_Gold_Vein":[236,232,226],"Sintered_Stone_Grey_Veined":[222,220,216],"Quartz_Top_White":[238,236,232],"Travertine_Honed_Warm":[222,208,186],"Champagne_Gold_Brushed":[188,156,100],"Brushed_Steel":[176,174,168],"Black_Steel_Powdercoat":[40,40,44],"Sculpture_Bronze":[160,124,76],"Joinery_White_Matt":[238,234,226],"Lux_Greige":[196,186,172],"Lux_Charcoal_Matt":[48,56,72],"Lux_Charcoal_Fluted":[58,66,82],"Door_Matt_Greige_Lacquer":[214,206,192],"Door_Frame_White":[240,236,228],"Main_Door_Charcoal_Lacquer":[36,46,66],"Acoustic_Panel_Felt_Greige":[170,162,150],"Sofa_Boucle_Greige":[218,210,196],"Sofa_Cushion_Oat":[232,226,214],"Cushion_Linen_Taupe":[42,56,88],"Cushion_Velvet_Caramel":[212,190,150],"Throw_Knit_Taupe":[170,158,140],"Boucle_Cushion_Cream":[240,236,226],"Leather_Caramel":[140,96,62],"Leather_Cognac_Dining":[54,66,96],"Leather_Cognac_Piping":[160,130,84],"Headboard_Fabric_Beige":[206,196,180],"Duvet_Warm_Grey":[226,220,208],"Boucle_Sage_Green":[140,150,168],"Bedding_Mustard_Stripe":[210,184,130],"Rug_Field_Oatmeal":[222,214,200],"Rug_Border_Taupe":[52,64,92],"Curtain_Light_Grey":[232,224,210],"Rattan_Cane_Natural":[200,170,124],"Art_Canvas_Ivory":[240,236,228],"Art_Abstract_Sand_Wash":[214,200,176]}},"wabisabi":{"name":"Wabi-sabi","sw":["#ddd3c4","#9a8b78","#9a5a3c"],"fam":"japandi","m":{"Wall_Paint_White":[221,211,196],"Wall_Paint_Partition":[214,204,188],"Floor_Homogeneous_Cream_600x600":[196,184,166],"Walnut_Veneer_Dark":[132,118,102],"Walnut_Fluted_Dark":[118,106,92],"Light_Oak":[166,152,134],"Oak_Smoked_Mid":[140,126,108],"Marble_Calacatta_White":[208,200,188],"Art_Marble_Gold_Vein":[190,180,166],"Sintered_Stone_Grey_Veined":[176,170,160],"Quartz_Top_White":[212,204,192],"Travertine_Honed_Warm":[196,184,166],"Champagne_Gold_Brushed":[70,66,62],"Brushed_Steel":[150,146,140],"Black_Steel_Powdercoat":[52,50,48],"Sculpture_Bronze":[118,92,70],"Joinery_White_Matt":[214,206,194],"Lux_Greige":[170,160,146],"Lux_Charcoal_Matt":[64,60,56],"Lux_Charcoal_Fluted":[76,70,64],"Door_Matt_Greige_Lacquer":[180,168,152],"Door_Frame_White":[220,212,200],"Main_Door_Charcoal_Lacquer":[72,66,60],"Acoustic_Panel_Felt_Greige":[150,134,114],"Sofa_Boucle_Greige":[212,202,186],"Sofa_Cushion_Oat":[224,216,202],"Cushion_Linen_Taupe":[154,92,64],"Cushion_Velvet_Caramel":[92,88,84],"Throw_Knit_Taupe":[132,118,100],"Boucle_Cushion_Cream":[232,226,214],"Leather_Caramel":[140,110,84],"Leather_Cognac_Dining":[150,126,100],"Leather_Cognac_Piping":[98,82,66],"Headboard_Fabric_Beige":[186,174,156],"Duvet_Warm_Grey":[214,206,192],"Boucle_Sage_Green":[140,142,118],"Bedding_Mustard_Stripe":[176,130,96],"Rug_Field_Oatmeal":[212,202,186],"Rug_Border_Taupe":[140,126,108],"Curtain_Light_Grey":[226,218,204],"Rattan_Cane_Natural":[184,162,126],"Art_Canvas_Ivory":[222,214,200],"Art_Abstract_Sand_Wash":[188,168,146]}},"minimal":{"name":"Minimalist","sw":["#f3f2ef","#d8c8b0","#2a2a2c"],"fam":"scandi","m":{"Wall_Paint_White":[244,243,240],"Wall_Paint_Partition":[240,239,236],"Floor_Homogeneous_Cream_600x600":[232,230,226],"Walnut_Veneer_Dark":[214,200,178],"Walnut_Fluted_Dark":[204,190,168],"Light_Oak":[220,206,184],"Oak_Smoked_Mid":[196,180,156],"Marble_Calacatta_White":[240,238,234],"Art_Marble_Gold_Vein":[236,234,230],"Sintered_Stone_Grey_Veined":[222,221,218],"Quartz_Top_White":[238,237,234],"Travertine_Honed_Warm":[226,220,210],"Champagne_Gold_Brushed":[40,40,42],"Brushed_Steel":[180,182,184],"Black_Steel_Powdercoat":[32,32,34],"Sculpture_Bronze":[60,60,62],"Joinery_White_Matt":[242,241,238],"Lux_Greige":[210,208,204],"Lux_Charcoal_Matt":[92,92,94],"Lux_Charcoal_Fluted":[104,104,106],"Door_Matt_Greige_Lacquer":[222,220,216],"Door_Frame_White":[242,241,238],"Main_Door_Charcoal_Lacquer":[70,70,72],"Acoustic_Panel_Felt_Greige":[196,194,190],"Sofa_Boucle_Greige":[224,222,218],"Sofa_Cushion_Oat":[234,232,228],"Cushion_Linen_Taupe":[160,160,158],"Cushion_Velvet_Caramel":[118,118,120],"Throw_Knit_Taupe":[196,194,190],"Boucle_Cushion_Cream":[242,240,236],"Leather_Caramel":[208,196,180],"Leather_Cognac_Dining":[200,186,166],"Leather_Cognac_Piping":[150,140,126],"Headboard_Fabric_Beige":[214,212,208],"Duvet_Warm_Grey":[228,226,222],"Boucle_Sage_Green":[184,186,180],"Bedding_Mustard_Stripe":[206,204,198],"Rug_Field_Oatmeal":[230,228,224],"Rug_Border_Taupe":[176,174,170],"Curtain_Light_Grey":[240,239,236],"Rattan_Cane_Natural":[214,196,166],"Art_Canvas_Ivory":[244,243,240],"Art_Abstract_Sand_Wash":[220,218,214]}},"coastal":{"name":"Coastal","sw":["#f5f4f0","#d4bc96","#7fa6b8"],"fam":"scandi","m":{"Wall_Paint_White":[246,245,241],"Wall_Paint_Partition":[242,241,237],"Floor_Homogeneous_Cream_600x600":[232,226,214],"Walnut_Veneer_Dark":[206,182,148],"Walnut_Fluted_Dark":[194,170,136],"Light_Oak":[214,192,158],"Oak_Smoked_Mid":[186,160,124],"Marble_Calacatta_White":[240,238,233],"Art_Marble_Gold_Vein":[232,230,226],"Sintered_Stone_Grey_Veined":[220,222,222],"Quartz_Top_White":[240,239,236],"Travertine_Honed_Warm":[224,214,196],"Champagne_Gold_Brushed":[196,196,190],"Brushed_Steel":[186,190,194],"Black_Steel_Powdercoat":[70,74,78],"Sculpture_Bronze":[150,136,116],"Joinery_White_Matt":[244,243,240],"Lux_Greige":[208,202,190],"Lux_Charcoal_Matt":[104,112,118],"Lux_Charcoal_Fluted":[116,122,128],"Door_Matt_Greige_Lacquer":[222,218,208],"Door_Frame_White":[244,243,240],"Main_Door_Charcoal_Lacquer":[90,108,124],"Acoustic_Panel_Felt_Greige":[176,188,192],"Sofa_Boucle_Greige":[230,226,216],"Sofa_Cushion_Oat":[240,236,226],"Cushion_Linen_Taupe":[128,164,184],"Cushion_Velvet_Caramel":[150,190,178],"Throw_Knit_Taupe":[214,204,184],"Boucle_Cushion_Cream":[244,242,236],"Leather_Caramel":[194,160,118],"Leather_Cognac_Dining":[210,184,148],"Leather_Cognac_Piping":[156,128,96],"Headboard_Fabric_Beige":[200,212,214],"Duvet_Warm_Grey":[236,234,228],"Boucle_Sage_Green":[156,186,180],"Bedding_Mustard_Stripe":[140,170,190],"Rug_Field_Oatmeal":[226,218,200],"Rug_Border_Taupe":[130,158,176],"Curtain_Light_Grey":[244,242,236],"Rattan_Cane_Natural":[212,186,142],"Art_Canvas_Ivory":[236,240,240],"Art_Abstract_Sand_Wash":[196,214,218]}},"boho":{"name":"Boho","sw":["#efe4d0","#b8864e","#b8603e"],"fam":"midcentury","m":{"Wall_Paint_White":[239,228,208],"Wall_Paint_Partition":[234,222,200],"Floor_Homogeneous_Cream_600x600":[214,196,168],"Walnut_Veneer_Dark":[168,118,70],"Walnut_Fluted_Dark":[152,104,60],"Light_Oak":[196,152,100],"Oak_Smoked_Mid":[170,124,80],"Marble_Calacatta_White":[232,224,210],"Art_Marble_Gold_Vein":[218,200,176],"Sintered_Stone_Grey_Veined":[206,196,182],"Quartz_Top_White":[230,222,208],"Travertine_Honed_Warm":[214,190,160],"Champagne_Gold_Brushed":[186,150,96],"Brushed_Steel":[176,166,152],"Black_Steel_Powdercoat":[48,44,40],"Sculpture_Bronze":[150,104,64],"Joinery_White_Matt":[232,222,204],"Lux_Greige":[186,162,132],"Lux_Charcoal_Matt":[84,72,60],"Lux_Charcoal_Fluted":[96,82,68],"Door_Matt_Greige_Lacquer":[204,180,148],"Door_Frame_White":[236,226,208],"Main_Door_Charcoal_Lacquer":[100,84,66],"Acoustic_Panel_Felt_Greige":[176,140,104],"Sofa_Boucle_Greige":[218,204,180],"Sofa_Cushion_Oat":[230,218,196],"Cushion_Linen_Taupe":[184,98,64],"Cushion_Velvet_Caramel":[196,152,64],"Throw_Knit_Taupe":[120,124,80],"Boucle_Cushion_Cream":[238,228,206],"Leather_Caramel":[166,100,58],"Leather_Cognac_Dining":[176,112,68],"Leather_Cognac_Piping":[124,74,44],"Headboard_Fabric_Beige":[196,150,104],"Duvet_Warm_Grey":[226,214,192],"Boucle_Sage_Green":[124,132,86],"Bedding_Mustard_Stripe":[206,160,82],"Rug_Field_Oatmeal":[210,180,140],"Rug_Border_Taupe":[168,92,60],"Curtain_Light_Grey":[236,224,202],"Rattan_Cane_Natural":[212,176,122],"Art_Canvas_Ivory":[230,212,184],"Art_Abstract_Sand_Wash":[206,150,108]}},"deco":{"name":"Art Deco","sw":["#2e5448","#4a3226","#c8a050"],"fam":"classic","m":{"Wall_Paint_White":[46,84,72],"Wall_Paint_Partition":[56,94,82],"Floor_Homogeneous_Cream_600x600":[222,218,212],"Walnut_Veneer_Dark":[74,50,38],"Walnut_Fluted_Dark":[64,42,32],"Light_Oak":[106,76,54],"Oak_Smoked_Mid":[86,60,44],"Marble_Calacatta_White":[238,236,232],"Art_Marble_Gold_Vein":[40,40,44],"Sintered_Stone_Grey_Veined":[70,72,74],"Quartz_Top_White":[232,230,226],"Travertine_Honed_Warm":[214,200,180],"Champagne_Gold_Brushed":[204,166,88],"Brushed_Steel":[190,186,178],"Black_Steel_Powdercoat":[26,26,28],"Sculpture_Bronze":[176,136,72],"Joinery_White_Matt":[232,228,220],"Lux_Greige":[60,60,62],"Lux_Charcoal_Matt":[28,28,30],"Lux_Charcoal_Fluted":[36,36,38],"Door_Matt_Greige_Lacquer":[40,72,62],"Door_Frame_White":[224,218,208],"Main_Door_Charcoal_Lacquer":[24,26,30],"Acoustic_Panel_Felt_Greige":[44,76,66],"Sofa_Boucle_Greige":[40,96,78],"Sofa_Cushion_Oat":[52,110,90],"Cushion_Linen_Taupe":[214,160,156],"Cushion_Velvet_Caramel":[30,30,32],"Throw_Knit_Taupe":[196,152,148],"Boucle_Cushion_Cream":[234,224,214],"Leather_Caramel":[30,30,32],"Leather_Cognac_Dining":[34,82,68],"Leather_Cognac_Piping":[196,158,82],"Headboard_Fabric_Beige":[28,64,54],"Duvet_Warm_Grey":[214,204,192],"Boucle_Sage_Green":[168,128,128],"Bedding_Mustard_Stripe":[196,160,90],"Rug_Field_Oatmeal":[214,204,186],"Rug_Border_Taupe":[28,30,34],"Curtain_Light_Grey":[200,166,160],"Rattan_Cane_Natural":[176,140,90],"Art_Canvas_Ivory":[26,28,32],"Art_Abstract_Sand_Wash":[204,176,130]}},"dark":{"name":"Dark Luxe","sw":["#3a3836","#7a5a3c","#c8a86e"],"m":{"Wall_Paint_White":[120,112,104],"Wall_Paint_Partition":[120,112,104],"Floor_Homogeneous_Cream_600x600":[150,140,128],"Wall_Kitchen_Tile_300x600":[96,94,92],"Walnut_Veneer_Dark":[70,46,34],"Walnut_Fluted_Dark":[60,40,30],"Light_Oak":[110,80,56],"Marble_Calacatta_White":[44,44,46],"Art_Marble_Gold_Vein":[62,60,60],"Sintered_Stone_Grey_Veined":[70,68,66],"Quartz_Top_White":[80,78,76],"Lux_Charcoal_Matt":[36,34,34],"Lux_Charcoal_Fluted":[44,42,42],"Main_Door_Charcoal_Lacquer":[36,34,34],"Door_Frame_White":[100,94,88],"Lux_Greige":[90,82,76],"Door_Matt_Greige_Lacquer":[110,100,92],"Acoustic_Panel_Felt_Greige":[70,64,60],"Joinery_White_Matt":[70,66,64],"Sofa_Boucle_Greige":[150,134,118],"Sofa_Cushion_Oat":[170,154,136],"Cushion_Linen_Taupe":[110,60,50],"Cushion_Velvet_Caramel":[60,74,60],"Throw_Knit_Taupe":[80,70,62],"Rug_Border_Taupe":[60,54,50],"Rug_Field_Oatmeal":[120,108,96],"Leather_Cognac_Dining":[96,58,38],"Leather_Cognac_Piping":[60,36,24],"Curtain_Light_Grey":[120,112,104],"Travertine_Honed_Warm":[150,136,118],"Headboard_Fabric_Beige":[96,86,78],"Duvet_Warm_Grey":[170,160,148]},"fam":"lux"}};
 let theme = 'lux'; try { const t = localStorage.getItem('theme'); if (THEMES[t]) theme = t; } catch (e) {}
 function matRGB(name) { return THEMES[theme].m[name] || D.mats[name].c; }
 function applyTheme(key) {
@@ -353,7 +333,7 @@ function applyTheme(key) {
     if (!D.mats[name]) continue; const c = matRGB(name);
     mat.color.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace); if (D.mats[name].e) mat.emissive.copy(mat.color);
   }
-  invalidate();
+  invalidate(); ensureFamily();
 }
 (function buildThemes() {
   const box = document.getElementById('themes');
@@ -380,18 +360,39 @@ function clearModel() {
   for (const m of Object.values(matCache)) m.dispose();
   root.clear(); dimGroup.clear(); layers = {}; emissiveMats = []; matCache = {};
 }
-function buildModel() {
-  for (const ch of D.chunks) {
-    const q = decode(ch.b64); const pos = new Float32Array(q.length); for (let i = 0; i < q.length; i++) pos[i] = q[i];
-    let g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    try { g = toCreasedNormals(g, Math.PI / 5); } catch (e) { g.computeVertexNormals(); }
-    const tx = HQ ? texFor(ch.mat) : null; if (tx) addUV(g, tx[1]);
-    const mm = D.mats[ch.mat]; const mesh = new THREE.Mesh(g, material(ch.mat));
-    if (mm.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else { mesh.castShadow = HQ; }
-    mesh.receiveShadow = HQ && !mm.e;
-    if (!layers[ch.layer]) { layers[ch.layer] = new THREE.Group(); layers[ch.layer].name = ch.layer; root.add(layers[ch.layer]); }
-    layers[ch.layer].add(mesh);
+function addChunk(ch, fam) {
+  const q = decode(ch.b64); const pos = new Float32Array(q.length); for (let i = 0; i < q.length; i++) pos[i] = q[i];
+  let g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  try { g = toCreasedNormals(g, Math.PI / 5); } catch (e) { g.computeVertexNormals(); }
+  const tx = HQ ? texFor(ch.mat) : null; if (tx) addUV(g, tx[1]);
+  const mm = D.mats[ch.mat]; const mesh = new THREE.Mesh(g, material(ch.mat));
+  if (mm.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else { mesh.castShadow = HQ; }
+  mesh.receiveShadow = HQ && !mm.e;
+  if (fam) { mesh.userData.fam = fam; mesh.visible = fam === curFam; }
+  if (!layers[ch.layer]) { layers[ch.layer] = new THREE.Group(); layers[ch.layer].name = ch.layer; root.add(layers[ch.layer]); }
+  layers[ch.layer].add(mesh);
+}
+// Furniture families: each theme uses its own furniture designs, loaded on demand per plan.
+let curFam = 'lux'; let builtFams = new Set(); const famCache = {};
+function wantFam() { const f = THEMES[theme].fam || 'lux'; return D && D.families && D.families.includes(f) ? f : 'lux'; }
+async function ensureFamily() {
+  if (!D) return; const plan = state.plan, fam = wantFam();
+  if (fam !== 'lux' && !builtFams.has(fam)) {
+    const key = plan + '.' + fam; const loading = document.getElementById('loading');
+    try {
+      if (!famCache[key]) { loading.style.display = 'flex'; loading.textContent = 'Loading furniture…'; const r = await fetch('plan_' + key + '.json?v=' + BUILD, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); famCache[key] = await r.json(); }
+    } catch (e) { loading.style.display = 'none'; return; }
+    loading.style.display = 'none';
+    if (state.plan !== plan) return;
+    if (!builtFams.has(fam)) { const F = famCache[key]; for (const k in F.mats) if (!D.mats[k]) D.mats[k] = F.mats[k]; builtFams.add(fam); for (const ch of F.chunks) addChunk(ch, fam); }
   }
+  if (state.plan !== plan || fam !== wantFam()) return;
+  curFam = fam; root.traverse(o => { if (o.userData.fam) o.visible = o.userData.fam === curFam; });
+  renderer.shadowMap.needsUpdate = true; invalidate();
+}
+function buildModel() {
+  builtFams = new Set(); curFam = 'lux';
+  for (const ch of D.chunks) addChunk(ch, ch.v ? 'lux' : null);
   renderer.shadowMap.needsUpdate = true; invalidate();
   for (const [a, b] of D.dims) dimGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a[0], 60, a[1]), new THREE.Vector3(b[0], 60, b[1])]), lineMat));
 }
@@ -490,7 +491,7 @@ function goView(i) {
   btns.forEach((b, j) => b && b.classList.toggle('on', j === i)); revealGroup(i);
   const tl = document.getElementById('title'); tl.textContent = v.name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Kitchen|Hall|Entrance screen|Night|Compare \d) – /, '');
   tl.textContent = tl.textContent.charAt(0).toUpperCase() + tl.textContent.slice(1); tl.classList.remove('swap'); void tl.offsetWidth; tl.classList.add('swap');
-  document.getElementById('viewRoom').textContent = PLANS.find(p => p.key === state.plan).short + ' · ' + roomOf(v.name);
+  document.getElementById('viewRoom').textContent = roomOf(v.name);
   document.getElementById('viewCount').textContent = (i + 1) + ' / ' + D.views.length;
   try { history.replaceState(null, '', '#' + state.plan + '-' + i); } catch (e) {}
   applyVisibility();
@@ -608,7 +609,7 @@ function buildViewList() {
     const list = document.createElement('div'); list.className = 'vlist'; const inner = document.createElement('div'); inner.className = 'inner'; list.appendChild(inner);
     for (const i of idx) {
       const b = document.createElement('button'); b.textContent = D.views[i].name.replace(/^(Living|Lounge|Study room|Study|Dining|Foyer|Master|Bedroom [23]|Open kitchen|Closed kitchen|Kitchen|Hall|Entrance screen|Night|Compare \d) – /, '');
-      b.textContent = b.textContent.charAt(0).toUpperCase() + b.textContent.slice(1); b.title = D.views[i].name; b.onclick = () => goView(i); inner.appendChild(b); btns[i] = b;
+      b.textContent = b.textContent.charAt(0).toUpperCase() + b.textContent.slice(1); b.title = D.views[i].name; b.onclick = () => { goView(i); if (window.innerWidth <= 860) panel.classList.add('closed'); }; inner.appendChild(b); btns[i] = b;
     }
     sec.appendChild(h); sec.appendChild(list); vbox.appendChild(sec);
   }
@@ -628,7 +629,7 @@ async function openPlan(key, viewName, viewIndex) {
   D = cache[key]; state.plan = key; planSel.value = key; state.first = true;
   pills.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.key === key));
   document.getElementById('panelTitle').textContent = PLANS.find(p => p.key === key).title;
-  clearModel(); buildModel();
+  clearModel(); buildModel(); await ensureFamily();
   modeSel.innerHTML = '';
   for (const k of Object.keys(D.modes)) { const o = document.createElement('option'); o.value = k; o.textContent = D.modes[k].label; modeSel.appendChild(o); }
   state.mode = D.modes.open ? 'open' : Object.keys(D.modes)[0];
@@ -646,6 +647,8 @@ async function openPlan(key, viewName, viewIndex) {
 planSel.onchange = () => { const name = state.view ? state.view.name : null; openPlan(planSel.value, name); };
 document.getElementById('home').onclick = () => { document.getElementById('landing').classList.remove('hidden'); try { history.replaceState(null, '', '#plans'); } catch (e) {} };
 document.getElementById('toggle').onclick = () => panel.classList.toggle('closed');
+document.getElementById('panelClose').onclick = () => panel.classList.add('closed');
+document.getElementById('stage').addEventListener('pointerdown', () => { if (window.innerWidth <= 860) panel.classList.add('closed'); });
 document.getElementById('home').onclick = () => {};
 const hqBox = document.getElementById('t_hq'); hqBox.checked = HQ;
 hqBox.onchange = () => { HQ = hqBox.checked; try { localStorage.setItem('hq', HQ ? '1' : '0'); } catch (e) {} if (state.plan) { const vi = state.vi; clearModel(); buildModel(); goView(vi); } };
