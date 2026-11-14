@@ -117,6 +117,25 @@
   #ceils { display:flex; flex-wrap:wrap; gap:6px; }
   #ceils button { padding:7px 12px; border-radius:999px; border:1px solid var(--line2); background:#151519; color:#d7d3cd; font:500 12.5px var(--sans); cursor:pointer; transition:background .25s, color .25s, border-color .25s; }
   #ceils button:hover { border-color:rgba(255,255,255,.3); } #ceils button.on { background:#f4f2ee; color:#0a0a0b; border-color:#f4f2ee; }
+  #tools button.ai { color:#fff; background:linear-gradient(100deg, rgba(125,139,255,.35), rgba(95,214,198,.3)); }
+  #tools button.ai:hover { background:linear-gradient(100deg, rgba(125,139,255,.6), rgba(95,214,198,.5)); }
+  #aiModal { position:fixed; inset:0; z-index:40; display:none; align-items:center; justify-content:center; padding:20px; background:rgba(6,6,8,.6); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  #aiModal.open { display:flex; animation:fadeIn .25s both; }
+  .aibox { width:min(1100px, 100%); max-height:100%; overflow:auto; background:#0f0f12; color:var(--ink); border:1px solid var(--line2); border-radius:20px; box-shadow:0 30px 80px rgba(0,0,0,.6); animation:rise .45s var(--ease) both; }
+  .aibox header { display:flex; align-items:center; gap:12px; padding:18px 20px 14px; border-bottom:1px solid var(--line); } .aibox header > div { flex:1; }
+  .aibox .sub { font:500 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--acc); } .aibox h3 { margin:4px 0 0; font:500 20px var(--disp); letter-spacing:-.02em; }
+  .iconbtn { width:36px; height:36px; display:grid; place-items:center; border:1px solid var(--line2); border-radius:10px; background:none; color:var(--ink); cursor:pointer; }
+  .aigrid { display:grid; grid-template-columns:1.25fr 1fr; gap:18px; padding:18px 20px 20px; }
+  .aishot img { width:100%; border-radius:12px; display:block; background:#eae6df; border:1px solid var(--line); }
+  .aiact { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .aiact button, .btnlink { display:inline-flex; align-items:center; gap:7px; padding:9px 14px; border-radius:999px; border:1px solid var(--line2); background:#18181c; color:var(--ink); font:500 13px var(--sans); cursor:pointer; text-decoration:none; transition:background .25s, color .25s; }
+  .aiact button:hover, .btnlink:hover { background:#f4f2ee; color:#0a0a0b; } .aiact button.pri { background:#f4f2ee; color:#0a0a0b; }
+  .aitext { display:flex; flex-direction:column; min-width:0; }
+  .ailbl { display:flex; align-items:center; justify-content:space-between; gap:10px; color:#d7d3cd; font-size:13px; margin-bottom:10px; }
+  .ailbl select { padding:8px 10px; border-radius:10px; border:1px solid var(--line2); background:#151519; color:var(--ink); font:inherit; }
+  #aiPrompt { flex:1; min-height:230px; resize:vertical; padding:12px; border-radius:12px; border:1px solid var(--line2); background:#151519; color:#e6e2dc; font:12.5px/1.5 var(--mono); }
+  .aisteps { margin:14px 0 0; padding-left:18px; color:var(--muted); font-size:12.5px; } .aisteps li { margin:3px 0; }
+  @media (max-width: 860px) { #aiModal { padding:0; align-items:stretch; } .aibox { border-radius:0; } .aigrid { grid-template-columns:1fr; padding:14px; } #aiPrompt { min-height:180px; } #tools button.ai { order:-1; } }
   #themes button { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid var(--line2); background:#151519; color:#d7d3cd; font:500 12.5px var(--sans); cursor:pointer; text-align:left; transition:background .25s, color .25s, border-color .25s, transform .3s var(--ease); }
   #themes button:hover { border-color:rgba(255,255,255,.3); transform:translateY(-1px); }
   #themes button.on { background:#f4f2ee; color:#0a0a0b; border-color:#f4f2ee; }
@@ -183,6 +202,18 @@
     <p class="fine">Browser mock-ups – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
   </div>
 </div>
+<div id="aiModal"><div class="aibox">
+  <header><div><div class="sub">AI render</div><h3>Photo-real image with ChatGPT</h3></div><button id="aiClose" class="iconbtn" title="Close"><svg class="hi" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6l12 12"/></svg></button></header>
+  <div class="aigrid">
+    <div class="aishot"><img id="aiImg" alt="Screenshot of the current view"><div class="aiact"><button id="aiCopyImg"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg> Copy image</button><button id="aiDownload"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg> Download</button><button id="aiShare"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"/></svg> Share</button></div></div>
+    <div class="aitext">
+      <label class="ailbl">Lighting <select id="aiTime"><option value="day">Daytime</option><option value="golden">Golden hour</option><option value="night">Evening, lights on</option></select></label>
+      <textarea id="aiPrompt" spellcheck="false"></textarea>
+      <div class="aiact"><button id="aiCopyPrompt" class="pri"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/></svg> Copy prompt</button><a class="btnlink" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg> Open ChatGPT</a></div>
+      <ol class="aisteps"><li>Copy or download the image and paste it into a new ChatGPT chat.</li><li>Copy the prompt, paste it in the same message and send.</li><li>Ask for tweaks in follow-up messages, e.g. "warmer light" or "add a plant".</li></ol>
+    </div>
+  </div>
+</div></div>
 <div id="app">
   <div id="stage">
     <div id="loading">Loading model…</div>
@@ -204,6 +235,7 @@
       <button data-tool="zoom" title="Zoom (Z)"><svg class="hi" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6"/></svg> <span class="t">Zoom</span> <kbd>Z</kbd></button>
       <button data-tool="look" title="Look around (L)"><svg class="hi" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg> <span class="t">Look</span> <kbd>L</kbd></button>
       <button data-tool="extents" title="Zoom extents (Shift+Z)"><svg class="hi" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg> <span class="t">Fit</span> <kbd>⇧Z</kbd></button>
+      <button id="aiBtn" class="ai" title="Photo-real render with AI"><svg class="hi" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"/></svg> <span class="t">AI render</span></button>
     </div>
     <div id="hint" class="glass"></div>
   </div>
@@ -242,7 +274,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794674376';
+const BUILD = '1794675426';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -717,6 +749,83 @@ renderer.setAnimationLoop(() => {
   const above = camera.position.y > 2600; if (above !== lastAbove) { lastAbove = above; applyVisibility(); }
   renderer.render(scene, camera); if (state.lab) placeLabels();
 });
+// ---- "AI render": screenshot + ready-made prompt for ChatGPT (or any image AI) ----
+const AI = {
+  theme: {
+    lux: 'Modern luxury: warm white walls, dark walnut veneer, white Calacatta marble, champagne-brass accents, greige boucle and soft taupe textiles',
+    japandi: 'Japandi: warm white walls, natural light oak, slatted timber, black metal details, linen upholstery, muted sage accents, calm and uncluttered',
+    nordic: 'Nordic / Scandinavian: bright white walls, pale birch and oak, light grey fabrics, dusty-blue and sage accents, brushed steel, airy and light',
+    midcentury: 'Mid-century modern: warm white walls, teak and walnut wood, teal-green upholstery, mustard and burnt-orange cushions, brass details',
+    industrial: 'Industrial loft: concrete-grey walls and floor, smoked dark oak, black powder-coated steel, cognac leather, charcoal textiles',
+    classic: 'Modern classic: soft ivory and greige walls, oak floor tone, white marble, antique brass, navy and champagne textiles',
+    wabisabi: 'Wabi-sabi: clay limewash walls, warm stone floor, weathered grey-brown timber, unbleached linen, charcoal and rust accents, matte and imperfect',
+    minimal: 'Minimalist: near-white walls and floor, very pale oak, soft greys, thin black metal accents, almost no colour, very clean',
+    coastal: 'Coastal: crisp white walls, sandy light oak, white and sand linen, soft sea-blue and seafoam cushions, natural rattan',
+    boho: 'Boho: warm cream walls, honey-toned wood, terracotta, mustard, olive and deep-teal textiles, natural rattan, relaxed and layered',
+    deco: 'Art Deco: deep emerald walls, black and white marble, polished brass, emerald velvet with blush and black accents, glamorous',
+    dark: 'Dark luxe: mocha walls, black marble, dark walnut, gold accents, oxblood and deep-green cushions, moody and rich',
+  },
+  fam: {
+    lux: 'curved boucle sofa with plush cushions, upholstered channel-tufted headboard, marble-top dining table on sculpted walnut trestle legs, armless cognac leather dining chairs with black legs, pebble-shaped coffee table, brass linear pendant',
+    japandi: 'low oak platform sofa with loose linen cushions, low oak platform bed with slatted headboard, solid oak trestle dining table, wishbone chairs with woven cane seats, paper lantern lights',
+    scandi: 'sofa raised on slim tapered oak legs, light bed frame on tapered legs, rounded oak dining table on splayed legs, moulded shell dining chairs, oval oak coffee table, white dome pendants, tripod floor lamp',
+    midcentury: 'walnut-framed sofa with tufted bench seat and bolsters, wide walnut panel headboard, walnut dining table on tapered splayed legs, curved-back walnut chairs, Eames-style lounge chair, opal globe lights',
+    industrial: 'boxy leather sofa in a black steel frame, black steel bar headboard bed, thick timber slab dining table on steel X-frame legs, metal cafe chairs, factory cone pendants',
+    classic: 'Chesterfield sofa with rolled arms and button tufting, arched wingback tufted headboard, marble dining table on turned pedestals, upholstered Louis-style chairs, brass lantern pendants',
+  },
+  ceil: {
+    wave: 'white plasterboard false ceiling with an organic free-form recessed cove and hidden warm LED strip lighting',
+    crescent: 'white plasterboard false ceiling with a crescent-moon-shaped recessed cove, hidden warm LED glow along its edge and a thin brass inlay line',
+    arc: 'white plasterboard false ceiling with a recessed cove whose one long side is a single sweeping curve, hidden warm LED glow and a thin brass inlay line',
+    pill: 'white plasterboard false ceiling with a rounded pill-shaped recessed cove and a floating brass-edged inner panel, warm LED halo',
+    island: 'white plasterboard false ceiling with a softly rounded tray and a floating pebble-shaped panel inside it, warm LED halo all around',
+  },
+  time: {
+    day: 'bright natural daylight streaming through the windows, soft shadows, lights off except the cove lighting',
+    golden: 'late-afternoon golden-hour sun through the windows, warm long shadows, cove lighting softly on',
+    night: 'evening, dark outside the windows, all interior lights on: warm 3000K cove lighting, downlights and lamps, cosy atmosphere',
+  },
+};
+function aiPrompt() {
+  const v = state.view || { name: '' }; const above = camera.position.y > 2600;
+  const room = roomOf(v.name); const scene = (v.name.split(' – ')[1] || v.name);
+  const th = THEMES[theme]; const fam = wantFam(); const time = document.getElementById('aiTime').value;
+  if (above) return [
+    'Turn this 3D screenshot into a photorealistic top-down 3D floor plan render (cutaway, no ceiling) of a 5-room HDB flat in Singapore.',
+    'Keep the exact layout, walls, doors, windows, furniture positions and sizes – do not add, remove or move anything.',
+    'Interior style: ' + AI.theme[theme] + '.', 'Furniture: ' + AI.fam[fam] + '.',
+    'Realistic materials and textures, soft daylight from above, gentle ambient occlusion, clean white background. No text, labels or watermarks.'].join('\n');
+  return [
+    'Turn this 3D screenshot into a photorealistic interior photograph. Keep the exact same camera angle, room layout, walls, windows, doors, built-in carpentry, furniture positions, sizes and proportions – do not add, remove or move anything, and keep the ceiling design exactly as shown.',
+    '', 'Room: ' + room.toLowerCase() + (scene && scene !== room ? ' (' + scene.toLowerCase() + ')' : '') + ' in a 5-room HDB flat in Singapore, 2.65 m ceiling with a false ceiling at 2.55 m.',
+    'Style: ' + AI.theme[theme] + '.', 'Furniture: ' + AI.fam[fam] + '.', 'Ceiling: ' + AI.ceil[wantCeil()] + '.', 'Lighting: ' + AI.time[time] + '.',
+    'Materials: realistic textures – wood grain, natural stone veining, fabric weave, matte painted walls, large-format floor tiles; replace any flat or blocky shapes with their realistic real-world equivalents.',
+    '', 'Photography: architectural interior photo for a design magazine, full-frame camera, 24 mm lens at eye level, vertical lines kept straight, natural colours, realistic soft shadows and global illumination, high detail. No people, no text, no watermarks.'].join('\n');
+}
+let aiBlob = null;
+async function aiCapture() {
+  const w = stage.clientWidth, h = stage.clientHeight; const s = Math.min(2.5, 1800 / Math.max(w, h)) * 1;
+  const W = Math.round(w * s), H = Math.round(h * s); const pr = renderer.getPixelRatio();
+  renderer.setPixelRatio(1); renderer.setSize(W, H, false); renderer.render(scene, camera);
+  const url = renderer.domElement.toDataURL('image/png');
+  renderer.setPixelRatio(pr); renderer.setSize(w, h, false); invalidate();
+  aiBlob = await (await fetch(url)).blob(); return url;
+}
+function aiFileName() { return 'plan-' + state.plan + '-' + (state.view ? state.view.name : 'view').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.png'; }
+async function aiOpen() {
+  const url = await aiCapture(); document.getElementById('aiImg').src = url;
+  document.getElementById('aiPrompt').value = aiPrompt(); document.getElementById('aiModal').classList.add('open');
+  document.getElementById('aiShare').style.display = (navigator.canShare && navigator.canShare({ files: [new File([aiBlob], 'x.png', { type: 'image/png' })] })) ? '' : 'none';
+}
+function aiFlash(btn, txt) { const o = btn.dataset.l || btn.innerHTML; btn.dataset.l = o; btn.textContent = txt; setTimeout(() => { btn.innerHTML = o; }, 1600); }
+document.getElementById('aiBtn').onclick = aiOpen;
+document.getElementById('aiClose').onclick = () => document.getElementById('aiModal').classList.remove('open');
+document.getElementById('aiModal').addEventListener('pointerdown', (e) => { if (e.target.id === 'aiModal') e.target.classList.remove('open'); });
+document.getElementById('aiTime').onchange = () => { document.getElementById('aiPrompt').value = aiPrompt(); };
+document.getElementById('aiCopyPrompt').onclick = async (e) => { const b = e.currentTarget; try { await navigator.clipboard.writeText(document.getElementById('aiPrompt').value); aiFlash(b, 'Copied'); } catch (err) { document.getElementById('aiPrompt').select(); aiFlash(b, 'Press Ctrl+C'); } };
+document.getElementById('aiCopyImg').onclick = async (e) => { const b = e.currentTarget; try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': aiBlob })]); aiFlash(b, 'Copied'); } catch (err) { aiFlash(b, 'Use Download'); } };
+document.getElementById('aiDownload').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(aiBlob); a.download = aiFileName(); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
+document.getElementById('aiShare').onclick = async () => { try { await navigator.share({ files: [new File([aiBlob], aiFileName(), { type: 'image/png' })], text: document.getElementById('aiPrompt').value }); } catch (err) {} };
 document.addEventListener('visibilitychange', invalidate);
 </script>
 <script>
