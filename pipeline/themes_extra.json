@@ -1,0 +1,1584 @@
+{
+ "wabisabi": {
+  "name": "Wabi-sabi",
+  "sw": [
+   "#ddd3c4",
+   "#9a8b78",
+   "#9a5a3c"
+  ],
+  "fam": "japandi",
+  "m": {
+   "Wall_Paint_White": [
+    221,
+    211,
+    196
+   ],
+   "Wall_Paint_Partition": [
+    214,
+    204,
+    188
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    196,
+    184,
+    166
+   ],
+   "Walnut_Veneer_Dark": [
+    132,
+    118,
+    102
+   ],
+   "Walnut_Fluted_Dark": [
+    118,
+    106,
+    92
+   ],
+   "Light_Oak": [
+    166,
+    152,
+    134
+   ],
+   "Oak_Smoked_Mid": [
+    140,
+    126,
+    108
+   ],
+   "Marble_Calacatta_White": [
+    208,
+    200,
+    188
+   ],
+   "Art_Marble_Gold_Vein": [
+    190,
+    180,
+    166
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    176,
+    170,
+    160
+   ],
+   "Quartz_Top_White": [
+    212,
+    204,
+    192
+   ],
+   "Travertine_Honed_Warm": [
+    196,
+    184,
+    166
+   ],
+   "Champagne_Gold_Brushed": [
+    70,
+    66,
+    62
+   ],
+   "Brushed_Steel": [
+    150,
+    146,
+    140
+   ],
+   "Black_Steel_Powdercoat": [
+    52,
+    50,
+    48
+   ],
+   "Sculpture_Bronze": [
+    118,
+    92,
+    70
+   ],
+   "Joinery_White_Matt": [
+    214,
+    206,
+    194
+   ],
+   "Lux_Greige": [
+    170,
+    160,
+    146
+   ],
+   "Lux_Charcoal_Matt": [
+    64,
+    60,
+    56
+   ],
+   "Lux_Charcoal_Fluted": [
+    76,
+    70,
+    64
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    180,
+    168,
+    152
+   ],
+   "Door_Frame_White": [
+    220,
+    212,
+    200
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    72,
+    66,
+    60
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    150,
+    134,
+    114
+   ],
+   "Sofa_Boucle_Greige": [
+    212,
+    202,
+    186
+   ],
+   "Sofa_Cushion_Oat": [
+    224,
+    216,
+    202
+   ],
+   "Cushion_Linen_Taupe": [
+    154,
+    92,
+    64
+   ],
+   "Cushion_Velvet_Caramel": [
+    92,
+    88,
+    84
+   ],
+   "Throw_Knit_Taupe": [
+    132,
+    118,
+    100
+   ],
+   "Boucle_Cushion_Cream": [
+    232,
+    226,
+    214
+   ],
+   "Leather_Caramel": [
+    140,
+    110,
+    84
+   ],
+   "Leather_Cognac_Dining": [
+    150,
+    126,
+    100
+   ],
+   "Leather_Cognac_Piping": [
+    98,
+    82,
+    66
+   ],
+   "Headboard_Fabric_Beige": [
+    186,
+    174,
+    156
+   ],
+   "Duvet_Warm_Grey": [
+    214,
+    206,
+    192
+   ],
+   "Boucle_Sage_Green": [
+    140,
+    142,
+    118
+   ],
+   "Bedding_Mustard_Stripe": [
+    176,
+    130,
+    96
+   ],
+   "Rug_Field_Oatmeal": [
+    212,
+    202,
+    186
+   ],
+   "Rug_Border_Taupe": [
+    140,
+    126,
+    108
+   ],
+   "Curtain_Light_Grey": [
+    226,
+    218,
+    204
+   ],
+   "Rattan_Cane_Natural": [
+    184,
+    162,
+    126
+   ],
+   "Art_Canvas_Ivory": [
+    222,
+    214,
+    200
+   ],
+   "Art_Abstract_Sand_Wash": [
+    188,
+    168,
+    146
+   ]
+  }
+ },
+ "minimal": {
+  "name": "Minimalist",
+  "sw": [
+   "#f3f2ef",
+   "#d8c8b0",
+   "#2a2a2c"
+  ],
+  "fam": "scandi",
+  "m": {
+   "Wall_Paint_White": [
+    244,
+    243,
+    240
+   ],
+   "Wall_Paint_Partition": [
+    240,
+    239,
+    236
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    232,
+    230,
+    226
+   ],
+   "Walnut_Veneer_Dark": [
+    214,
+    200,
+    178
+   ],
+   "Walnut_Fluted_Dark": [
+    204,
+    190,
+    168
+   ],
+   "Light_Oak": [
+    220,
+    206,
+    184
+   ],
+   "Oak_Smoked_Mid": [
+    196,
+    180,
+    156
+   ],
+   "Marble_Calacatta_White": [
+    240,
+    238,
+    234
+   ],
+   "Art_Marble_Gold_Vein": [
+    236,
+    234,
+    230
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    222,
+    221,
+    218
+   ],
+   "Quartz_Top_White": [
+    238,
+    237,
+    234
+   ],
+   "Travertine_Honed_Warm": [
+    226,
+    220,
+    210
+   ],
+   "Champagne_Gold_Brushed": [
+    40,
+    40,
+    42
+   ],
+   "Brushed_Steel": [
+    180,
+    182,
+    184
+   ],
+   "Black_Steel_Powdercoat": [
+    32,
+    32,
+    34
+   ],
+   "Sculpture_Bronze": [
+    60,
+    60,
+    62
+   ],
+   "Joinery_White_Matt": [
+    242,
+    241,
+    238
+   ],
+   "Lux_Greige": [
+    210,
+    208,
+    204
+   ],
+   "Lux_Charcoal_Matt": [
+    92,
+    92,
+    94
+   ],
+   "Lux_Charcoal_Fluted": [
+    104,
+    104,
+    106
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    222,
+    220,
+    216
+   ],
+   "Door_Frame_White": [
+    242,
+    241,
+    238
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    70,
+    70,
+    72
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    196,
+    194,
+    190
+   ],
+   "Sofa_Boucle_Greige": [
+    224,
+    222,
+    218
+   ],
+   "Sofa_Cushion_Oat": [
+    234,
+    232,
+    228
+   ],
+   "Cushion_Linen_Taupe": [
+    160,
+    160,
+    158
+   ],
+   "Cushion_Velvet_Caramel": [
+    118,
+    118,
+    120
+   ],
+   "Throw_Knit_Taupe": [
+    196,
+    194,
+    190
+   ],
+   "Boucle_Cushion_Cream": [
+    242,
+    240,
+    236
+   ],
+   "Leather_Caramel": [
+    208,
+    196,
+    180
+   ],
+   "Leather_Cognac_Dining": [
+    200,
+    186,
+    166
+   ],
+   "Leather_Cognac_Piping": [
+    150,
+    140,
+    126
+   ],
+   "Headboard_Fabric_Beige": [
+    214,
+    212,
+    208
+   ],
+   "Duvet_Warm_Grey": [
+    228,
+    226,
+    222
+   ],
+   "Boucle_Sage_Green": [
+    184,
+    186,
+    180
+   ],
+   "Bedding_Mustard_Stripe": [
+    206,
+    204,
+    198
+   ],
+   "Rug_Field_Oatmeal": [
+    230,
+    228,
+    224
+   ],
+   "Rug_Border_Taupe": [
+    176,
+    174,
+    170
+   ],
+   "Curtain_Light_Grey": [
+    240,
+    239,
+    236
+   ],
+   "Rattan_Cane_Natural": [
+    214,
+    196,
+    166
+   ],
+   "Art_Canvas_Ivory": [
+    244,
+    243,
+    240
+   ],
+   "Art_Abstract_Sand_Wash": [
+    220,
+    218,
+    214
+   ]
+  }
+ },
+ "coastal": {
+  "name": "Coastal",
+  "sw": [
+   "#f5f4f0",
+   "#d4bc96",
+   "#7fa6b8"
+  ],
+  "fam": "scandi",
+  "m": {
+   "Wall_Paint_White": [
+    246,
+    245,
+    241
+   ],
+   "Wall_Paint_Partition": [
+    242,
+    241,
+    237
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    232,
+    226,
+    214
+   ],
+   "Walnut_Veneer_Dark": [
+    206,
+    182,
+    148
+   ],
+   "Walnut_Fluted_Dark": [
+    194,
+    170,
+    136
+   ],
+   "Light_Oak": [
+    214,
+    192,
+    158
+   ],
+   "Oak_Smoked_Mid": [
+    186,
+    160,
+    124
+   ],
+   "Marble_Calacatta_White": [
+    240,
+    238,
+    233
+   ],
+   "Art_Marble_Gold_Vein": [
+    232,
+    230,
+    226
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    220,
+    222,
+    222
+   ],
+   "Quartz_Top_White": [
+    240,
+    239,
+    236
+   ],
+   "Travertine_Honed_Warm": [
+    224,
+    214,
+    196
+   ],
+   "Champagne_Gold_Brushed": [
+    196,
+    196,
+    190
+   ],
+   "Brushed_Steel": [
+    186,
+    190,
+    194
+   ],
+   "Black_Steel_Powdercoat": [
+    70,
+    74,
+    78
+   ],
+   "Sculpture_Bronze": [
+    150,
+    136,
+    116
+   ],
+   "Joinery_White_Matt": [
+    244,
+    243,
+    240
+   ],
+   "Lux_Greige": [
+    208,
+    202,
+    190
+   ],
+   "Lux_Charcoal_Matt": [
+    104,
+    112,
+    118
+   ],
+   "Lux_Charcoal_Fluted": [
+    116,
+    122,
+    128
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    222,
+    218,
+    208
+   ],
+   "Door_Frame_White": [
+    244,
+    243,
+    240
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    90,
+    108,
+    124
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    176,
+    188,
+    192
+   ],
+   "Sofa_Boucle_Greige": [
+    230,
+    226,
+    216
+   ],
+   "Sofa_Cushion_Oat": [
+    240,
+    236,
+    226
+   ],
+   "Cushion_Linen_Taupe": [
+    128,
+    164,
+    184
+   ],
+   "Cushion_Velvet_Caramel": [
+    150,
+    190,
+    178
+   ],
+   "Throw_Knit_Taupe": [
+    214,
+    204,
+    184
+   ],
+   "Boucle_Cushion_Cream": [
+    244,
+    242,
+    236
+   ],
+   "Leather_Caramel": [
+    194,
+    160,
+    118
+   ],
+   "Leather_Cognac_Dining": [
+    210,
+    184,
+    148
+   ],
+   "Leather_Cognac_Piping": [
+    156,
+    128,
+    96
+   ],
+   "Headboard_Fabric_Beige": [
+    200,
+    212,
+    214
+   ],
+   "Duvet_Warm_Grey": [
+    236,
+    234,
+    228
+   ],
+   "Boucle_Sage_Green": [
+    156,
+    186,
+    180
+   ],
+   "Bedding_Mustard_Stripe": [
+    140,
+    170,
+    190
+   ],
+   "Rug_Field_Oatmeal": [
+    226,
+    218,
+    200
+   ],
+   "Rug_Border_Taupe": [
+    130,
+    158,
+    176
+   ],
+   "Curtain_Light_Grey": [
+    244,
+    242,
+    236
+   ],
+   "Rattan_Cane_Natural": [
+    212,
+    186,
+    142
+   ],
+   "Art_Canvas_Ivory": [
+    236,
+    240,
+    240
+   ],
+   "Art_Abstract_Sand_Wash": [
+    196,
+    214,
+    218
+   ]
+  }
+ },
+ "boho": {
+  "name": "Boho",
+  "sw": [
+   "#efe4d0",
+   "#b8864e",
+   "#b8603e"
+  ],
+  "fam": "midcentury",
+  "m": {
+   "Wall_Paint_White": [
+    239,
+    228,
+    208
+   ],
+   "Wall_Paint_Partition": [
+    234,
+    222,
+    200
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    214,
+    196,
+    168
+   ],
+   "Walnut_Veneer_Dark": [
+    168,
+    118,
+    70
+   ],
+   "Walnut_Fluted_Dark": [
+    152,
+    104,
+    60
+   ],
+   "Light_Oak": [
+    196,
+    152,
+    100
+   ],
+   "Oak_Smoked_Mid": [
+    170,
+    124,
+    80
+   ],
+   "Marble_Calacatta_White": [
+    232,
+    224,
+    210
+   ],
+   "Art_Marble_Gold_Vein": [
+    218,
+    200,
+    176
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    206,
+    196,
+    182
+   ],
+   "Quartz_Top_White": [
+    230,
+    222,
+    208
+   ],
+   "Travertine_Honed_Warm": [
+    214,
+    190,
+    160
+   ],
+   "Champagne_Gold_Brushed": [
+    186,
+    150,
+    96
+   ],
+   "Brushed_Steel": [
+    176,
+    166,
+    152
+   ],
+   "Black_Steel_Powdercoat": [
+    48,
+    44,
+    40
+   ],
+   "Sculpture_Bronze": [
+    150,
+    104,
+    64
+   ],
+   "Joinery_White_Matt": [
+    232,
+    222,
+    204
+   ],
+   "Lux_Greige": [
+    186,
+    162,
+    132
+   ],
+   "Lux_Charcoal_Matt": [
+    84,
+    72,
+    60
+   ],
+   "Lux_Charcoal_Fluted": [
+    96,
+    82,
+    68
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    204,
+    180,
+    148
+   ],
+   "Door_Frame_White": [
+    236,
+    226,
+    208
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    100,
+    84,
+    66
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    176,
+    140,
+    104
+   ],
+   "Sofa_Boucle_Greige": [
+    218,
+    204,
+    180
+   ],
+   "Sofa_Cushion_Oat": [
+    230,
+    218,
+    196
+   ],
+   "Cushion_Linen_Taupe": [
+    184,
+    98,
+    64
+   ],
+   "Cushion_Velvet_Caramel": [
+    196,
+    152,
+    64
+   ],
+   "Throw_Knit_Taupe": [
+    120,
+    124,
+    80
+   ],
+   "Boucle_Cushion_Cream": [
+    238,
+    228,
+    206
+   ],
+   "Leather_Caramel": [
+    166,
+    100,
+    58
+   ],
+   "Leather_Cognac_Dining": [
+    176,
+    112,
+    68
+   ],
+   "Leather_Cognac_Piping": [
+    124,
+    74,
+    44
+   ],
+   "Headboard_Fabric_Beige": [
+    196,
+    150,
+    104
+   ],
+   "Duvet_Warm_Grey": [
+    226,
+    214,
+    192
+   ],
+   "Boucle_Sage_Green": [
+    124,
+    132,
+    86
+   ],
+   "Bedding_Mustard_Stripe": [
+    206,
+    160,
+    82
+   ],
+   "Rug_Field_Oatmeal": [
+    210,
+    180,
+    140
+   ],
+   "Rug_Border_Taupe": [
+    168,
+    92,
+    60
+   ],
+   "Curtain_Light_Grey": [
+    236,
+    224,
+    202
+   ],
+   "Rattan_Cane_Natural": [
+    212,
+    176,
+    122
+   ],
+   "Art_Canvas_Ivory": [
+    230,
+    212,
+    184
+   ],
+   "Art_Abstract_Sand_Wash": [
+    206,
+    150,
+    108
+   ]
+  }
+ },
+ "industrial": {
+  "name": "Industrial",
+  "sw": [
+   "#b4b2ae",
+   "#4e3e32",
+   "#a86a3e"
+  ],
+  "fam": "industrial",
+  "m": {
+   "Wall_Paint_White": [
+    188,
+    186,
+    182
+   ],
+   "Wall_Paint_Partition": [
+    176,
+    174,
+    170
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    150,
+    148,
+    144
+   ],
+   "Walnut_Veneer_Dark": [
+    80,
+    64,
+    52
+   ],
+   "Walnut_Fluted_Dark": [
+    70,
+    56,
+    46
+   ],
+   "Light_Oak": [
+    112,
+    92,
+    74
+   ],
+   "Oak_Smoked_Mid": [
+    92,
+    74,
+    60
+   ],
+   "Marble_Calacatta_White": [
+    200,
+    198,
+    194
+   ],
+   "Art_Marble_Gold_Vein": [
+    170,
+    168,
+    164
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    150,
+    150,
+    148
+   ],
+   "Quartz_Top_White": [
+    176,
+    176,
+    174
+   ],
+   "Travertine_Honed_Warm": [
+    168,
+    160,
+    150
+   ],
+   "Champagne_Gold_Brushed": [
+    46,
+    46,
+    48
+   ],
+   "Brushed_Steel": [
+    150,
+    152,
+    154
+   ],
+   "Black_Steel_Powdercoat": [
+    30,
+    30,
+    32
+   ],
+   "Sculpture_Bronze": [
+    96,
+    76,
+    58
+   ],
+   "Joinery_White_Matt": [
+    200,
+    198,
+    194
+   ],
+   "Lux_Greige": [
+    110,
+    108,
+    106
+   ],
+   "Lux_Charcoal_Matt": [
+    50,
+    50,
+    52
+   ],
+   "Lux_Charcoal_Fluted": [
+    60,
+    60,
+    62
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    120,
+    116,
+    112
+   ],
+   "Door_Frame_White": [
+    80,
+    80,
+    82
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    42,
+    42,
+    44
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    96,
+    94,
+    92
+   ],
+   "Sofa_Boucle_Greige": [
+    162,
+    104,
+    62
+   ],
+   "Sofa_Cushion_Oat": [
+    178,
+    120,
+    76
+   ],
+   "Cushion_Linen_Taupe": [
+    70,
+    72,
+    76
+   ],
+   "Cushion_Velvet_Caramel": [
+    150,
+    138,
+    118
+   ],
+   "Throw_Knit_Taupe": [
+    84,
+    84,
+    86
+   ],
+   "Boucle_Cushion_Cream": [
+    196,
+    190,
+    180
+   ],
+   "Leather_Caramel": [
+    170,
+    108,
+    64
+   ],
+   "Leather_Cognac_Dining": [
+    150,
+    94,
+    56
+   ],
+   "Leather_Cognac_Piping": [
+    98,
+    60,
+    36
+   ],
+   "Headboard_Fabric_Beige": [
+    116,
+    112,
+    108
+   ],
+   "Duvet_Warm_Grey": [
+    170,
+    168,
+    164
+   ],
+   "Boucle_Sage_Green": [
+    110,
+    118,
+    100
+   ],
+   "Bedding_Mustard_Stripe": [
+    176,
+    138,
+    80
+   ],
+   "Rug_Field_Oatmeal": [
+    130,
+    128,
+    124
+   ],
+   "Rug_Border_Taupe": [
+    66,
+    66,
+    68
+   ],
+   "Curtain_Light_Grey": [
+    150,
+    148,
+    144
+   ],
+   "Rattan_Cane_Natural": [
+    150,
+    122,
+    88
+   ],
+   "Art_Canvas_Ivory": [
+    196,
+    192,
+    186
+   ],
+   "Art_Abstract_Sand_Wash": [
+    160,
+    150,
+    140
+   ]
+  }
+ },
+ "classic": {
+  "name": "Modern Classic",
+  "sw": [
+   "#ece6dc",
+   "#8a6444",
+   "#1f2e4a"
+  ],
+  "fam": "classic",
+  "m": {
+   "Wall_Paint_White": [
+    236,
+    230,
+    220
+   ],
+   "Wall_Paint_Partition": [
+    230,
+    224,
+    214
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    150,
+    112,
+    78
+   ],
+   "Walnut_Veneer_Dark": [
+    118,
+    84,
+    58
+   ],
+   "Walnut_Fluted_Dark": [
+    104,
+    74,
+    52
+   ],
+   "Light_Oak": [
+    160,
+    120,
+    84
+   ],
+   "Oak_Smoked_Mid": [
+    134,
+    98,
+    68
+   ],
+   "Marble_Calacatta_White": [
+    240,
+    238,
+    234
+   ],
+   "Art_Marble_Gold_Vein": [
+    236,
+    232,
+    226
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    222,
+    220,
+    216
+   ],
+   "Quartz_Top_White": [
+    238,
+    236,
+    232
+   ],
+   "Travertine_Honed_Warm": [
+    222,
+    208,
+    186
+   ],
+   "Champagne_Gold_Brushed": [
+    188,
+    156,
+    100
+   ],
+   "Brushed_Steel": [
+    176,
+    174,
+    168
+   ],
+   "Black_Steel_Powdercoat": [
+    40,
+    40,
+    44
+   ],
+   "Sculpture_Bronze": [
+    160,
+    124,
+    76
+   ],
+   "Joinery_White_Matt": [
+    238,
+    234,
+    226
+   ],
+   "Lux_Greige": [
+    196,
+    186,
+    172
+   ],
+   "Lux_Charcoal_Matt": [
+    48,
+    56,
+    72
+   ],
+   "Lux_Charcoal_Fluted": [
+    58,
+    66,
+    82
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    214,
+    206,
+    192
+   ],
+   "Door_Frame_White": [
+    240,
+    236,
+    228
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    36,
+    46,
+    66
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    170,
+    162,
+    150
+   ],
+   "Sofa_Boucle_Greige": [
+    218,
+    210,
+    196
+   ],
+   "Sofa_Cushion_Oat": [
+    232,
+    226,
+    214
+   ],
+   "Cushion_Linen_Taupe": [
+    42,
+    56,
+    88
+   ],
+   "Cushion_Velvet_Caramel": [
+    212,
+    190,
+    150
+   ],
+   "Throw_Knit_Taupe": [
+    170,
+    158,
+    140
+   ],
+   "Boucle_Cushion_Cream": [
+    240,
+    236,
+    226
+   ],
+   "Leather_Caramel": [
+    140,
+    96,
+    62
+   ],
+   "Leather_Cognac_Dining": [
+    54,
+    66,
+    96
+   ],
+   "Leather_Cognac_Piping": [
+    160,
+    130,
+    84
+   ],
+   "Headboard_Fabric_Beige": [
+    206,
+    196,
+    180
+   ],
+   "Duvet_Warm_Grey": [
+    226,
+    220,
+    208
+   ],
+   "Boucle_Sage_Green": [
+    140,
+    150,
+    168
+   ],
+   "Bedding_Mustard_Stripe": [
+    210,
+    184,
+    130
+   ],
+   "Rug_Field_Oatmeal": [
+    222,
+    214,
+    200
+   ],
+   "Rug_Border_Taupe": [
+    52,
+    64,
+    92
+   ],
+   "Curtain_Light_Grey": [
+    232,
+    224,
+    210
+   ],
+   "Rattan_Cane_Natural": [
+    200,
+    170,
+    124
+   ],
+   "Art_Canvas_Ivory": [
+    240,
+    236,
+    228
+   ],
+   "Art_Abstract_Sand_Wash": [
+    214,
+    200,
+    176
+   ]
+  }
+ },
+ "deco": {
+  "name": "Art Deco",
+  "sw": [
+   "#2e5448",
+   "#4a3226",
+   "#c8a050"
+  ],
+  "fam": "classic",
+  "m": {
+   "Wall_Paint_White": [
+    46,
+    84,
+    72
+   ],
+   "Wall_Paint_Partition": [
+    56,
+    94,
+    82
+   ],
+   "Floor_Homogeneous_Cream_600x600": [
+    222,
+    218,
+    212
+   ],
+   "Walnut_Veneer_Dark": [
+    74,
+    50,
+    38
+   ],
+   "Walnut_Fluted_Dark": [
+    64,
+    42,
+    32
+   ],
+   "Light_Oak": [
+    106,
+    76,
+    54
+   ],
+   "Oak_Smoked_Mid": [
+    86,
+    60,
+    44
+   ],
+   "Marble_Calacatta_White": [
+    238,
+    236,
+    232
+   ],
+   "Art_Marble_Gold_Vein": [
+    40,
+    40,
+    44
+   ],
+   "Sintered_Stone_Grey_Veined": [
+    70,
+    72,
+    74
+   ],
+   "Quartz_Top_White": [
+    232,
+    230,
+    226
+   ],
+   "Travertine_Honed_Warm": [
+    214,
+    200,
+    180
+   ],
+   "Champagne_Gold_Brushed": [
+    204,
+    166,
+    88
+   ],
+   "Brushed_Steel": [
+    190,
+    186,
+    178
+   ],
+   "Black_Steel_Powdercoat": [
+    26,
+    26,
+    28
+   ],
+   "Sculpture_Bronze": [
+    176,
+    136,
+    72
+   ],
+   "Joinery_White_Matt": [
+    232,
+    228,
+    220
+   ],
+   "Lux_Greige": [
+    60,
+    60,
+    62
+   ],
+   "Lux_Charcoal_Matt": [
+    28,
+    28,
+    30
+   ],
+   "Lux_Charcoal_Fluted": [
+    36,
+    36,
+    38
+   ],
+   "Door_Matt_Greige_Lacquer": [
+    40,
+    72,
+    62
+   ],
+   "Door_Frame_White": [
+    224,
+    218,
+    208
+   ],
+   "Main_Door_Charcoal_Lacquer": [
+    24,
+    26,
+    30
+   ],
+   "Acoustic_Panel_Felt_Greige": [
+    44,
+    76,
+    66
+   ],
+   "Sofa_Boucle_Greige": [
+    40,
+    96,
+    78
+   ],
+   "Sofa_Cushion_Oat": [
+    52,
+    110,
+    90
+   ],
+   "Cushion_Linen_Taupe": [
+    214,
+    160,
+    156
+   ],
+   "Cushion_Velvet_Caramel": [
+    30,
+    30,
+    32
+   ],
+   "Throw_Knit_Taupe": [
+    196,
+    152,
+    148
+   ],
+   "Boucle_Cushion_Cream": [
+    234,
+    224,
+    214
+   ],
+   "Leather_Caramel": [
+    30,
+    30,
+    32
+   ],
+   "Leather_Cognac_Dining": [
+    34,
+    82,
+    68
+   ],
+   "Leather_Cognac_Piping": [
+    196,
+    158,
+    82
+   ],
+   "Headboard_Fabric_Beige": [
+    28,
+    64,
+    54
+   ],
+   "Duvet_Warm_Grey": [
+    214,
+    204,
+    192
+   ],
+   "Boucle_Sage_Green": [
+    168,
+    128,
+    128
+   ],
+   "Bedding_Mustard_Stripe": [
+    196,
+    160,
+    90
+   ],
+   "Rug_Field_Oatmeal": [
+    214,
+    204,
+    186
+   ],
+   "Rug_Border_Taupe": [
+    28,
+    30,
+    34
+   ],
+   "Curtain_Light_Grey": [
+    200,
+    166,
+    160
+   ],
+   "Rattan_Cane_Natural": [
+    176,
+    140,
+    90
+   ],
+   "Art_Canvas_Ivory": [
+    26,
+    28,
+    32
+   ],
+   "Art_Abstract_Sand_Wash": [
+    204,
+    176,
+    130
+   ]
+  }
+ }
+}

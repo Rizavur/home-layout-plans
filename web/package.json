@@ -1,0 +1,18 @@
+{
+  "name": "lakeside-view-plans",
+  "private": true,
+  "version": "2.0.0",
+  "description": "3D viewer for the home layout plans (React + three.js).",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}
