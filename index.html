@@ -114,6 +114,9 @@
   .sec { margin:20px 6px 8px; font:500 10.5px var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--dim); }
   select#mode { width:100%; padding:11px 12px; border-radius:12px; border:1px solid var(--line2); background:#151519; font:inherit; color:var(--ink); cursor:pointer; }
   #themes { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  #ceils { display:flex; flex-wrap:wrap; gap:6px; }
+  #ceils button { padding:7px 12px; border-radius:999px; border:1px solid var(--line2); background:#151519; color:#d7d3cd; font:500 12.5px var(--sans); cursor:pointer; transition:background .25s, color .25s, border-color .25s; }
+  #ceils button:hover { border-color:rgba(255,255,255,.3); } #ceils button.on { background:#f4f2ee; color:#0a0a0b; border-color:#f4f2ee; }
   #themes button { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; border:1px solid var(--line2); background:#151519; color:#d7d3cd; font:500 12.5px var(--sans); cursor:pointer; text-align:left; transition:background .25s, color .25s, border-color .25s, transform .3s var(--ease); }
   #themes button:hover { border-color:rgba(255,255,255,.3); transform:translateY(-1px); }
   #themes button.on { background:#f4f2ee; color:#0a0a0b; border-color:#f4f2ee; }
@@ -209,6 +212,8 @@
     <div id="scroll">
       <div class="sec">Theme</div>
       <div id="themes"></div>
+      <div class="sec">False ceiling</div>
+      <div id="ceils"></div>
       <div class="sec" id="modeLabel">Layout option</div>
       <select id="mode"></select>
       <div class="sec">Show</div>
@@ -237,7 +242,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794647853';
+const BUILD = '1794668142';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -368,31 +373,48 @@ function addChunk(ch, fam) {
   const mm = D.mats[ch.mat]; const mesh = new THREE.Mesh(g, material(ch.mat));
   if (mm.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else { mesh.castShadow = HQ; }
   mesh.receiveShadow = HQ && !mm.e;
-  if (fam) { mesh.userData.fam = fam; mesh.visible = fam === curFam; }
+  if (fam) { mesh.userData.fam = fam; mesh.visible = famVisible(fam); }
   if (!layers[ch.layer]) { layers[ch.layer] = new THREE.Group(); layers[ch.layer].name = ch.layer; root.add(layers[ch.layer]); }
   layers[ch.layer].add(mesh);
 }
 // Furniture families: each theme uses its own furniture designs, loaded on demand per plan.
 let curFam = 'lux'; let builtFams = new Set(); const famCache = {};
+const CEILS = { wave: 'Organic wave', crescent: 'Crescent', arc: 'Sweeping arc', pill: 'Soft pill', island: 'Floating island' };
+let ceil = 'wave'; try { const s = localStorage.getItem('ceil'); if (CEILS[s]) ceil = s; } catch (e) {}
+let curCeil = 'wave';
+function famVisible(f) { return f.startsWith('c:') ? f === 'c:' + curCeil : f === curFam; }
+function wantCeil() { return D && D.ceils && D.ceils.includes(ceil) ? ceil : 'wave'; }
+async function loadVariant(plan, file, tag) {
+  if (builtFams.has(tag)) return true; const key = plan + '.' + file; const loading = document.getElementById('loading');
+  try {
+    if (!famCache[key]) { loading.style.display = 'flex'; loading.textContent = 'Loading…'; const r = await fetch('plan_' + key + '.json?v=' + BUILD, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); famCache[key] = await r.json(); }
+  } catch (e) { loading.style.display = 'none'; return false; }
+  loading.style.display = 'none';
+  if (state.plan !== plan) return false;
+  if (!builtFams.has(tag)) { const F = famCache[key]; for (const k in F.mats) if (!D.mats[k]) D.mats[k] = F.mats[k]; builtFams.add(tag); for (const ch of F.chunks) addChunk(ch, tag); }
+  return true;
+}
+function setCeil(k) {
+  ceil = k; try { localStorage.setItem('ceil', k); } catch (e) {}
+  document.querySelectorAll('#ceils button').forEach(b => b.classList.toggle('on', b.dataset.c === k)); ensureFamily();
+}
+(function buildCeils() {
+  const box = document.getElementById('ceils');
+  for (const [k, n] of Object.entries(CEILS)) { const b = document.createElement('button'); b.dataset.c = k; b.className = k === ceil ? 'on' : ''; b.textContent = n; b.onclick = () => setCeil(k); box.appendChild(b); }
+})();
 function wantFam() { const f = THEMES[theme].fam || 'lux'; return D && D.families && D.families.includes(f) ? f : 'lux'; }
 async function ensureFamily() {
-  if (!D) return; const plan = state.plan, fam = wantFam();
-  if (fam !== 'lux' && !builtFams.has(fam)) {
-    const key = plan + '.' + fam; const loading = document.getElementById('loading');
-    try {
-      if (!famCache[key]) { loading.style.display = 'flex'; loading.textContent = 'Loading furniture…'; const r = await fetch('plan_' + key + '.json?v=' + BUILD, { cache: 'no-cache' }); if (!r.ok) throw new Error(r.status); famCache[key] = await r.json(); }
-    } catch (e) { loading.style.display = 'none'; return; }
-    loading.style.display = 'none';
-    if (state.plan !== plan) return;
-    if (!builtFams.has(fam)) { const F = famCache[key]; for (const k in F.mats) if (!D.mats[k]) D.mats[k] = F.mats[k]; builtFams.add(fam); for (const ch of F.chunks) addChunk(ch, fam); }
-  }
-  if (state.plan !== plan || fam !== wantFam()) return;
-  curFam = fam; root.traverse(o => { if (o.userData.fam) o.visible = o.userData.fam === curFam; });
+  if (!D) return; const plan = state.plan, fam = wantFam(), cl = wantCeil();
+  if (fam !== 'lux' && !(await loadVariant(plan, fam, fam))) return;
+  if (cl !== 'wave' && !(await loadVariant(plan, 'ceil_' + cl, 'c:' + cl))) return;
+  if (state.plan !== plan || fam !== wantFam() || cl !== wantCeil()) return;
+  curFam = fam; curCeil = cl; root.traverse(o => { if (o.userData.fam) o.visible = famVisible(o.userData.fam); });
+  document.querySelectorAll('#ceils button').forEach(b => { b.style.display = (b.dataset.c === 'wave' || (D.ceils || []).includes(b.dataset.c)) ? '' : 'none'; });
   renderer.shadowMap.needsUpdate = true; invalidate();
 }
 function buildModel() {
-  builtFams = new Set(); curFam = 'lux';
-  for (const ch of D.chunks) addChunk(ch, ch.v ? 'lux' : null);
+  builtFams = new Set(); curFam = 'lux'; curCeil = 'wave';
+  for (const ch of D.chunks) addChunk(ch, ch.v === 1 ? 'lux' : ch.v === 2 ? 'c:wave' : null);
   renderer.shadowMap.needsUpdate = true; invalidate();
   for (const [a, b] of D.dims) dimGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a[0], 60, a[1]), new THREE.Vector3(b[0], 60, b[1])]), lineMat));
 }
