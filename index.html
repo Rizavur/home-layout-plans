@@ -290,7 +290,7 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 
 const PLANS = JSON.parse(document.getElementById('plans').textContent);
-const BUILD = '1794677918';
+const BUILD = '1794678070';
 let D = null;
 const stage = document.getElementById('stage');
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
@@ -828,14 +828,22 @@ function aiPrompt() {
     '', 'Photography: architectural interior photo for a design magazine, full-frame camera, 24 mm lens at eye level, vertical lines kept straight, natural colours, realistic soft shadows and global illumination, high detail. No people, no text, no watermarks.'].join('\n');
 }
 let aiBlob = null;
+function grabCanvas() {
+  const src = renderer.domElement; const cv = document.createElement('canvas'); cv.width = src.width; cv.height = src.height;
+  const cx = cv.getContext('2d'); cx.fillStyle = '#eae6df'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(src, 0, 0);
+  // blank check: sample a grid of pixels; a real view always has some variation
+  let lo = 255, hi = 0; const d = cx.getImageData(0, 0, cv.width, cv.height).data; const step = Math.max(4, Math.floor(d.length / 4 / 400)) * 4;
+  for (let i = 0; i < d.length; i += step) { const v = d[i] + d[i + 1] + d[i + 2]; if (v < lo) lo = v; if (v > hi) hi = v; }
+  return { cv, blank: hi - lo < 12 };
+}
+const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
 async function aiCapture(type) {
-  const w = stage.clientWidth, h = stage.clientHeight; const s = Math.min(2.5, 1800 / Math.max(w, h)) * 1;
-  const W = Math.round(w * s), H = Math.round(h * s); const pr = renderer.getPixelRatio();
-  renderer.setPixelRatio(1); renderer.setSize(W, H, false); renderer.render(scene, camera);
-  const cv = document.createElement('canvas'); cv.width = renderer.domElement.width; cv.height = renderer.domElement.height;
-  const cx = cv.getContext('2d'); cx.fillStyle = '#eae6df'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(renderer.domElement, 0, 0);
-  const url = type === 'image/jpeg' ? cv.toDataURL('image/jpeg', 0.92) : cv.toDataURL('image/png');
-  renderer.setPixelRatio(pr); renderer.setSize(w, h, false); invalidate();
+  let g = null;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    renderer.render(scene, camera); g = grabCanvas(); if (!g.blank) break;   // same task as the draw: works in Chrome/Firefox
+    invalidate(); await nextFrame(); await nextFrame(); g = grabCanvas(); if (!g.blank) break;  // after the browser shows the frame (Safari)
+  }
+  const url = type === 'image/jpeg' ? g.cv.toDataURL('image/jpeg', 0.92) : g.cv.toDataURL('image/png');
   if (!type) aiBlob = await (await fetch(url)).blob(); return url;
 }
 function aiFileName() { return 'plan-' + state.plan + '-' + (state.view ? state.view.name : 'view').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.png'; }
