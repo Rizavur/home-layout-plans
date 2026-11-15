@@ -5,6 +5,7 @@ import type { PlanData, ViewOptions } from '../types';
 
 const TOGGLES: [keyof ViewOptions, string][] = [
   ['fc', 'False ceiling & lights'],
+  ['wood', 'Wood slats in ceiling recess'],
   ['lab', 'Room names & dimensions'],
   ['pwr', 'Power points'],
   ['ac', 'Aircon trunking'],

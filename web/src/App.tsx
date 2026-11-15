@@ -19,7 +19,7 @@ import type { Screenshot } from './components/AiRenderDialog';
 import type { Lighting, PlanData, Tool, ViewOptions } from './types';
 import type { StartAt } from './lib/viewOptions';
 
-const DEFAULT_OPTIONS: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false };
+const DEFAULT_OPTIONS: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false, wood: false };
 const PLAN_HASH = /^#([a-z])(?:-(\d+))?$/;   // #c or #c-12 (plan C, scene 12)
 
 export default function App() {

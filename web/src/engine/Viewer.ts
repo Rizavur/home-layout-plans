@@ -53,7 +53,7 @@ export class Viewer {
   planKey: string | null = null;
   /** high-quality rendering: textures, shadows, reflections */
   hq = true;
-  opts: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false };
+  opts: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false, wood: false };
   viewTag: ViewTag = '';
   currentView: View | null = null;
   theme = 'lux';
@@ -287,6 +287,7 @@ export class Viewer {
     const hide = new Set(['Beams_Highlight', 'Structural_Highlight', ...(this.plan.modes[o.mode]?.hide || [])]);
     if (planLike || this.isAboveCeiling()) hide.add('Ceiling');
     if (!o.fc || planLike) { hide.add('False_Ceiling'); hide.add('Lighting'); }
+    if (!o.wood || !o.fc || planLike) hide.add('Ceiling_Wood');
     if (!o.pwr) hide.add('Power_Points');
     if (!o.ac) hide.add('Aircon_Trunking');
     if (!o.cur || tag === 'plan') hide.add('Curtains');

@@ -53,10 +53,51 @@ def cove(c, raw, it, outer, hole, z0, z1, wall_gap=True):
 def fceil_slab(c, _orig, it, outer, hole, z0, z1, m, mh):
     if m != 'fceil' or mh != 'cove' or not hole:
         return _orig(it, outer, hole, z0, z1, m, mh)
+    n0 = len(it.get('_holes', []))
     if CEIL != 'wave':
         import importlib
-        return importlib.import_module('ceil_' + CEIL).build(c, _orig, it, _dedupe(outer), _dedupe(hole), z0, z1)
-    cove(c, _orig, it, outer, hole, z0, z1)
+        importlib.import_module('ceil_' + CEIL).build(c, _orig, it, _dedupe(outer), _dedupe(hole), z0, z1)
+    else:
+        cove(c, _orig, it, outer, hole, z0, z1)
+    # optional timber slats lining the recess (own layer, switched on/off in the viewer)
+    wood_recess(c, it['name'], it.get('_holes', [])[n0:], z1)
+
+
+def _clip(poly, axis, val, keep_above):
+    """Clip a polygon to one side of the line x = val (axis 0) or y = val (axis 1)."""
+    out = []
+    inside = (lambda p: p[axis] >= val) if keep_above else (lambda p: p[axis] <= val)
+    for i in range(len(poly)):
+        a, b = poly[i - 1], poly[i]
+        if inside(b):
+            if not inside(a): out.append(_cross(a, b, axis, val))
+            out.append(b)
+        elif inside(a): out.append(_cross(a, b, axis, val))
+    return out
+
+def _cross(a, b, axis, val):
+    t = (val - a[axis]) / ((b[axis] - a[axis]) or 1e-9)
+    return (a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t)
+
+def _area(poly):
+    return abs(sum(poly[i - 1][0] * poly[i][1] - poly[i][0] * poly[i - 1][1] for i in range(len(poly)))) / 2
+
+def wood_recess(c, name, holes, z1, slat=80, gap=15):
+    """Timber slats (80 mm, 15 mm dark gaps) lining each ceiling recess, running along its long side."""
+    if not holes: return
+    it = c.item(name + '_Wood_Slats', 'Ceiling_Wood')
+    for h in holes:
+        inner = _offset(_dedupe(h), -30)
+        if len(inner) < 3 or _area(inner) < 40000: continue
+        c.PRZ(it, inner, z1 - 6, z1 - 4, 'charcoal')                        # dark backing seen through the gaps
+        x0, x1, y0, y1 = bbox(inner)
+        axis = 1 if (x1 - x0) >= (y1 - y0) else 0                          # slats run along the long side
+        lo, hi = (y0, y1) if axis == 1 else (x0, x1)
+        v = lo
+        while v < hi:
+            piece = _clip(_clip(inner, axis, v, True), axis, min(hi, v + slat), False)
+            if len(piece) >= 3 and _area(piece) > 400: c.PRZ(it, _dedupe(piece), z1 - 14, z1 - 6, 'walnut')
+            v += slat + gap
 
 def trimless_downlights(c, it, pts, z):
     for (x, y) in pts:

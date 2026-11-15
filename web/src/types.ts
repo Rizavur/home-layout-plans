@@ -82,6 +82,8 @@ export interface ViewOptions {
   cur: boolean;
   /** night mood */
   night: boolean;
+  /** timber slats lining the false-ceiling recesses */
+  wood: boolean;
 }
 
 export type Tool = 'look' | 'orbit' | 'pan' | 'zoom' | 'tape';
