@@ -91,7 +91,17 @@ def dining9(c):
     CYL(it, 6000, 5610, 110, 758, 800, 'ceramic', 24); CYL(it, 6320, 5610, 65, 758, 1050, 'ceramic', 20); CYL(it, 6320, 5610, 32, 1050, 1110, 'ceramic', 14)
     it = c.item('Dining_Linear_Pendant', 'Lighting')
     P.dining_pendant(c, it, 5505, 6805, 5600)
-    it = c.item('Ceiling_Fan_Dining_42in', 'Lighting'); c.fan(it, 7200, 4800, 2300, 2550, 530)
+    # No ceiling fan here (it could not sit over the table: beam above the table's west end + the linear pendant).
+    # Instead: a slim ducted aircon fan-coil hidden in a bulkhead along the corridor side, with a long slot
+    # diffuser blowing across the table and a return grille on the underside.
+    it = c.item('Dining_Aircon_Bulkhead_with_Slot_Diffuser', 'False_Ceiling')
+    c.B(it, 5850, 7920, 3900, 4320, 2300, 2550, 'fceil')                                 # bulkhead box (250 mm deep)
+    c.B(it, 6050, 7700, 4320, 4324, 2370, 2450, 'charcoal')                              # linear slot diffuser (2 slots)
+    for z in (2395, 2425): c.B(it, 6050, 7700, 4324, 4326, z - 3, z + 3, 'metal')
+    c.B(it, 6250, 7050, 3990, 4230, 2296, 2300, 'greige')                                # return-air grille underneath
+    for x in range(6290, 7050, 40): c.B(it, x, x + 12, 4000, 4220, 2294, 2296, 'charcoal')
+    c.downlights(it, [(5980, 4110), (7790, 4110)], 2300)
+    it = c.item('Dining_Fan_Coil_Unit_indicative', 'Aircon_Trunking'); c.B(it, 6250, 7550, 3950, 4290, 2320, 2540, 'trunk')
     it = c.item('Dry_Pantry_on_Toilet_Wall_Cabinet_Mirror_Robot_Bay', 'Furniture')
     c.cabinet(it, '-x', 5540, 6690, 7920, 480, 0, 850, 2, WM, 100, None, 'bar', hm=WHM)
     c.cabinet(it, '-x', 5010, 5537, 7920, 480, 480, 850, 1, WM, 0, None, 'bar', hm=WHM)
@@ -102,7 +112,7 @@ def dining9(c):
     B(it, 8370, 8400, 5020, 5040, 880, 2635, 'gold'); B(it, 8370, 8400, 6660, 6680, 880, 2635, 'gold'); B(it, 8370, 8400, 5040, 6660, 2615, 2635, 'gold')
     it = c.item('False_Ceiling_Dining_Coffer', 'False_Ceiling')
     c.SLABH(it, [(5850, 3900), (7920, 3900), (7920, 6700), (5850, 6700)], RRECT(6000, 7750, 4400, 6500, 150, 6), 2550, 2650, 'fceil', 'cove')
-    c.downlights(it, [(6950, 4080), (7850, 5300), (7850, 6000), (6000, 6600), (7000, 6600)], 2550)
+    c.downlights(it, [(7850, 5300), (7850, 6000), (6000, 6600), (7000, 6600)], 2550)
 
 def bedrooms(c, br3='bed'):
     # br3: 'bed' adds queen bed, painting and rug; anything else leaves bedroom 3 joinery only
