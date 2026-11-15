@@ -91,9 +91,9 @@ def dining9(c):
     CYL(it, 6000, 5610, 110, 758, 800, 'ceramic', 24); CYL(it, 6320, 5610, 65, 758, 1050, 'ceramic', 20); CYL(it, 6320, 5610, 32, 1050, 1110, 'ceramic', 14)
     it = c.item('Dining_Linear_Pendant', 'Lighting')
     P.dining_pendant(c, it, 5505, 6805, 5600)
-    # Cooling: a wall-mounted aircon on the pantry wall above the mirror, blowing across the table,
+    # Cooling: an aircon on the walkway beam just north of the pantry mirror, blowing across the table,
     # and a bladeless tower fan in the corner by the kitchen (no ceiling fan: beam + pendant over the table).
-    it = c.item('Dining_Wall_Aircon_above_Mirror', 'Fixtures'); P.wall_aircon(c, it, '-x', 8400, 5350, 6350, 2180)
+    it = c.item('Dining_Aircon_on_Walkway_Beam', 'Aircon'); P.wall_aircon(c, it, '-x', 8400, 4000, 4900, 2250)
     it = c.item('Dining_Bladeless_Tower_Fan', 'Furniture'); P.bladeless_fan(c, it, 7720, 6480, 6150, 5600)
     it = c.item('Dry_Pantry_on_Toilet_Wall_Cabinet_Mirror_Robot_Bay', 'Furniture')
     c.cabinet(it, '-x', 5540, 6690, 7920, 480, 0, 850, 2, WM, 100, None, 'bar', hm=WHM)
@@ -101,8 +101,8 @@ def dining9(c):
     B(it, 7920, 8400, 5010, 5030, 0, 480, WM); B(it, 7920, 8400, 5517, 5537, 0, 480, WM)
     B(it, 7930, 8390, 5030, 5517, 470, 480, 'charcoal'); B(it, 7970, 8370, 5040, 5507, 466, 470, 'led')
     B(it, 8250, 8390, 5140, 5400, 0, 420, 'metal'); CYL(it, 8115, 5270, 160, 0, 92, 'metal', 32); CYL(it, 8115, 5270, 153, 92, 95, 'charcoal2', 32)
-    B(it, 7910, 8400, 5010, 6690, 850, 880, 'sintered'); B(it, 8378, 8400, 5040, 6660, 900, 2070, 'mirror')
-    B(it, 8370, 8400, 5020, 5040, 880, 2090, 'gold'); B(it, 8370, 8400, 6660, 6680, 880, 2090, 'gold'); B(it, 8370, 8400, 5040, 6660, 2070, 2090, 'gold')
+    B(it, 7910, 8400, 5010, 6690, 850, 880, 'sintered'); B(it, 8378, 8400, 5040, 6660, 900, 2615, 'mirror')
+    B(it, 8370, 8400, 5020, 5040, 880, 2635, 'gold'); B(it, 8370, 8400, 6660, 6680, 880, 2635, 'gold'); B(it, 8370, 8400, 5040, 6660, 2615, 2635, 'gold')
     it = c.item('False_Ceiling_Dining_Coffer', 'False_Ceiling')
     c.SLABH(it, [(5850, 3900), (7920, 3900), (7920, 6700), (5850, 6700)], RRECT(6000, 7750, 4400, 6500, 150, 6), 2550, 2650, 'fceil', 'cove')
     c.downlights(it, [(6950, 4080), (7850, 5300), (7850, 6000), (6000, 6600), (7000, 6600)], 2550)
