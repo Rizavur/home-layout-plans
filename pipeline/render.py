@@ -8,7 +8,7 @@ def png(path, img):
     def chunk(t, d): return struct.pack('>I', len(d)) + t + d + struct.pack('>I', zlib.crc32(t + d) & 0xffffffff)
     open(path, 'wb').write(b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', w, h, 8, 2, 0, 0, 0)) + chunk(b'IDAT', zlib.compress(raw, 6)) + chunk(b'IEND', b''))
 def render(D, view, mode, out, W=640, H=400, hide_extra=()):
-    hide = set(['Ceiling', 'Beams_Highlight', 'Structural_Highlight', 'Power_Points', 'Aircon_Trunking'] + D['modes'][mode]['hide'] + list(hide_extra))
+    hide = set(['Ceiling', 'Ceiling_Wood', 'Beams_Highlight', 'Structural_Highlight', 'Power_Points', 'Aircon_Trunking'] + D['modes'][mode]['hide'] + list(hide_extra))
     if view['tag'] in ('top', 'plan', 'services'): hide |= {'False_Ceiling', 'Lighting'}
     if view['tag'] == 'services': hide -= {'Power_Points', 'Aircon_Trunking'}
     eye = np.array([view['eye'][0], view['eye'][2], view['eye'][1]], float); tgt = np.array([view['target'][0], view['target'][2], view['target'][1]], float)

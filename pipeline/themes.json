@@ -4,7 +4,7 @@
   "sw": [
    "#ece9e4",
    "#604230",
-   "#c4a874"
+   "#928476"
   ],
   "m": {},
   "fam": "lux"
@@ -186,6 +186,11 @@
     150,
     158,
     130
+   ],
+   "Bedding_Mustard_Stripe": [
+    208,
+    164,
+    92
    ]
   },
   "fam": "japandi"
@@ -362,6 +367,11 @@
     150,
     170,
     160
+   ],
+   "Bedding_Mustard_Stripe": [
+    208,
+    164,
+    92
    ]
   },
   "fam": "scandi"
@@ -508,6 +518,21 @@
     96,
     120,
     104
+   ],
+   "Leather_Cognac_Dining": [
+    168,
+    104,
+    64
+   ],
+   "Leather_Cognac_Piping": [
+    122,
+    72,
+    42
+   ],
+   "Bedding_Mustard_Stripe": [
+    208,
+    164,
+    92
    ]
   },
   "fam": "midcentury"
@@ -679,6 +704,16 @@
     170,
     160,
     148
+   ],
+   "Boucle_Sage_Green": [
+    120,
+    140,
+    108
+   ],
+   "Bedding_Mustard_Stripe": [
+    208,
+    164,
+    92
    ]
   },
   "fam": "lux"
