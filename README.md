@@ -39,14 +39,16 @@ python3 build.py          # all plans  (or: python3 build.py c f  for just C and
 
 ## Changing the website
 
-The app is React (JSX), bundled with esbuild. three.js is loaded from a CDN (see the import map in `web/index.html`).
+The app is React + TypeScript, bundled with esbuild. three.js is loaded from a CDN (see the import map in `web/index.html`).
 
 | File | What it does |
 |---|---|
-| `web/src/App.jsx` | App state: open plan, scene, options, panels; wires the UI to the 3D engine |
-| `web/src/engine/Viewer.js` | 3D engine: loads models, themes, visibility, lighting, camera moves, screenshots |
-| `web/src/engine/navigation.js` | Look-around / orbit / pan / zoom tools, walking keys, camera flights |
-| `web/src/engine/textures.js` | Procedural textures (tiles, marble, wood, fabric) |
+| `web/src/App.tsx` | App state: open plan, scene, options, panels; wires the UI to the 3D engine |
+| `web/src/engine/Viewer.ts` | 3D engine: loads models, themes, visibility, lighting, camera moves, screenshots |
+| `web/src/engine/navigation.ts` | Look-around / orbit / pan / zoom tools, walking keys, camera flights |
+| `web/src/engine/textures.ts` | Procedural textures (tiles, marble, wood, fabric) |
+| `web/src/engine/tape.ts` | Tape measure tool |
+| `web/src/types.ts` | Types for the plan data and viewer options |
 | `web/src/components/` | UI pieces: `Landing`, `TopBar`, `Stepper`, `Toolbar`, `SidePanel`, `ViewList`, `AiRenderDialog`, `Icon` |
 | `web/src/config/` | Room grouping, ceiling names, AI prompt text, data paths |
 | `web/src/lib/` | ZIP writer, "all scenes" export, scene options, localStorage helper |
@@ -56,6 +58,7 @@ The app is React (JSX), bundled with esbuild. three.js is loaded from a CDN (see
 cd web
 npm install
 npm run dev       # rebuilds on save, serves http://localhost:8000
+npm run typecheck # TypeScript check
 npm run build     # production build into ../assets and ../index.html
 ```
 
@@ -63,7 +66,7 @@ Commit the rebuilt files and push – GitHub Pages serves the repo root.
 
 ## Keyboard shortcuts
 
-O orbit · H pan · Z zoom · L look around · Shift+Z fit · W A S D / arrows walk · [ ] previous / next scene · F full view · Esc exit full view
+O orbit · H pan · Z zoom · L look around · T tape measure · Shift+Z fit · W A S D / arrows walk · [ ] previous / next scene · F full view · Esc exit full view
 
 ## Notes
 

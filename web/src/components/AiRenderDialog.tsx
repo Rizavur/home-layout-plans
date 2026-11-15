@@ -1,20 +1,30 @@
 import { useEffect, useState } from 'react';
-import Icon from './Icon.jsx';
-import { LIGHTING } from '../config/prompts.js';
+import Icon from './Icon';
+import { LIGHTING } from '../config/prompts';
+import type { Lighting } from '../types';
 
 /** Briefly swap a button's label, e.g. "Copied". */
-function useFlash() {
-  const [flash, setFlash] = useState(null);
-  const show = (id, text) => { setFlash({ id, text }); setTimeout(() => setFlash(null), 1600); };
-  const label = (id, normal) => (flash?.id === id ? flash.text : normal);
+function useFlash(): [(id: string, text: string) => void, (id: string, normal: string) => string] {
+  const [flash, setFlash] = useState<{ id: string; text: string } | null>(null);
+  const show = (id: string, text: string) => { setFlash({ id, text }); setTimeout(() => setFlash(null), 1600); };
+  const label = (id: string, normal: string) => (flash?.id === id ? flash.text : normal);
   return [show, label];
 }
 
-/**
- * Screenshot of the current scene + a ready-made prompt for ChatGPT.
- * @param {{ open, onClose, image: {url, blob, fileName}|null, makePrompt: (lighting) => string, lighting, onLighting, onZip }} props
- */
-export default function AiRenderDialog({ open, onClose, image, makePrompt, lighting, onLighting, onZip }) {
+export interface Screenshot { url: string; blob: Blob; fileName: string }
+
+interface AiRenderDialogProps {
+  open: boolean;
+  onClose: () => void;
+  image: Screenshot | null;
+  makePrompt: (lighting: Lighting) => string;
+  lighting: Lighting;
+  onLighting: (lighting: Lighting) => void;
+  onZip: () => void;
+}
+
+/** Screenshot of the current scene + a ready-made prompt for ChatGPT. */
+export default function AiRenderDialog({ open, onClose, image, makePrompt, lighting, onLighting, onZip }: AiRenderDialogProps) {
   const [prompt, setPrompt] = useState('');
   const [flash, label] = useFlash();
   useEffect(() => { if (open) setPrompt(makePrompt(lighting)); }, [open, lighting]);   // eslint-disable-line react-hooks/exhaustive-deps
@@ -24,19 +34,19 @@ export default function AiRenderDialog({ open, onClose, image, makePrompt, light
   const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
 
   const copyPrompt = async () => {
-    try { await navigator.clipboard.writeText(prompt); flash('prompt', 'Copied'); } catch (e) { flash('prompt', 'Press Ctrl+C'); }
+    try { await navigator.clipboard.writeText(prompt); flash('prompt', 'Copied'); } catch { flash('prompt', 'Press Ctrl+C'); }
   };
   const copyImage = async () => {
-    try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': image.blob })]); flash('img', 'Copied'); } catch (e) { flash('img', 'Use Download'); }
+    try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': image.blob })]); flash('img', 'Copied'); } catch { flash('img', 'Use Download'); }
   };
   const download = () => {
     const a = document.createElement('a'); a.href = URL.createObjectURL(image.blob); a.download = image.fileName; a.click();
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
-  const share = async () => { try { await navigator.share({ files: [file], text: prompt }); } catch (e) { /* cancelled */ } };
+  const share = async () => { try { await navigator.share({ files: [file], text: prompt }); } catch { /* cancelled */ } };
 
   return (
-    <div id="aiModal" className="open" onPointerDown={(e) => { if (e.target.id === 'aiModal') onClose(); }}>
+    <div id="aiModal" className="open" onPointerDown={(e) => { if ((e.target as HTMLElement).id === 'aiModal') onClose(); }}>
       <div className="aibox">
         <header>
           <div><div className="sub">AI render</div><h3>Photo-real image with ChatGPT</h3></div>
@@ -53,7 +63,7 @@ export default function AiRenderDialog({ open, onClose, image, makePrompt, light
           </div>
           <div className="aitext">
             <label className="ailbl">Lighting
-              <select value={lighting} onChange={(e) => onLighting(e.target.value)}>
+              <select value={lighting} onChange={(e) => onLighting(e.target.value as Lighting)}>
                 {Object.entries(LIGHTING).map(([k, [name]]) => <option key={k} value={k}>{name}</option>)}
               </select>
             </label>

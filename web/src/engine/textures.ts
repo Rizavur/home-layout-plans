@@ -2,19 +2,19 @@
 // The colour still comes from the material; a texture only adds pattern on top (white = no change).
 import * as THREE from 'three';
 
-function canvas(n) {
+function canvas(n: number): [HTMLCanvasElement, CanvasRenderingContext2D] {
   const c = document.createElement('canvas');
   c.width = c.height = n;
-  return [c, c.getContext('2d')];
+  return [c, c.getContext('2d')!];
 }
 
 // small deterministic random generator so textures look the same on every load
-function random(seed) {
+function random(seed: number): () => number {
   let s = seed;
   return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
 }
 
-function tiles(n, cols, rows, grout, base) {
+function tiles(n: number, cols: number, rows: number, grout: string, base: string): HTMLCanvasElement {
   const [c, g] = canvas(n); const r = random(7);
   g.fillStyle = base; g.fillRect(0, 0, n, n);
   for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(0,0,0,${r() * 0.025})`; g.fillRect(r() * n, r() * n, 2 + r() * 6, 2 + r() * 6); }
@@ -24,7 +24,7 @@ function tiles(n, cols, rows, grout, base) {
   return c;
 }
 
-function marble(n, vein, seed) {
+function marble(n: number, vein: string, seed: number): HTMLCanvasElement {
   const [c, g] = canvas(n); const r = random(seed);
   g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
   for (let k = 0; k < 14; k++) {
@@ -36,7 +36,7 @@ function marble(n, vein, seed) {
   return c;
 }
 
-function grain(n, dark, seed) {
+function grain(n: number, dark: string, seed: number): HTMLCanvasElement {
   const [c, g] = canvas(n); const r = random(seed);
   g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
   for (let i = 0; i < 260; i++) {
@@ -48,7 +48,7 @@ function grain(n, dark, seed) {
   return c;
 }
 
-function noise(n, amount, seed, blob) {
+function noise(n: number, amount: number, seed: number, blob: number): HTMLCanvasElement {
   const [c, g] = canvas(n); const r = random(seed);
   g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
   for (let i = 0; i < n * n / (blob * blob) * 2.2; i++) {
@@ -58,7 +58,7 @@ function noise(n, amount, seed, blob) {
 }
 
 // material-name pattern -> [draw function, size of one texture repeat in mm]
-const RULES = [
+const RULES: [RegExp, () => HTMLCanvasElement, number][] = [
   [/^Floor_Homogeneous/, () => tiles(1024, 2, 2, 'rgba(120,112,100,.55)', '#ffffff'), 1200],
   [/^Floor_Kitchen/, () => tiles(1024, 2, 2, 'rgba(110,104,96,.6)', '#ffffff'), 1200],
   [/^Floor_Yard|^Floor_Toilet/, () => tiles(1024, 4, 2, 'rgba(90,90,90,.55)', '#ffffff'), 1200],
@@ -71,12 +71,14 @@ const RULES = [
   [/Sofa|Boucle|Cushion|Headboard|Duvet|Linen|Pillow|Velvet|Curtain|Felt|Leather/, () => noise(512, 0.07, 4, 2), 300],
 ];
 
-const cache = {};
+/** [texture, mm per repeat] */
+export type TextureInfo = [THREE.Texture, number];
+const cache: Record<string, TextureInfo | null> = {};
 
 /** Texture for a material name, or null. Returns [THREE.Texture, mm per repeat]. */
-export function textureFor(name) {
+export function textureFor(name: string): TextureInfo | null {
   if (name in cache) return cache[name];
-  let result = null;
+  let result: TextureInfo | null = null;
   for (const [re, draw, mm] of RULES) {
     if (!re.test(name)) continue;
     const t = new THREE.CanvasTexture(draw());
@@ -89,8 +91,8 @@ export function textureFor(name) {
 }
 
 /** Box-project UVs onto a triangle soup: each triangle uses the plane its normal faces most. */
-export function addBoxUVs(geometry, mm) {
-  const p = geometry.attributes.position.array;
+export function addBoxUVs(geometry: THREE.BufferGeometry, mm: number): void {
+  const p = geometry.attributes.position.array as Float32Array;
   const uv = new Float32Array(p.length / 3 * 2);
   for (let t = 0; t < p.length; t += 9) {
     const ax = p[t + 3] - p[t], ay = p[t + 4] - p[t + 1], az = p[t + 5] - p[t + 2];

@@ -15,18 +15,18 @@ void main(){vec2 uv=(gl_FragCoord.xy-.5*r)/r.y;vec2 q=uv+(m-.5)*.18;float T=t*.0
   col*=band*1.5;col+=pow(band,4.)*.35;col+=vec3(.012,.012,.016);
   col+=(h(gl_FragCoord.xy+t)-.5)*.025;gl_FragColor=vec4(col,1.);}`;
 
-export default function LandingBackground({ active }) {
-  const ref = useRef(null);
+export default function LandingBackground({ active }: { active: boolean }) {
+  const ref = useRef<HTMLCanvasElement>(null);
   const activeRef = useRef(active);
   activeRef.current = active;
-  const kickRef = useRef(() => {});
+  const kickRef = useRef<() => void>(() => {});
 
   useEffect(() => {
-    const cv = ref.current;
+    const cv = ref.current!;
     const gl = cv.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
     if (!gl) { cv.style.background = 'radial-gradient(60% 50% at 70% 30%, #1d3550, #08080a)'; return undefined; }
-    const shader = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
-    const prog = gl.createProgram();
+    const shader = (type: number, src: string): WebGLShader => { const s = gl.createShader(type)!; gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    const prog = gl.createProgram()!;
     gl.attachShader(prog, shader(gl.VERTEX_SHADER, VERTEX)); gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, FRAGMENT));
     gl.linkProgram(prog); gl.useProgram(prog);
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
@@ -35,12 +35,12 @@ export default function LandingBackground({ active }) {
     const uR = gl.getUniformLocation(prog, 'r'), uT = gl.getUniformLocation(prog, 't'), uM = gl.getUniformLocation(prog, 'm');
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let mx = 0.5, my = 0.5, tx = 0.5, ty = 0.5, last = 0, raf = 0; const t0 = performance.now();
-    const onMove = (e) => { tx = e.clientX / innerWidth; ty = 1 - e.clientY / innerHeight; };
+    const onMove = (e: PointerEvent) => { tx = e.clientX / innerWidth; ty = 1 - e.clientY / innerHeight; };
     const size = () => {
       const s = 0.5 * Math.min(devicePixelRatio || 1, 2);
       cv.width = Math.max(2, innerWidth * s | 0); cv.height = Math.max(2, innerHeight * s | 0); gl.viewport(0, 0, cv.width, cv.height);
     };
-    const frame = (now) => {
+    const frame = (now: number) => {
       raf = 0;
       if (!activeRef.current || document.hidden) return;
       raf = requestAnimationFrame(frame);

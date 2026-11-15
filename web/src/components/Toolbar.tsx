@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react';
-import Icon from './Icon.jsx';
+import Icon from './Icon';
+import type { Tool } from '../types';
 
-const TOOLS = [
+const TOOLS: { id: Tool; icon: string; label: string; key: string; title: string }[] = [
   { id: 'orbit', icon: 'orbit', label: 'Orbit', key: 'O', title: 'Orbit (O)' },
   { id: 'pan', icon: 'pan', label: 'Pan', key: 'H', title: 'Pan (H)' },
   { id: 'zoom', icon: 'zoom', label: 'Zoom', key: 'Z', title: 'Zoom (Z)' },
   { id: 'look', icon: 'eye', label: 'Look', key: 'L', title: 'Look around (L)' },
+  { id: 'tape', icon: 'tape', label: 'Tape', key: 'T', title: 'Tape measure (T)' },
 ];
 
-const HINTS = {
+const HINTS: Record<Tool, string> = {
   look: 'Look around (L): drag to turn your head · scroll to zoom the lens · W A S D / arrows to walk',
   orbit: 'Orbit (O): drag to rotate · scroll to zoom · right-drag or Shift-drag to pan',
   pan: 'Pan (H): drag to slide the view · scroll to zoom · right-drag to orbit',
   zoom: 'Zoom (Z): drag up/down to zoom · scroll also zooms towards the cursor',
+  tape: 'Tape measure (T): click two points to measure · Esc clears · right-drag to orbit · scroll to zoom',
 };
 
 /** Navigation tools (like SketchUp) plus the AI render buttons, bottom right. */
-export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip }) {
+interface ToolbarProps {
+  tool: Tool;
+  onTool: (tool: Tool) => void;
+  onFit: () => void;
+  onAiRender: () => void;
+  onZip: () => void;
+}
+
+export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip }: ToolbarProps) {
   return (
     <div id="tools" className="glass">
       {TOOLS.map((t) => (
@@ -32,7 +43,7 @@ export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip }) {
 }
 
 /** Short how-to for the active tool; fades out after a few seconds. */
-export function ToolHint({ tool }) {
+export function ToolHint({ tool }: { tool: Tool }) {
   const [shown, setShown] = useState(false);
   useEffect(() => { setShown(true); const t = setTimeout(() => setShown(false), 6000); return () => clearTimeout(t); }, [tool]);
   return <div id="hint" className="glass" style={{ opacity: shown ? 1 : 0 }}>{HINTS[tool] || ''}</div>;

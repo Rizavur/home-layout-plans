@@ -197,3 +197,7 @@
     #hint { display:none; }
     #stepper { bottom:16px; }
   }
+
+/* tape measure */
+.tape-labels { position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:4; }
+.lbl.tape { background:#ff6a3d; color:#fff; border-color:rgba(255,255,255,.35); font:600 11.5px var(--mono); }

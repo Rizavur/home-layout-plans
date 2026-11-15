@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { groupViews, roomOf, shortName } from '../config/rooms.js';
+import { groupViews, roomOf, shortName } from '../config/rooms';
 
 /** Scenes grouped by room. One group is open at a time; it follows the current scene. */
-export default function ViewList({ views, current, onSelect }) {
+import type { View } from '../types';
+
+interface ViewListProps { views: View[]; current: number; onSelect: (index: number) => void }
+
+export default function ViewList({ views, current, onSelect }: ViewListProps) {
   const groups = groupViews(views);
   const currentGroup = views[current] ? roomOf(views[current].name) : null;
-  const [open, setOpen] = useState(currentGroup);
+  const [open, setOpen] = useState<string | null>(currentGroup);
   useEffect(() => { setOpen(currentGroup); }, [currentGroup]);
   return (
     <div className="views" id="views">

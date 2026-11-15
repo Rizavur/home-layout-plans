@@ -1,8 +1,9 @@
-import Icon from './Icon.jsx';
-import ViewList from './ViewList.jsx';
-import { THEMES, CEILINGS } from '../config/data.js';
+import Icon from './Icon';
+import ViewList from './ViewList';
+import { THEMES, CEILINGS } from '../config/data';
+import type { PlanData, ViewOptions } from '../types';
 
-const TOGGLES = [
+const TOGGLES: [keyof ViewOptions, string][] = [
   ['fc', 'False ceiling & lights'],
   ['lab', 'Room names & dimensions'],
   ['pwr', 'Power points'],
@@ -11,11 +12,26 @@ const TOGGLES = [
   ['night', 'Night mood'],
 ];
 
-/**
- * Right-hand panel: theme, false-ceiling design, layout option, what to show, scenes by room, notes.
- * `open` is for narrow screens (slide-over); on wide screens App hides the whole panel instead.
- */
-export default function SidePanel({ open, title, plan, theme, onTheme, ceiling, onCeiling, opts, onOption, hq, onHq, viewIndex, onView, onClose }) {
+interface SidePanelProps {
+  /** narrow screens: slide-over open (on wide screens App hides the whole panel instead) */
+  open: boolean;
+  title: string;
+  plan: PlanData | null;
+  theme: string;
+  onTheme: (key: string) => void;
+  ceiling: string;
+  onCeiling: (key: string) => void;
+  opts: ViewOptions;
+  onOption: (change: Partial<ViewOptions>) => void;
+  hq: boolean;
+  onHq: (on: boolean) => void;
+  viewIndex: number;
+  onView: (index: number) => void;
+  onClose: () => void;
+}
+
+/** Right-hand panel: theme, false-ceiling design, layout option, what to show, scenes by room, notes. */
+export default function SidePanel({ open, title, plan, theme, onTheme, ceiling, onCeiling, opts, onOption, hq, onHq, viewIndex, onView, onClose }: SidePanelProps) {
   const ceilings = Object.entries(CEILINGS).filter(([k]) => k === 'wave' || plan?.ceils?.includes(k));
   return (
     <aside id="panel" className={open ? '' : 'closed'}>

@@ -98,6 +98,7 @@ VIEWS = VC.HEAD + [
  ('Bedroom 3 – Option B two standing desks', (6450, 2950, 1650), (8550, 1300, 700), 85, '', 'optB'),
  ('Kitchen (closed) – inside', (4300, 7150, 1650), (7800, 9250, 800), 88, '', 'optA'),
  ('Kitchen – towards the door', (7300, 8600, 1600), (4300, 6800, 1000), 85, '', 'optA'),
+ ('Kitchen – from the service yard end', (7550, 8050, 1600), (3900, 7600, 1000), 85, '', 'optA'),
  ('Kitchen – door shut', (3000, 5200, 1600), (4600, 6900, 1100), 70, '', 'optA_door'),
 ] + VC.tail(False)
 LABELS = VC.COMMON_LABELS + [('Living', 2900, 2600), ('Dining', 1150, 5065), ('Study room', 6950, 5900), ('Dry pantry', 5300, 5850), ('Bedroom 3', 7000, 1500)]

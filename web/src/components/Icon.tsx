@@ -1,6 +1,7 @@
 // Heroicons (outline, 24px grid) used across the app. https://heroicons.com
 // Usage: <Icon name="home" size={18} />
-const PATHS = {
+const PATHS: Record<string, string[]> = {
+ "tape": ["M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"],
  "arrowRight": [
   "M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
  ],
@@ -64,7 +65,9 @@ const PATHS = {
  ]
 };
 
-export default function Icon({ name, size = 18, className = 'hi' }) {
+export interface IconProps { name: string; size?: number; className?: string }
+
+export default function Icon({ name, size = 18, className = 'hi' }: IconProps) {
   const paths = PATHS[name];
   if (!paths) return null;
   return (

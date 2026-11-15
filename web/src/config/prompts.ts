@@ -1,8 +1,9 @@
 // Text for the "AI render" prompts (ChatGPT or any image AI).
 // buildPrompt() assembles one prompt from the current scene, theme, furniture, ceiling and lighting.
-import { roomOf } from './rooms.js';
+import { roomOf } from './rooms';
+import type { Lighting } from '../types';
 
-export const THEME_TEXT = {
+export const THEME_TEXT: Record<string, string> = {
   lux: 'Modern luxury: warm white walls, dark walnut veneer, white Calacatta marble, champagne-brass accents, greige boucle and soft taupe textiles',
   japandi: 'Japandi: warm white walls, natural light oak, slatted timber, black metal details, linen upholstery, muted sage accents, calm and uncluttered',
   nordic: 'Nordic / Scandinavian: bright white walls, pale birch and oak, light grey fabrics, dusty-blue and sage accents, brushed steel, airy and light',
@@ -17,7 +18,7 @@ export const THEME_TEXT = {
   dark: 'Dark luxe: mocha walls, black marble, dark walnut, gold accents, oxblood and deep-green cushions, moody and rich',
 };
 
-export const FURNITURE_TEXT = {
+export const FURNITURE_TEXT: Record<string, string> = {
   lux: 'curved boucle sofa with plush cushions, upholstered channel-tufted headboard, marble-top dining table on sculpted walnut trestle legs, armless cognac leather dining chairs with black legs, pebble-shaped coffee table, brass linear pendant',
   japandi: 'low oak platform sofa with loose linen cushions, low oak platform bed with slatted headboard, solid oak trestle dining table, wishbone chairs with woven cane seats, paper lantern lights',
   scandi: 'sofa raised on slim tapered oak legs, light bed frame on tapered legs, rounded oak dining table on splayed legs, moulded shell dining chairs, oval oak coffee table, white dome pendants, tripod floor lamp',
@@ -26,7 +27,7 @@ export const FURNITURE_TEXT = {
   classic: 'Chesterfield sofa with rolled arms and button tufting, arched wingback tufted headboard, marble dining table on turned pedestals, upholstered Louis-style chairs, brass lantern pendants',
 };
 
-export const CEILING_TEXT = {
+export const CEILING_TEXT: Record<string, string> = {
   wave: 'white plasterboard false ceiling with an organic free-form recessed cove and hidden warm LED strip lighting',
   crescent: 'white plasterboard false ceiling with a crescent-moon-shaped recessed cove, hidden warm LED glow along its edge and a thin brass inlay line',
   arc: 'white plasterboard false ceiling with a recessed cove whose one long side is a single sweeping curve, hidden warm LED glow and a thin brass inlay line',
@@ -34,22 +35,28 @@ export const CEILING_TEXT = {
   island: 'white plasterboard false ceiling with a softly rounded tray and a floating pebble-shaped panel inside it, warm LED halo all around',
 };
 
-export const LIGHTING = {
+/** lighting key -> [menu label, prompt text] */
+export const LIGHTING: Record<Lighting, [string, string]> = {
   day: ['Daytime', 'bright natural daylight streaming through the windows, soft shadows, lights off except the cove lighting'],
   golden: ['Golden hour', 'late-afternoon golden-hour sun through the windows, warm long shadows, cove lighting softly on'],
   night: ['Evening, lights on', 'evening, dark outside the windows, all interior lights on: warm 3000K cove lighting, downlights and lamps, cosy atmosphere'],
 };
 
-/**
- * @param {object} p
- * @param {string} p.viewName   scene name, e.g. "Living – TV wall"
- * @param {boolean} p.fromAbove camera is above the ceiling (plan view)
- * @param {string} p.theme      theme key
- * @param {string} p.family     furniture family key
- * @param {string} p.ceiling    ceiling design key
- * @param {string} p.lighting   'day' | 'golden' | 'night'
- */
-export function buildPrompt({ viewName, fromAbove, theme, family, ceiling, lighting }) {
+export interface PromptInput {
+  /** scene name, e.g. "Living – TV wall" */
+  viewName: string;
+  /** camera is above the ceiling (plan view) */
+  fromAbove: boolean;
+  /** theme key */
+  theme: string;
+  /** furniture style key */
+  family: string;
+  /** false-ceiling design key */
+  ceiling: string;
+  lighting: Lighting;
+}
+
+export function buildPrompt({ viewName, fromAbove, theme, family, ceiling, lighting }: PromptInput): string {
   if (fromAbove) {
     return [
       'Turn this 3D screenshot into a photorealistic top-down 3D floor plan render (cutaway, no ceiling) of a 5-room HDB flat in Singapore.',

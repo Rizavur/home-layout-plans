@@ -13,7 +13,7 @@ const watch = process.argv.includes('--watch');
 const build = String(Date.now());
 
 const options = {
-  entryPoints: [resolve(here, 'src/main.jsx')],
+  entryPoints: [resolve(here, 'src/main.tsx')],
   bundle: true,
   format: 'esm',
   outfile: resolve(root, 'assets/app.js'),

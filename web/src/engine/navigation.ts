@@ -4,35 +4,50 @@
 // Also animates smooth camera flights between scenes.
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import type { Tool } from '../types';
 
 const WALK_STEP_MM = 25;   // per frame while a walk key is held
 
-function ease(k) { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
+function ease(k: number): number { return k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; }
 
-const typingIn = (e) => ['SELECT', 'INPUT', 'TEXTAREA'].includes(e.target.tagName);
+const typingIn = (e: KeyboardEvent): boolean => ['SELECT', 'INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName);
+
+interface Tween {
+  p0: THREE.Vector3; t0: THREE.Vector3; f0: number;
+  p1: THREE.Vector3; t1: THREE.Vector3; f1: number;
+  start: number; ms: number; lift: number; done: () => void;
+}
 
 export class Navigator {
+  camera: THREE.PerspectiveCamera;
+  dom: HTMLElement;
+  invalidate: () => void;
+  onTool: (tool: Tool) => void;
+  controls: OrbitControls;
+  /** what is driving the camera */
+  nav: 'look' | 'orbit' | 'tween' = 'look';
+  /** the tool button that is highlighted */
+  tool: Tool = 'look';
+  look = { yaw: 0, pitch: 0, pointers: new Map<number, [number, number]>(), lastPinch: 0 };
+  tween: Tween | null = null;
+  keys = new Set<string>();
+  private _off: (() => void)[] = [];
+
   /**
-   * @param {THREE.PerspectiveCamera} camera
-   * @param {HTMLElement} dom   the canvas
-   * @param {() => void} invalidate  ask for a redraw
-   * @param {(tool: string) => void} onTool  told whenever the active tool changes
+   * @param dom         the canvas
+   * @param invalidate  ask for a redraw
+   * @param onTool      told whenever the active tool changes
    */
-  constructor(camera, dom, invalidate, onTool) {
+  constructor(camera: THREE.PerspectiveCamera, dom: HTMLElement, invalidate: () => void, onTool: (tool: Tool) => void) {
     this.camera = camera; this.dom = dom; this.invalidate = invalidate; this.onTool = onTool;
     this.controls = new OrbitControls(camera, dom);
     Object.assign(this.controls, { enableDamping: true, dampingFactor: 0.12, screenSpacePanning: true, zoomSpeed: 0.9 });
     this.controls.addEventListener('change', invalidate);
-    this.nav = 'look';          // what is driving the camera: 'look' | 'orbit' | 'tween'
-    this.tool = 'look';         // the tool button that is highlighted
-    this.look = { yaw: 0, pitch: 0, pointers: new Map(), lastPinch: 0 };
-    this.tween = null;
-    this.keys = new Set();
     this._listen();
   }
 
   // ---------- look-around ----------
-  lookDir() {
+  lookDir(): THREE.Vector3 {
     const { yaw, pitch } = this.look;
     return new THREE.Vector3(Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch));
   }
@@ -42,22 +57,29 @@ export class Navigator {
     this.look.pitch = Math.asin(Math.max(-1, Math.min(1, d.y)));
   }
   applyLook() { this.camera.lookAt(this.camera.position.clone().add(this.lookDir())); this.invalidate(); }
-  zoomLens(factor) {
+  zoomLens(factor: number): void {
     this.camera.fov = Math.max(20, Math.min(100, this.camera.fov * factor));
     this.camera.updateProjectionMatrix(); this.invalidate();
   }
   /** Where the camera is looking at, whichever mode drives it. */
-  currentTarget() {
+  currentTarget(): THREE.Vector3 {
     return this.nav === 'look' ? this.camera.position.clone().add(this.lookDir().multiplyScalar(1500)) : this.controls.target.clone();
   }
 
   // ---------- tools ----------
-  /** @param {'look'|'orbit'|'pan'|'zoom'} tool  @param {boolean} fromView  true when a scene just set the camera */
-  setTool(tool, fromView = false) {
+  /** @param fromView  true when a scene just set the camera */
+  setTool(tool: Tool, fromView = false): void {
     const was = this.nav; this.tool = tool;
     const c = this.controls;
     if (tool === 'look') {
       this.nav = 'look'; this.syncLookFromCamera(); c.enabled = false; this.applyLook();
+    } else if (tool === 'tape') {
+      // tape measure: left click / tap is for measuring; right-drag orbits, middle-drag / two fingers zoom and pan
+      if (!fromView && was === 'look') c.target.copy(this.currentTargetFromLook());
+      this.nav = 'orbit'; c.enabled = true;
+      c.mouseButtons = { LEFT: -1 as THREE.MOUSE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.ROTATE };
+      c.touches = { ONE: -1 as THREE.TOUCH, TWO: THREE.TOUCH.DOLLY_PAN };
+      c.update();
     } else {
       this.nav = 'orbit';
       // leaving look mode by hand: orbit around the point we were looking at
@@ -74,10 +96,10 @@ export class Navigator {
     }
     this.onTool(tool);
   }
-  currentTargetFromLook() { return this.camera.position.clone().add(this.lookDir().multiplyScalar(1500)); }
+  currentTargetFromLook(): THREE.Vector3 { return this.camera.position.clone().add(this.lookDir().multiplyScalar(1500)); }
 
   /** Frame a bounding box (SketchUp "Zoom extents"). */
-  zoomExtents(box) {
+  zoomExtents(box: THREE.Box3): void {
     if (box.isEmpty()) return;
     const centre = box.getCenter(new THREE.Vector3());
     const size = box.getSize(new THREE.Vector3()).length();
@@ -90,7 +112,7 @@ export class Navigator {
   }
 
   // ---------- camera flights between scenes ----------
-  flyTo(eye, target, fov, ms, done) {
+  flyTo(eye: THREE.Vector3, target: THREE.Vector3, fov: number, ms: number, done: () => void): void {
     if (ms <= 0) {
       this.camera.position.copy(eye); this.controls.target.copy(target);
       this.camera.fov = fov; this.camera.updateProjectionMatrix(); this.camera.lookAt(target);
@@ -103,7 +125,7 @@ export class Navigator {
     };
     this.nav = 'tween'; this.controls.enabled = false; this.invalidate();
   }
-  stepTween(now) {
+  stepTween(now: number): boolean {
     const tw = this.tween; if (!tw) return false;
     const k = Math.min(1, (now - tw.start) / tw.ms), e = ease(k);
     this.camera.position.lerpVectors(tw.p0, tw.p1, e); this.camera.position.y += Math.sin(Math.PI * e) * tw.lift;
@@ -116,13 +138,13 @@ export class Navigator {
 
   // ---------- per-frame update ----------
   /** Advance flights / walking / orbit damping. Returns true if the camera moved. */
-  update(now) {
+  update(now: number): boolean {
     let moved = this.stepTween(now);
     if (!moved) moved = this.walkStep();
     if (this.nav === 'orbit' && this.controls.update()) moved = true;   // damping still settling
     return moved;
   }
-  walkStep() {
+  walkStep(): boolean {
     const k = this.keys; if (k.size === 0) return false;
     if (this.nav !== 'look') this.syncLookFromCamera();
     const f = new THREE.Vector3(Math.sin(this.look.yaw), 0, Math.cos(this.look.yaw));
@@ -139,16 +161,18 @@ export class Navigator {
   }
 
   // ---------- input ----------
-  _listen() {
+  private _listen(): void {
     const el = this.dom, look = this.look;
-    const on = (t, n, f, o) => { t.addEventListener(n, f, o); (this._off ||= []).push(() => t.removeEventListener(n, f, o)); };
-    on(el, 'pointerdown', (e) => {
+    const on = <E extends Event>(t: EventTarget, n: string, f: (e: E) => void, o?: AddEventListenerOptions) => {
+      t.addEventListener(n, f as EventListener, o); this._off.push(() => t.removeEventListener(n, f as EventListener, o));
+    };
+    on<PointerEvent>(el, 'pointerdown', (e) => {
       if (this.nav !== 'look') return;
       el.setPointerCapture(e.pointerId); look.pointers.set(e.pointerId, [e.clientX, e.clientY]); look.lastPinch = 0;
     });
-    on(el, 'pointermove', (e) => {
+    on<PointerEvent>(el, 'pointermove', (e) => {
       if (this.nav !== 'look' || !look.pointers.has(e.pointerId)) return;
-      const prev = look.pointers.get(e.pointerId); look.pointers.set(e.pointerId, [e.clientX, e.clientY]);
+      const prev = look.pointers.get(e.pointerId)!; look.pointers.set(e.pointerId, [e.clientX, e.clientY]);
       if (look.pointers.size === 1) {
         const radPerPx = (this.camera.fov * Math.PI / 180) / Math.max(1, el.clientHeight);   // follows the lens
         look.yaw += (e.clientX - prev[0]) * radPerPx;
@@ -160,12 +184,12 @@ export class Navigator {
         look.lastPinch = dist;
       }
     });
-    const end = (e) => { look.pointers.delete(e.pointerId); look.lastPinch = 0; };
+    const end = (e: PointerEvent) => { look.pointers.delete(e.pointerId); look.lastPinch = 0; };
     on(el, 'pointerup', end); on(el, 'pointercancel', end);
-    on(el, 'wheel', (e) => { if (this.nav !== 'look') return; e.preventDefault(); this.zoomLens(Math.exp(e.deltaY * 0.0012)); }, { passive: false });
-    on(window, 'keydown', (e) => { if (!typingIn(e) && !e.metaKey && !e.ctrlKey) this.keys.add(e.key.toLowerCase()); });
-    on(window, 'keyup', (e) => this.keys.delete(e.key.toLowerCase()));
+    on<WheelEvent>(el, 'wheel', (e) => { if (this.nav !== 'look') return; e.preventDefault(); this.zoomLens(Math.exp(e.deltaY * 0.0012)); }, { passive: false });
+    on<KeyboardEvent>(window, 'keydown', (e) => { if (!typingIn(e) && !e.metaKey && !e.ctrlKey) this.keys.add(e.key.toLowerCase()); });
+    on<KeyboardEvent>(window, 'keyup', (e) => this.keys.delete(e.key.toLowerCase()));
     on(window, 'blur', () => this.keys.clear());
   }
-  dispose() { (this._off || []).forEach((f) => f()); this.controls.dispose(); }
+  dispose(): void { this._off.forEach((f) => f()); this.controls.dispose(); }
 }

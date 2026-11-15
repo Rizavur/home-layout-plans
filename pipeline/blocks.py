@@ -57,9 +57,12 @@ def foyer(c, corner='round'):
     B(it, 3345, 3360, 6718 + R, 7130, 394, 400, 'led')                                                       # glow under the floating seat
     shelf = P._offset(seat, -40)
     P.soft_slab(c, it, shelf, 120, 138, 'walnut', 6, 2)                                                       # floating shoe tray
-    B(it, 3720, 3740, 6718, 7140, 500, 1500, 'walnut'); B(it, 3700, 3720, 6760, 7110, 650, 1050, 'fabric') # timber back + padded back rest
-    B(it, 3290, 3740, 6718, 7140, 1482, 1500, 'white'); B(it, 3310, 3340, 6730, 7130, 1476, 1482, 'led')   # top shelf with LED
-    cabinet(it, '-x', 6700, 7150, 3290, 450, 1500, 2650, 1, 'white', 0, None, None)
+    B(it, 3720, 3740, 6718, 7140, 500, 1950, 'walnut'); B(it, 3700, 3720, 6760, 7110, 650, 1050, 'fabric') # timber back + padded back rest
+    # short upper cabinet (1950-2650) whose open end is curved like the seat – no flat side panel facing the hall
+    top = P._dedupe([(3740, 7150), (3300, 7150)] + c.ARC(3300 + R, 6700 + R, R, 180, 270, 18) + [(3740, 6700)])
+    c.PRZ(it, top, 1950, 2650, 'white')
+    c.PRZ(it, P._offset(top, -25), 1944, 1950, 'led')                                                        # soft light onto the bench
+    B(it, 3296, 3300, 6930, 6936, 1960, 2640, 'reveal'); B(it, 3296, 3300, 6700 + R, 7150, 2290, 2296, 'reveal')   # door lines
     for (cx, cy, z) in ((3560, 6900, 138), (3560, 7040, 138), (3480, 6800, 0)):
         c.PRZ(it, c.RRECT(cx - 140, cx + 140, cy - 45, cy + 45, 30, 3), z, z + 90, 'charcoal')               # a few pairs of shoes
     it = c.item('Foyer_Shoe_Cabinet_with_Grab_and_Go_Niche', 'Furniture')
@@ -187,7 +190,7 @@ def kitchen_closed(c, lay='Kitchen_Closed'):
     it = c.item('Kitchen_Base_Drawers_Dining_Wall', lay)
     krun(it, '+y', 7400, 600, 0, 870, 150, [(5890, 6540, 'drawers4'), (6540, 7190, 'drawers'), (7190, 7840, 'drawers')], 'top')
     it = c.item('Kitchen_Wall_Cabinets_Dining_Wall', lay)
-    krun(it, '+y', 7150, 350, 1500, 2250, 0, [(5890, 6540, 'door2'), (6540, 7190, 'door2'), (7190, 7840, 'door2')], 'bottom')
+    krun(it, '+y', 7150, 350, 1500, 2650, 0, [(5890, 6540, 'door2'), (6540, 7190, 'door2'), (7190, 7840, 'door2')], 'bottom')
     it = c.item('Sintered_Stone_Top_and_Backsplash_Dining_Wall', lay)
     B(it, 5890, 7840, 6800, 7420, 870, 900, 'sintered'); B(it, 5890, 7840, 6800, 6815, 900, 1500, 'sintered')
     it = c.item('Kitchen_Appliance_Garage', lay)
@@ -211,10 +214,10 @@ def kitchen_common(c):
     it = c.item('Sintered_Stone_Top_and_Backsplash_Hob_Wall', 'Kitchen')
     B(it, 4810, 7840, 8680, 9300, 870, 900, 'sintered'); V(it, 6840, 7340, 8780, 9200, 870, 900, 'sintered'); B(it, 4810, 7840, 9285, 9300, 900, 1500, 'sintered')
     it = c.item('Kitchen_Wall_Cabinets_Stove_Side_KEPT', 'Kitchen')
-    krun(it, '-y', 8950, 350, 1500, 2250, 0, [(4810, 5410, 'door2'), (5410, 6010, 'door2')], 'bottom')
-    krun(it, '-y', 8950, 350, 1500, 2250, 0, [(6610, 7225, 'door'), (7225, 7840, 'door')], 'bottom')
-    krun(it, '-y', 8950, 350, 2253, 2650, 0, [(4810, 5410, 'flat'), (5410, 6010, 'flat'), (6010, 6610, 'flat'), (6610, 7225, 'flat'), (7225, 7840, 'flat')], 'bottom')
-    krun(it, '-y', 8950, 350, 1563, 2250, 0, [(6010, 6610, 'flat')], 'bottom')
+    # wall cabinets on the hob / oven wall: tall doors all the way to the ceiling
+    krun(it, '-y', 8950, 350, 1500, 2650, 0, [(4810, 5410, 'door2'), (5410, 6010, 'door2')], 'bottom')
+    krun(it, '-y', 8950, 350, 1500, 2650, 0, [(6610, 7225, 'door'), (7225, 7840, 'door')], 'bottom')
+    krun(it, '-y', 8950, 350, 1563, 2650, 0, [(6010, 6610, 'door2')], 'bottom')                     # above the cooker hood
     krun(it, '-y', 8600, 700, 1900, 2650, 0, [(3990, 4400, 'door'), (4400, 4810, 'door')], 'bottom')
     it = c.item('Kitchen_Sink_and_Tap', 'Kitchen')
     B(it, 6820, 7360, 8760, 9220, 700, 870, 'steel'); V(it, 6840, 7340, 8780, 9200, 720, 870, 'steel')

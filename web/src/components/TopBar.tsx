@@ -1,8 +1,21 @@
-import Icon from './Icon.jsx';
-import { PLANS } from '../config/data.js';
+import Icon from './Icon';
+import { PLANS } from '../config/data';
 
 /** Top of the viewer: home, plan letters, current scene, full view, and the button that shows / hides the side panel. */
-export default function TopBar({ planKey, room, title, onHome, onPlan, onFullView, onTogglePanel, panelShown }) {
+interface TopBarProps {
+  planKey: string | null;
+  /** room group of the current scene */
+  room: string;
+  /** short scene name */
+  title: string;
+  onHome: () => void;
+  onPlan: (key: string) => void;
+  onFullView: () => void;
+  onTogglePanel: () => void;
+  panelShown: boolean;
+}
+
+export default function TopBar({ planKey, room, title, onHome, onPlan, onFullView, onTogglePanel, panelShown }: TopBarProps) {
   return (
     <div id="topbar">
       <button id="homeBtn" className="glass" title="All plans" onClick={onHome}><Icon name="home" size={19} /></button>

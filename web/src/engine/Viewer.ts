@@ -5,19 +5,21 @@
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
-import { Navigator } from './navigation.js';
-import { textureFor, addBoxUVs } from './textures.js';
-import { THEMES, planUrl } from '../config/data.js';
+import { Navigator } from './navigation';
+import { textureFor, addBoxUVs } from './textures';
+import { TapeMeasure } from './tape';
+import { THEMES, planUrl } from '../config/data';
+import type { Chunk, PlanData, Tool, VariantData, View, ViewOptions, ViewTag } from '../types';
 
 const DAY_BG = 0xeae6df, NIGHT_BG = 0x14120f;
 const CEILING_HEIGHT = 2600;     // camera above this = looking from above (plan views)
 const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|Android|iPhone|iPad/.test(navigator.userAgent);
 // warm point lights switched on for the night mood: [x, y(plan), z]
-const NIGHT_LIGHT_SPOTS = [[3200, 2900, 2300], [1150, 5100, 2300], [6150, 5600, 2300], [12900, 2600, 2300], [10000, 1800, 2300],
+const NIGHT_LIGHT_SPOTS: [number, number, number][] = [[3200, 2900, 2300], [1150, 5100, 2300], [6150, 5600, 2300], [12900, 2600, 2300], [10000, 1800, 2300],
   [7000, 1500, 2300], [5900, 8000, 2300], [2700, 7400, 2300], [9900, 6000, 2300], [12000, 6000, 2300]];
 
 /** Decode a base64 string of little-endian int16 vertex coordinates. */
-function decodePositions(b64) {
+function decodePositions(b64: string): Float32Array {
   const bin = atob(b64); const bytes = new Uint8Array(bin.length);
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   const q = new Int16Array(bytes.buffer); const pos = new Float32Array(q.length);
@@ -25,41 +27,81 @@ function decodePositions(b64) {
   return pos;
 }
 
-const planCache = {};
-async function fetchJson(file) {
+const planCache: Record<string, unknown> = {};
+async function fetchJson<T>(file: string): Promise<T> {
   if (!planCache[file]) {
     const r = await fetch(planUrl(file), { cache: 'no-cache' });
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     planCache[file] = await r.json();
   }
-  return planCache[file];
+  return planCache[file] as T;
+}
+
+export interface ViewerEvents {
+  /** the active navigation tool changed */
+  onTool: (tool: Tool) => void;
+  /** show a loading message, or null to hide it */
+  onLoading: (text: string | null) => void;
 }
 
 export class Viewer {
+  container: HTMLElement;
+  labelsEl: HTMLElement;
+  events: ViewerEvents;
+  /** the open plan (views, modes, labels, dims, info, ...) */
+  plan: PlanData | null = null;
+  planKey: string | null = null;
+  /** high-quality rendering: textures, shadows, reflections */
+  hq = true;
+  opts: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false };
+  viewTag: ViewTag = '';
+  currentView: View | null = null;
+  theme = 'lux';
+  ceiling = 'wave';
+  dirty = true;
+  // three.js objects (created in _setupRenderer / _setupScene)
+  renderer!: THREE.WebGLRenderer;
+  scene!: THREE.Scene;
+  camera!: THREE.PerspectiveCamera;
+  envTex: THREE.Texture | null = null;
+  hemi!: THREE.HemisphereLight;
+  sun!: THREE.DirectionalLight;
+  fill!: THREE.DirectionalLight;
+  amb!: THREE.AmbientLight;
+  nightLights: THREE.PointLight[] = [];
+  root!: THREE.Group;
+  dimGroup!: THREE.Group;
+  lineMat!: THREE.LineBasicMaterial;
+  layers: Record<string, THREE.Group> = {};
+  materials: Record<string, THREE.MeshStandardMaterial> = {};
+  emissive: THREE.MeshStandardMaterial[] = [];
+  loadedVariants = new Set<string>();
+  activeFamily = 'lux';
+  activeCeiling = 'wave';
+  labelEls: [HTMLElement, THREE.Vector3][] = [];
+  nav: Navigator;
+  tape: TapeMeasure;
+  tapeLayer: HTMLElement;
+  private _onVisible = (): void => this.invalidate();
+
   /**
-   * @param {HTMLElement} container  element the canvas is added to (the stage)
-   * @param {HTMLElement} labelsEl   element that holds the room-name / dimension labels
-   * @param {{ onTool?: (t: string) => void, onLoading?: (text: string|null) => void }} events
+   * @param container  element the canvas is added to (the stage)
+   * @param labelsEl   element that holds the room-name / dimension labels
    */
-  constructor(container, labelsEl, events = {}) {
+  constructor(container: HTMLElement, labelsEl: HTMLElement, events: Partial<ViewerEvents> = {}) {
     this.container = container; this.labelsEl = labelsEl;
     this.events = { onTool: () => {}, onLoading: () => {}, ...events };
-    this.plan = null;            // plan data (views, modes, labels, dims, info, ...)
-    this.planKey = null;
-    this.hq = true;
-    this.opts = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false };
-    this.viewTag = '';
-    this.theme = 'lux'; this.ceiling = 'wave';
-    this.dirty = true;
     this._setupRenderer(); this._setupScene();
-    this.nav = new Navigator(this.camera, this.renderer.domElement, () => this.invalidate(), (t) => this.events.onTool(t));
+    this.nav = new Navigator(this.camera, this.renderer.domElement, () => this.invalidate(), (t) => { this.tape?.setActive(t === 'tape'); this.events.onTool(t); });
+    this.tapeLayer = document.createElement('div'); this.tapeLayer.className = 'tape-labels'; this.container.appendChild(this.tapeLayer);
+    this.tape = new TapeMeasure(this.scene, this.camera, this.renderer.domElement, this.root, this.tapeLayer, () => this.invalidate());
     this._startLoop();
   }
 
-  invalidate() { this.dirty = true; }
+  invalidate(): void { this.dirty = true; }
 
   // ---------------------------------------------------------------- setup
-  _setupRenderer() {
+  private _setupRenderer(): void {
     // preserveDrawingBuffer keeps the last frame so screenshots work in every browser (Safari clears it otherwise)
     const r = this.renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true, preserveDrawingBuffer: true });
     r.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.25 : 1.5));
@@ -71,10 +113,10 @@ export class Viewer {
     this.container.prepend(r.domElement);
   }
 
-  _setupScene() {
+  private _setupScene(): void {
     const scene = this.scene = new THREE.Scene();
     try { const pm = new THREE.PMREMGenerator(this.renderer); this.envTex = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); }
-    catch (e) { this.envTex = null; }
+    catch { this.envTex = null; }
     this.camera = new THREE.PerspectiveCamera(60, 1, 30, 400000);
     this.hemi = new THREE.HemisphereLight(0xfff6ea, 0xa89a86, 0.55); scene.add(this.hemi);
     const sun = this.sun = new THREE.DirectionalLight(0xffe9cc, 2.6);
@@ -96,8 +138,8 @@ export class Viewer {
     this.labelEls = [];
   }
 
-  _startLoop() {
-    let lastAbove = null;
+  private _startLoop(): void {
+    let lastAbove: boolean | null = null;
     this.renderer.setAnimationLoop((now) => {
       if (!this.plan) return;
       if (this.nav.update(now)) this.dirty = true;
@@ -107,19 +149,19 @@ export class Viewer {
       if (above !== lastAbove) { lastAbove = above; this.applyVisibility(); }
       this.renderer.render(this.scene, this.camera);
       if (this.opts.lab) this._placeLabels();
+      this.tape.place(this.container.clientWidth, this.container.clientHeight);
     });
-    this._onVisible = () => this.invalidate();
     document.addEventListener('visibilitychange', this._onVisible);
   }
 
   // ---------------------------------------------------------------- plans and models
   /** Load a plan ('a'..'f') and build its model. Resolves with the plan data. */
-  async loadPlan(key) {
+  async loadPlan(key: string): Promise<PlanData> {
     this.events.onLoading(`Loading ${key.toUpperCase()}…`);
-    let data;
-    try { data = await fetchJson(key); }
-    catch (e) { this.events.onLoading(`Could not load this plan (${e.message}). Please reload the page.`); throw e; }
-    this.plan = data; this.planKey = key;
+    let data: PlanData;
+    try { data = await fetchJson<PlanData>(key); }
+    catch (e) { this.events.onLoading(`Could not load this plan (${(e as Error).message}). Please reload the page.`); throw e; }
+    this.plan = data; this.planKey = key; this.tape?.clear();
     this.opts.mode = data.modes.open ? 'open' : Object.keys(data.modes)[0];
     this._rebuild();
     await this._ensureVariants();
@@ -127,30 +169,31 @@ export class Viewer {
     return data;
   }
 
-  _rebuild() {
+  private _rebuild(): void {
+    const plan = this.plan!;
     this._clearModel();
     // v = 1: default furniture (swapped by other furniture families); v = 2: default false ceiling (swapped by other designs)
-    for (const ch of this.plan.chunks) this._addChunk(ch, ch.v === 1 ? 'lux' : ch.v === 2 ? 'c:wave' : null);
-    for (const [a, b] of this.plan.dims) {
+    for (const ch of plan.chunks) this._addChunk(ch, ch.v === 1 ? 'lux' : ch.v === 2 ? 'c:wave' : null);
+    for (const [a, b] of plan.dims) {
       const g = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(a[0], 60, a[1]), new THREE.Vector3(b[0], 60, b[1])]);
       this.dimGroup.add(new THREE.Line(g, this.lineMat));
     }
     this.applyVisibility();
   }
 
-  _clearModel() {
-    this.root.traverse((o) => o.geometry && o.geometry.dispose());
+  private _clearModel(): void {
+    this.root.traverse((o) => { if ((o as THREE.Mesh).geometry) (o as THREE.Mesh).geometry.dispose(); });
     Object.values(this.materials).forEach((m) => m.dispose());
     this.root.clear(); this.dimGroup.clear();
     this.layers = {}; this.materials = {}; this.emissive = [];
     this.loadedVariants = new Set(); this.activeFamily = 'lux'; this.activeCeiling = 'wave';
   }
 
-  _themeColour(name) { return THEMES[this.theme]?.m[name] || this.plan.mats[name].c; }
+  private _themeColour(name: string): [number, number, number] { return THEMES[this.theme]?.m[name] || this.plan!.mats[name].c; }
 
-  _material(name) {
+  private _material(name: string): THREE.MeshStandardMaterial {
     if (this.materials[name]) return this.materials[name];
-    const m = this.plan.mats[name]; const rgb = this._themeColour(name);
+    const m = this.plan!.mats[name]; const rgb = this._themeColour(name);
     const colour = new THREE.Color().setRGB(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255, THREE.SRGBColorSpace);
     const glassy = m.a < 0.99;
     const shiny = /Mirror|Chrome|Glass|Screen|Hob_Black/.test(name);
@@ -167,13 +210,13 @@ export class Viewer {
     return mat;
   }
 
-  /** @param chunk {layer, mat, b64}  @param variant tag of a swappable group ('lux', 'japandi', 'c:wave', ...) or null */
-  _addChunk(chunk, variant) {
+  /** @param variant  tag of a swappable group ('lux', 'japandi', 'c:wave', ...) or null */
+  private _addChunk(chunk: Chunk, variant: string | null): void {
     let g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(decodePositions(chunk.b64), 3));
-    try { g = toCreasedNormals(g, Math.PI / 5); } catch (e) { g.computeVertexNormals(); }
+    try { g = toCreasedNormals(g, Math.PI / 5); } catch { g.computeVertexNormals(); }
     const tx = this.hq ? textureFor(chunk.mat) : null; if (tx) addBoxUVs(g, tx[1]);
-    const info = this.plan.mats[chunk.mat];
+    const info = this.plan!.mats[chunk.mat];
     const mesh = new THREE.Mesh(g, this._material(chunk.mat));
     if (info.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else mesh.castShadow = this.hq;
     mesh.receiveShadow = this.hq && !info.e;
@@ -184,27 +227,27 @@ export class Viewer {
 
   // ---------------------------------------------------------------- themes, furniture families, ceilings
   /** Furniture family the current theme uses (falls back to the default if this plan lacks it). */
-  family() { const f = THEMES[this.theme]?.fam || 'lux'; return this.plan?.families?.includes(f) ? f : 'lux'; }
+  family(): string { const f = THEMES[this.theme]?.fam || 'lux'; return this.plan?.families?.includes(f) ? f : 'lux'; }
   /** Ceiling design in use (falls back to the default if this plan lacks it). */
-  ceilingDesign() { return this.plan?.ceils?.includes(this.ceiling) ? this.ceiling : 'wave'; }
-  _variantVisible(tag) { return tag.startsWith('c:') ? tag === 'c:' + this.activeCeiling : tag === this.activeFamily; }
+  ceilingDesign(): string { return this.plan?.ceils?.includes(this.ceiling) ? this.ceiling : 'wave'; }
+  private _variantVisible(tag: string): boolean { return tag.startsWith('c:') ? tag === 'c:' + this.activeCeiling : tag === this.activeFamily; }
 
-  setTheme(key) {
+  setTheme(key: string): void {
     this.theme = key;
-    if (!this.plan) return;
+    const plan = this.plan; if (!plan) return;
     for (const [name, mat] of Object.entries(this.materials)) {
-      if (!this.plan.mats[name]) continue;
+      if (!plan.mats[name]) continue;
       const c = this._themeColour(name);
       mat.color.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace);
-      if (this.plan.mats[name].e) mat.emissive.copy(mat.color);
+      if (plan.mats[name].e) mat.emissive.copy(mat.color);
     }
-    this.invalidate(); this._ensureVariants();
+    this.invalidate(); void this._ensureVariants();
   }
 
-  setCeiling(key) { this.ceiling = key; if (this.plan) this._ensureVariants(); }
+  setCeiling(key: string): void { this.ceiling = key; if (this.plan) void this._ensureVariants(); }
 
   /** Load (once) and show the furniture family and ceiling design that the current choices need. */
-  async _ensureVariants() {
+  private async _ensureVariants(): Promise<void> {
     const key = this.planKey, fam = this.family(), ceil = this.ceilingDesign();
     if (fam !== 'lux' && !(await this._loadVariant(fam, fam))) return;
     if (ceil !== 'wave' && !(await this._loadVariant('ceil_' + ceil, 'c:' + ceil))) return;
@@ -214,13 +257,13 @@ export class Viewer {
     this.renderer.shadowMap.needsUpdate = true; this.invalidate();
   }
 
-  async _loadVariant(file, tag) {
+  private async _loadVariant(file: string, tag: string): Promise<boolean> {
     if (this.loadedVariants.has(tag)) return true;
-    const key = this.planKey; let data;
+    const key = this.planKey; let data: VariantData;
     this.events.onLoading('Loading…');
-    try { data = await fetchJson(`${key}.${file}`); } catch (e) { this.events.onLoading(null); return false; }
+    try { data = await fetchJson<VariantData>(`${key}.${file}`); } catch { this.events.onLoading(null); return false; }
     this.events.onLoading(null);
-    if (this.planKey !== key) return false;
+    if (this.planKey !== key || !this.plan) return false;
     if (!this.loadedVariants.has(tag)) {
       for (const k in data.mats) if (!this.plan.mats[k]) this.plan.mats[k] = data.mats[k];
       this.loadedVariants.add(tag);
@@ -230,15 +273,14 @@ export class Viewer {
   }
 
   /** High-quality rendering (textures, shadows, reflections). Rebuilds the model. */
-  setHQ(on) { this.hq = on; if (this.plan) { this._rebuild(); this._ensureVariants(); } }
+  setHQ(on: boolean): void { this.hq = on; if (this.plan) { this._rebuild(); void this._ensureVariants(); } }
 
   // ---------------------------------------------------------------- visibility and lighting
-  /** @param {Partial<{mode, fc, lab, pwr, ac, cur, night}>} opts */
-  setOptions(opts) { Object.assign(this.opts, opts); this.applyVisibility(); }
+  setOptions(opts: Partial<ViewOptions>): void { Object.assign(this.opts, opts); this.applyVisibility(); }
 
-  isAboveCeiling() { return this.camera.position.y > CEILING_HEIGHT; }
+  isAboveCeiling(): boolean { return this.camera.position.y > CEILING_HEIGHT; }
 
-  applyVisibility() {
+  applyVisibility(): void {
     if (!this.plan) return;
     const o = this.opts, tag = this.viewTag;
     const planLike = tag === 'top' || tag === 'plan' || tag === 'services';
@@ -268,17 +310,17 @@ export class Viewer {
   }
 
   // ---------------------------------------------------------------- labels
-  _buildLabels() {
+  private _buildLabels(): void {
     this.labelsEl.innerHTML = ''; this.labelEls = [];
     if (!this.opts.lab || !this.plan) return;
-    const add = (text, cls, p) => {
+    const add = (text: string, cls: string, p: THREE.Vector3) => {
       const e = document.createElement('div'); e.className = cls; e.textContent = text;
       this.labelsEl.appendChild(e); this.labelEls.push([e, p]);
     };
     for (const [t, x, y] of this.plan.labels) add(t, 'lbl', new THREE.Vector3(x, 150, y));
     for (const [a, b, t] of this.plan.dims) add(t + ' mm', 'lbl dim', new THREE.Vector3((a[0] + b[0]) / 2, 80, (a[1] + b[1]) / 2));
   }
-  _placeLabels() {
+  private _placeLabels(): void {
     const w = this.container.clientWidth, h = this.container.clientHeight, p = new THREE.Vector3();
     for (const [e, pos] of this.labelEls) {
       p.copy(pos).project(this.camera);
@@ -289,7 +331,7 @@ export class Viewer {
   }
 
   // ---------------------------------------------------------------- camera
-  _fovFor(view) {
+  private _fovFor(view: View): number {
     const aspect = this.container.clientWidth / Math.max(1, this.container.clientHeight);
     let vf = Math.min(view.fov * 0.78, 78);
     if (aspect < 1) {   // portrait screens: keep the horizontal field of view
@@ -300,7 +342,7 @@ export class Viewer {
   }
 
   /** Move the camera to a scene. Plan views look straight down from high above. */
-  showView(view, { instant = false } = {}) {
+  showView(view: View, { instant = false }: { instant?: boolean } = {}): void {
     this.viewTag = view.tag || '';
     const eye = new THREE.Vector3(view.eye[0], view.eye[2], view.eye[1]);
     const target = new THREE.Vector3(view.target[0], view.target[2], view.target[1]);
@@ -310,16 +352,19 @@ export class Viewer {
     this.nav.flyTo(eye, target, this._fovFor(view), instant ? 0 : 900, () => {
       this.nav.controls.update();
       // walk-around scenes start in look mode, overviews in orbit mode
-      this.nav.setTool(view.eye[2] < 5000 && view.tag !== 'plan' ? 'look' : 'orbit', true);
+      const keepTape = this.nav.tool === 'tape';   // stay in tape-measure mode when stepping through scenes
+      this.nav.setTool(keepTape ? 'tape' : view.eye[2] < 5000 && view.tag !== 'plan' ? 'look' : 'orbit', true);
       this.applyVisibility();
     });
     this.applyVisibility();
   }
 
-  setTool(tool) { this.nav.setTool(tool); }
-  zoomExtents() { this.nav.zoomExtents(new THREE.Box3().setFromObject(this.root)); this.applyVisibility(); }
+  setTool(tool: Tool): void { this.nav.setTool(tool); }
+  /** Remove all tape measurements. */
+  clearMeasurements(): void { this.tape.clear(); }
+  zoomExtents(): void { this.nav.zoomExtents(new THREE.Box3().setFromObject(this.root)); this.applyVisibility(); }
 
-  resize() {
+  resize(): void {
     const w = this.container.clientWidth, h = this.container.clientHeight;
     if (!w || !h) return;
     this.renderer.setSize(w, h, false);
@@ -330,10 +375,10 @@ export class Viewer {
 
   // ---------------------------------------------------------------- screenshots
   /** Copy the canvas into a 2D canvas; reports whether the frame looks blank (all one colour). */
-  _grab() {
+  private _grab(): { canvas: HTMLCanvasElement; blank: boolean } {
     const src = this.renderer.domElement;
     const cv = document.createElement('canvas'); cv.width = src.width; cv.height = src.height;
-    const cx = cv.getContext('2d');
+    const cx = cv.getContext('2d')!;
     cx.fillStyle = '#eae6df'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(src, 0, 0);
     const d = cx.getImageData(0, 0, cv.width, cv.height).data;
     const step = Math.max(4, Math.floor(d.length / 4 / 400)) * 4;
@@ -343,9 +388,9 @@ export class Viewer {
   }
 
   /** Screenshot of the current view as a data URL ('image/png' or 'image/jpeg'). */
-  async capture(type = 'image/png') {
-    const nextFrame = () => new Promise((r) => requestAnimationFrame(() => r()));
-    let shot = null;
+  async capture(type: 'image/png' | 'image/jpeg' = 'image/png'): Promise<string> {
+    const nextFrame = (): Promise<void> => new Promise((r) => requestAnimationFrame(() => r()));
+    let shot = this._grab();
     for (let attempt = 0; attempt < 4; attempt++) {
       this.renderer.render(this.scene, this.camera); shot = this._grab(); if (!shot.blank) break;   // Chrome / Firefox
       this.invalidate(); await nextFrame(); await nextFrame(); shot = this._grab(); if (!shot.blank) break;   // Safari
@@ -353,9 +398,9 @@ export class Viewer {
     return type === 'image/jpeg' ? shot.canvas.toDataURL('image/jpeg', 0.92) : shot.canvas.toDataURL('image/png');
   }
 
-  dispose() {
+  dispose(): void {
     this.renderer.setAnimationLoop(null);
     document.removeEventListener('visibilitychange', this._onVisible);
-    this.nav.dispose(); this._clearModel(); this.renderer.dispose(); this.renderer.domElement.remove();
+    this.tape.dispose(); this.nav.dispose(); this._clearModel(); this.renderer.dispose(); this.renderer.domElement.remove();
   }
 }

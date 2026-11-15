@@ -1,12 +1,20 @@
-import Icon from './Icon.jsx';
-import LandingBackground from './LandingBackground.jsx';
-import { PLANS, previewUrl } from '../config/data.js';
+import Icon from './Icon';
+import LandingBackground from './LandingBackground';
+import { PLANS, previewUrl } from '../config/data';
 
 /** Home page: one card per plan with its plan-view preview. */
-export default function Landing({ visible, onOpenPlan, onCompare }) {
+import type { PointerEvent } from 'react';
+
+interface LandingProps {
+  visible: boolean;
+  onOpenPlan: (key: string) => void;
+  onCompare: () => void;
+}
+
+export default function Landing({ visible, onOpenPlan, onCompare }: LandingProps) {
   // spotlight that follows the pointer across a card
-  const track = (e) => {
-    const card = e.target.closest('.card'); if (!card) return;
+  const track = (e: PointerEvent<HTMLDivElement>) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('.card'); if (!card) return;
     const r = card.getBoundingClientRect();
     card.style.setProperty('--mx', `${e.clientX - r.left}px`); card.style.setProperty('--my', `${e.clientY - r.top}px`);
   };
