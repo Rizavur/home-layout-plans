@@ -1,4 +1,4 @@
-web/node_modules/
+web/node_modules
 pipeline/__pycache__/
 pipeline/r_*.png
 pipeline/plan_*.json
