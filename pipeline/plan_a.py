@@ -25,15 +25,17 @@ def build(c):
     it = c.item('Living_Wall_Art_Marble_Diptych', 'Decor'); P.painting(c, it, 'x', 5550, -1, 1990, 2730, 1050, 1950, 'artm'); P.painting(c, it, 'x', 5550, -1, 2790, 3530, 1050, 1950, 'artm')
     it = c.item('Curtains_Living', 'Curtains'); c.curtain_full(it, 290, 5550, 1375, 420, 420, 6, 2540)
     it = c.item('Living_Floor_Lamp', 'Lighting'); P.floor_lamp(c, it, 5150, 1700)
-    # ---- Dining by the shelter (8 Nov) ----
+    # ---- Dining by the shelter ----
     # 1900 x 1000 table for 7
     chairs = [(x, 4335, '-y') for x in (700, 1300, 1900)] + [(x, 5795, '+y') for x in (700, 1300, 1900)] + [(2490, 5065, '+x')]
     P.dining_set(c, (340, 2240, 4565, 5565), chairs)
     it = c.item('Dining_Linear_Pendant', 'Lighting'); P.dining_pendant(c, it, 650, 1930, 5065)
     CYL(it, 790, 5065, 3, 1690, 2550, 'metal', 6); CYL(it, 1790, 5065, 3, 1690, 2550, 'metal', 6)
     it = c.item('Ceiling_Fan_Dining_42in', 'Lighting'); c.fan(it, 2950, 5300, 2300, 2550, 530)
+    it = c.item('Dining_Wall_Aircon_West_Wall', 'Fixtures'); P.wall_aircon(c, it, '+x', 250, 4565, 5565, 2180)
+    it = c.item('Dining_Bladeless_Tower_Fan', 'Furniture'); P.bladeless_fan(c, it, 2180, 6170, 1290, 5065)
     it = c.item('Dining_Centrepiece', 'Decor'); CYL(it, 1290, 5065, 110, 758, 800, 'ceramic', 24); CYL(it, 1290, 5065, 55, 800, 1020, 'ceramic', 18)
-    # ---- Study room beside kitchen (8 Nov) with options ----
+    # ---- Study room beside the kitchen, with options ----
     it = c.item('Study_Partition_Walls', 'Partitions')
     B(it, 5550, 5650, 5000, 6700, 0, 2650, 'wallp'); B(it, 5650, 5850, 5000, 5100, 0, 2250, 'wallp')
     B(it, 5850, 6280, 5000, 5100, 0, 2650, 'wallp'); B(it, 7600, 8400, 5000, 5100, 0, 2650, 'wallp'); B(it, 6280, 7600, 5000, 5100, 2100, 2650, 'wallp')

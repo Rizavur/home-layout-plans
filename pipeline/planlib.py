@@ -164,6 +164,38 @@ def bedside_sconce(c, it, wx, cy, side=-1, z=1250):
     else:                     # modern lux: opal cylinder with champagne-brass rings
         CYL(it, sx, cy, 62, z - 100, z + 50, 'lightw', 20); CYL(it, sx, cy, 66, z - 104, z - 96, 'gold', 20); CYL(it, sx, cy, 66, z + 46, z + 62, 'gold', 20)
 
+
+def wall_aircon(c, it, face, wall, a0, a1, z0=2180):
+    """Wall-mounted split aircon (1000 x 300 x 230 mm) high on a wall.
+    face = direction the unit blows ('-x', '+x', '-y', '+y'); wall = the wall-face coordinate; a0..a1 = span along the wall."""
+    d, h = 230, 300
+    s = -1 if face[0] == '-' else 1
+    w0, w1 = sorted((wall, wall + s * d))
+    if face[1] == 'x':
+        c.PRZ(it, c.RRECT(w0, w1, a0, a1, 45, 4), z0, z0 + h, 'white')
+        fx = wall + s * d
+        c.B(it, min(fx, fx + s * 4), max(fx, fx + s * 4), a0 + 50, a1 - 50, z0 + 18, z0 + 62, 'charcoal')     # air outlet
+        c.B(it, min(fx, fx + s * 3), max(fx, fx + s * 3), a1 - 140, a1 - 110, z0 + 150, z0 + 162, 'lightw')   # display
+    else:
+        c.PRZ(it, c.RRECT(a0, a1, w0, w1, 45, 4), z0, z0 + h, 'white')
+        fy = wall + s * d
+        c.B(it, a0 + 50, a1 - 50, min(fy, fy + s * 4), max(fy, fy + s * 4), z0 + 18, z0 + 62, 'charcoal')
+        c.B(it, a1 - 140, a1 - 110, min(fy, fy + s * 3), max(fy, fy + s * 3), z0 + 150, z0 + 162, 'lightw')
+
+def bladeless_fan(c, it, x, y, tx, ty):
+    """Free-standing bladeless tower fan (about 1.05 m tall) at (x, y), facing the point (tx, ty)."""
+    dx, dy = tx - x, ty - y; L = math.hypot(dx, dy) or 1.0; dx, dy = dx / L, dy / L
+    c.CYL(it, x, y, 120, 0, 70, 'charcoal', 28); c.CYL(it, x, y, 110, 70, 80, 'steel', 28)      # round base
+    c.CYL(it, x, y, 52, 80, 270, 'white', 20)                                                     # motor body
+    U, V, W = (-dy, dx, 0), (0, 0, 1), (dx, dy, 0)
+    a, b, t, n = 95, 390, 32, 36                                                                    # loop: half-width, half-height, ring width
+    O = (x - dx * 15, y - dy * 15, 270 + b)
+    ring = lambda k, r: (r[0] * math.cos(2 * math.pi * k / n), r[1] * math.sin(2 * math.pi * k / n))
+    for k in range(n):
+        quad = [ring(k, (a, b)), ring(k + 1, (a, b)), ring(k + 1, (a - t, b - t)), ring(k, (a - t, b - t))]
+        c.PR3(it, quad, O, U, V, W, 0, 60, 'white')
+    c.CYL(it, x, y, 14, 262, 272, 'lightw', 10)                                                  # status light
+
 def setup(L, LQ):
     c = Ctx()
     for k, v in L.items(): setattr(c, k, v)
