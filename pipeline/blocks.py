@@ -48,16 +48,20 @@ def foyer(c, corner='round'):
     B(it, 2080, 2088, 6745, 7355, 200, 215, 'gold'); B(it, 2080, 2088, 6745, 7355, 1985, 2000, 'gold')
     it = c.item('Shelter_Door_Handles', 'Doors'); c.lever(it, 'x', 1745, 1, 6780, 1000, 1, 'steel')
     # Shoe bench (y 6700-7150) + shoe cabinet with grab-and-go niche (y 7150-7550), clear of the DB box (y 7550-8250).
-    it = c.item('Foyer_Shoe_Bench', 'Furniture')
-    B(it, 3290, 3740, 6700, 6718, 0, 1500, 'white'); B(it, 3290, 3740, 7132, 7150, 0, 1500, 'white')       # end panels
-    B(it, 3290, 3740, 6718, 7132, 400, 440, 'walnut')                                                     # seat board
-    P.soft_slab(c, it, c.RRECT(3300, 3730, 6726, 7124, 30, 4), 440, 500, 'fabric', 20, 3)                   # seat cushion
-    for z in (60, 230): B(it, 3330, 3740, 6718, 7132, z, z + 18, 'walnut')                                 # open shoe racks below
-    B(it, 3720, 3740, 6718, 7132, 500, 1500, 'walnut'); B(it, 3700, 3720, 6730, 7120, 650, 1050, 'fabric') # timber back + padded back rest
-    B(it, 3290, 3740, 6718, 7132, 1482, 1500, 'white'); B(it, 3310, 3340, 6730, 7120, 1476, 1482, 'led')   # top shelf with LED
+    # Open, floating shoe bench with a curved end (no side boards), y 6718-7140, wall-hung from x 3740.
+    it = c.item('Foyer_Shoe_Bench_Curved', 'Furniture')
+    R = 360                                                                                                 # radius of the rounded open end
+    seat = P._dedupe([(3740, 7140), (3330, 7140)] + c.ARC(3330 + R, 6718 + R, R, 180, 270, 18) + [(3740, 6718)])
+    P.soft_slab(c, it, seat, 400, 440, 'walnut', 12, 2)                                                       # seat board
+    P.soft_slab(c, it, P._offset(seat, -12), 440, 495, 'fabric', 22, 3)                                      # seat cushion
+    B(it, 3345, 3360, 6718 + R, 7130, 394, 400, 'led')                                                       # glow under the floating seat
+    shelf = P._offset(seat, -40)
+    P.soft_slab(c, it, shelf, 120, 138, 'walnut', 6, 2)                                                       # floating shoe tray
+    B(it, 3720, 3740, 6718, 7140, 500, 1500, 'walnut'); B(it, 3700, 3720, 6760, 7110, 650, 1050, 'fabric') # timber back + padded back rest
+    B(it, 3290, 3740, 6718, 7140, 1482, 1500, 'white'); B(it, 3310, 3340, 6730, 7130, 1476, 1482, 'led')   # top shelf with LED
     cabinet(it, '-x', 6700, 7150, 3290, 450, 1500, 2650, 1, 'white', 0, None, None)
-    for (cy, z) in ((6820, 60 + 18), (7010, 60 + 18), (6860, 230 + 18)):
-        c.PRZ(it, c.RRECT(3420, 3700, cy - 45, cy + 45, 30, 3), z, z + 90, 'charcoal')                   # a few pairs of shoes
+    for (cx, cy, z) in ((3560, 6900, 138), (3560, 7040, 138), (3480, 6800, 0)):
+        c.PRZ(it, c.RRECT(cx - 140, cx + 140, cy - 45, cy + 45, 30, 3), z, z + 90, 'charcoal')               # a few pairs of shoes
     it = c.item('Foyer_Shoe_Cabinet_with_Grab_and_Go_Niche', 'Furniture')
     cabinet(it, '-x', 7150, 7550, 3290, 450, 150, 1000, 1, 'white', 0, None, None)          # floating shoe cabinet, slipper gap below
     B(it, 3320, 3350, 7160, 7540, 144, 150, 'led')

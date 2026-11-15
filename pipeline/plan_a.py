@@ -89,6 +89,7 @@ VIEWS = VC.HEAD + [
  ('Living – TV wall and console', (3900, 2670, 1350), (290, 2670, 950), 75, ''),
  ('Living – organic wave ceiling', (4900, 4250, 1250), (2700, 2700, 2650), 88, ''),
  ('Dining – table for 7 by the shelter', (3300, 4200, 1550), (800, 5300, 700), 75, ''),
+ ('Dining – from the shelter side', (1300, 6150, 1600), (1500, 3300, 900), 85, ''),
  ('Dining – false ceiling, pendant, fan', (4600, 4300, 1300), (1600, 5300, 2500), 85, ''),
  ('Dry pantry – mirror and robot bay', (2600, 4300, 1500), (5550, 5850, 1300), 72, ''),
  ('Study room – Option A two standing desks', (6950, 5300, 1650), (6950, 6700, 700), 90, '', 'optA'),
@@ -96,6 +97,7 @@ VIEWS = VC.HEAD + [
  ('Bedroom 3 – Option A queen bed', (8350, 3450, 1650), (5850, 1450, 1200), 88, '', 'optA'),
  ('Bedroom 3 – Option B two standing desks', (6450, 2950, 1650), (8550, 1300, 700), 85, '', 'optB'),
  ('Kitchen (closed) – inside', (4300, 7150, 1650), (7800, 9250, 800), 88, '', 'optA'),
+ ('Kitchen – towards the door', (7300, 8600, 1600), (4300, 6800, 1000), 85, '', 'optA'),
  ('Kitchen – door shut', (3000, 5200, 1600), (4600, 6900, 1100), 70, '', 'optA_door'),
 ] + VC.tail(False)
 LABELS = VC.COMMON_LABELS + [('Living', 2900, 2600), ('Dining', 1150, 5065), ('Study room', 6950, 5900), ('Dry pantry', 5300, 5850), ('Bedroom 3', 7000, 1500)]

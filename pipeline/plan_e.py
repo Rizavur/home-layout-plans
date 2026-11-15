@@ -78,6 +78,7 @@ VIEWS = VC.HEAD + [
  ('Dining – from pantry end', (7950, 4300, 1600), (4500, 6200, 800), 80, ''),
  ('Bedroom 3 – queen bed', (8350, 3450, 1650), (5850, 1450, 1200), 88, '', 'open'),
  ('Bedroom 3 – as study (2 standing desks)', (6450, 2950, 1650), (8550, 1300, 700), 85, '', 'br3desk'),
+ ('Bedroom 3 – towards the door', (6150, 700, 1600), (8100, 3300, 1000), 85, '', 'open'),
 ] + VC.KITCHEN_OPEN_VIEWS + VC.tail(False)
 LABELS = VC.COMMON_LABELS + [('Living', 2880, 3000), ('Dining', 6150, 5600), ('Dry pantry', 8150, 5850), ('Bedroom 3', 7000, 1500)]
 DIMS = [((1280, 5355), (2880, 3350), 'TV → coffee table ≈ 2560'), ((2600, 6360), (3740, 6360), 'Clear way in from foyer ≈ 1140'), ((5150, 5050), (7150, 5050), 'Table 2000 × 1000'), ((4600, 4700), (4600, 3900), 'Walkway to bedrooms ≈ 800')]
