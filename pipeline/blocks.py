@@ -208,7 +208,8 @@ def kitchen_closed(c, lay='Kitchen_Closed'):
         B(it, x0 + 45, x1 - 45, 6860, 6890, 10, 100, 'charcoal'); B(it, x0 + 45, x1 - 45, 6860, 6890, 2010, 2100, 'charcoal')
         B(it, x0 + 45, x1 - 45, 6869, 6881, 100, 2010, 'fglass'); B(it, x0 + 12, x0 + 30, 6855, 6860, 850, 1250, 'gold'); B(it, x0 + 12, x0 + 30, 6890, 6895, 850, 1250, 'gold')
 
-def kitchen_common(c):
+def kitchen_common(c, stack=False):
+    """stack=True: washer and dryer stacked in the south-east yard corner, freeing the space under the north yard counter."""
     B, V, cabinet, krun, CYL, CYLY, PRZ, RRECT = c.B, c.V, c.cabinet, c.krun, c.CYL, c.CYLY, c.PRZ, c.RRECT
     it = c.item('Kitchen_Base_Hob_Oven_Sink_Dishwasher', 'Kitchen')
     krun(it, '-y', 8700, 600, 0, 870, 150, [(4810, 5410, 'drawers4'), (5410, 6010, 'drawers'), (6010, 6610, 'skip'), (6610, 6790, 'door'), (6790, 7390, 'door2'), (7390, 7840, 'door')], 'top')
@@ -234,14 +235,22 @@ def kitchen_common(c):
     it = c.item('Fridge', 'Kitchen')
     B(it, 4000, 4800, 8600, 9280, 0, 20, 'metal'); B(it, 4000, 4800, 8600, 9280, 20, 1800, 'silver'); B(it, 4000, 4398, 8580, 8600, 1000, 1800, 'silver'); B(it, 4402, 4800, 8580, 8600, 1000, 1800, 'silver'); B(it, 4000, 4800, 8580, 8600, 60, 996, 'silver')
     it = c.item('Gas_Water_Heater_Wall_Mounted', 'Kitchen'); B(it, 8035, 8535, 6950, 7370, 1550, 2300, 'appl')
-    for (nm, y0, y1, fy, s) in (('Dryer', 6960, 7560, 7560, 1), ('Washing_Machine', 8690, 9290, 8690, -1)):
-        it = c.item(nm, 'Kitchen'); B(it, 8660, 9260, y0, y1, 0, 850, 'appl')
-        CYLY(it, 8960, 430, 170, fy, fy + s * 25, 'steel', 28); CYLY(it, 8960, 430, 130, fy + s * 25, fy + s * 30, 'screen', 28)
+    if stack:
+        it = c.item('Washer_and_Dryer_Stacked', 'Kitchen')
+        for (z0, z1) in ((0, 850), (880, 1730)):
+            B(it, 8660, 9260, 8690, 9290, z0, z1, 'appl')
+            CYLY(it, 8960, z0 + 430, 170, 8690, 8665, 'steel', 28); CYLY(it, 8960, z0 + 430, 130, 8665, 8660, 'screen', 28)
+        B(it, 8650, 9270, 8680, 9290, 850, 880, 'steel')                                   # stacking kit with pull-out shelf
+    else:
+        for (nm, y0, y1, fy, s) in (('Dryer', 6960, 7560, 7560, 1), ('Washing_Machine', 8690, 9290, 8690, -1)):
+            it = c.item(nm, 'Kitchen'); B(it, 8660, 9260, y0, y1, 0, 850, 'appl')
+            CYLY(it, 8960, 430, 170, fy, fy + s * 25, 'steel', 28); CYLY(it, 8960, 430, 130, fy + s * 25, fy + s * 30, 'screen', 28)
     it = c.item('Yard_Pipe_Boxup', 'Kitchen'); B(it, 7940, 8630, 8650, 9300, 0, 2650, 'white')
     it = c.item('Yard_Cabinets_and_Tabletops', 'Kitchen')
     cabinet(it, '+y', 7940, 8640, 7560, 610, 0, 870, 1, 'white', 150, None, 'bar', base='mortar_y')
-    B(it, 7940, 9290, 6950, 7580, 870, 900, 'quartz'); B(it, 8640, 9290, 8670, 9300, 870, 900, 'quartz')
-    cabinet(it, '+y', 8640, 9290, 7300, 350, 1500, 2650, 1, 'white', 0, [2250], 'bar'); cabinet(it, '-y', 8640, 9290, 8950, 350, 1500, 2650, 1, 'white', 0, [2250], 'bar')
+    B(it, 7940, 9290, 6950, 7580, 870, 900, 'quartz')
+    if not stack: B(it, 8640, 9290, 8670, 9300, 870, 900, 'quartz')
+    cabinet(it, '+y', 8640, 9290, 7300, 350, 1500, 2650, 1, 'white', 0, [2250], 'bar'); cabinet(it, '-y', 8640, 9290, 8950, 350, 1800 if stack else 1500, 2650, 1, 'white', 0, [2250], 'bar')
     it = c.item('Steigen_Ceiling_Drying_Rack', 'Kitchen')
     for yc in (7420, 8830):
         B(it, 8770, 9230, yc - 40, yc + 40, 2630, 2650, 'steel')
