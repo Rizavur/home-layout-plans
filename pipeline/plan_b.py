@@ -5,27 +5,29 @@ WM = 'greige'
 def build(c):
     B, CYL, PRZ, RRECT, SLABH = c.B, c.CYL, c.PRZ, c.RRECT, c.SLABH
     K.fixtures(c)
-    # ---------- Study (9 Nov position) ----------
+    # ---------- Study: south wall pulled in to line up with the end of the TV (y 3350-3500) ----------
+    SW0, SW1 = 3350, 3500
     it = c.item('Study_TV_Partition_Half_Wall_and_Framed_Glass', 'Partitions')
-    B(it, 2250, 2400, 1170, 3870, 0, 2650, 'wallp'); B(it, 1250, 2250, 3720, 3870, 0, 1000, 'wallp')
-    B(it, 250, 1250, 3720, 3870, 2100, 2650, 'wallp'); B(it, 1250, 2250, 3720, 3870, 2550, 2650, 'wallp')
-    B(it, 1250, 2250, 3712, 3878, 1000, 1020, 'marble')
-    B(it, 1250, 1290, 3720, 3870, 1020, 2550, 'frame'); B(it, 2210, 2250, 3720, 3870, 1020, 2550, 'frame'); B(it, 1730, 1770, 3775, 3815, 1050, 2510, 'frame')
-    B(it, 1290, 2210, 3775, 3815, 2510, 2550, 'frame'); B(it, 1290, 2210, 3775, 3815, 1020, 1050, 'frame')
-    B(it, 1290, 1730, 3787, 3803, 1050, 2510, 'glass'); B(it, 1770, 2210, 3787, 3803, 1050, 2510, 'glass')
-    it = c.item('Study_Sliding_Door_Fluted_Glass', 'Partitions')
-    B(it, 250, 2250, 3875, 3905, 2080, 2100, 'metal'); B(it, 270, 1275, 3880, 3898, 10, 2075, 'fglass')
-    B(it, 270, 300, 3879, 3899, 10, 2075, 'charcoal'); B(it, 1245, 1275, 3879, 3899, 10, 2075, 'charcoal'); B(it, 300, 1245, 3879, 3899, 10, 40, 'charcoal'); B(it, 300, 1245, 3879, 3899, 2045, 2075, 'charcoal')
-    B(it, 1220, 1235, 3899, 3919, 900, 1250, 'gold'); B(it, 1220, 1235, 3860, 3879, 900, 1250, 'gold')
-    it = c.item('Study_Two_Standing_Desks_Facing_Partition', 'Furniture')
-    for cy in (2050, 3150): P.sdesk(c, it, '+x', 1657, cy, 1050, 585); c.station(it, '+x', 1657, cy, 585)
-    c.cabinet(it, '-x', 1520, 3680, 1900, 350, 1500, 2550, 4, 'white', 0, None, 'bar', hm='gold'); B(it, 1925, 1945, 1540, 3660, 1494, 1500, 'led')
-    it = c.item('Study_Chairs_x2', 'Furniture'); c.chair2(it, '+x', 1250, 2050); c.chair2(it, '+x', 1250, 3150)
-    it = c.item('Aircon_Study', 'Aircon'); P.aircon2(c, it, 'x', 250, 1, 2300, 3200, 2230)
+    B(it, 2250, 2400, 1170, 3870, 0, 2650, 'wallp')                                   # TV wall (unchanged)
+    B(it, 250, 1250, SW0, SW1, 0, 1000, 'wallp'); B(it, 1250, 2250, SW0, SW1, 2100, 2650, 'wallp'); B(it, 250, 1250, SW0, SW1, 2550, 2650, 'wallp')
+    B(it, 250, 1250, SW0 - 8, SW1 + 8, 1000, 1020, 'marble')
+    B(it, 250, 290, SW0, SW1, 1020, 2550, 'frame'); B(it, 1210, 1250, SW0, SW1, 1020, 2550, 'frame'); B(it, 730, 770, SW0 + 55, SW0 + 95, 1050, 2510, 'frame')
+    B(it, 290, 1210, SW0 + 55, SW0 + 95, 2510, 2550, 'frame'); B(it, 290, 1210, SW0 + 55, SW0 + 95, 1020, 1050, 'frame')
+    B(it, 290, 730, SW0 + 67, SW0 + 83, 1050, 2510, 'glass'); B(it, 770, 1210, SW0 + 67, SW0 + 83, 1050, 2510, 'glass')
+    it = c.item('Study_Sliding_Door_Fluted_Glass', 'Partitions')                       # door now at the TV end of the wall
+    d0 = SW1 + 5
+    B(it, 250, 2250, d0, d0 + 30, 2080, 2100, 'metal'); B(it, 1225, 2230, d0 + 5, d0 + 23, 10, 2075, 'fglass')
+    B(it, 1225, 1255, d0 + 4, d0 + 24, 10, 2075, 'charcoal'); B(it, 2200, 2230, d0 + 4, d0 + 24, 10, 2075, 'charcoal'); B(it, 1255, 2200, d0 + 4, d0 + 24, 10, 40, 'charcoal'); B(it, 1255, 2200, d0 + 4, d0 + 24, 2045, 2075, 'charcoal')
+    B(it, 1265, 1280, d0 + 24, d0 + 44, 900, 1250, 'gold'); B(it, 1265, 1280, d0 - 15, d0 + 4, 900, 1250, 'gold')
+    it = c.item('Study_Two_Standing_Desks_on_West_Wall', 'Furniture')
+    for cy in (1960, 2890): P.sdesk(c, it, '-x', 843, cy, 900, 585); c.station(it, '-x', 843, cy, 585)
+    c.cabinet(it, '+x', 1480, 3340, 600, 350, 1500, 2550, 4, 'white', 0, None, 'bar', hm='gold'); B(it, 555, 575, 1500, 3320, 1494, 1500, 'led')
+    it = c.item('Study_Chairs_x2', 'Furniture'); c.chair2(it, '-x', 1250, 1960); c.chair2(it, '-x', 1250, 2890)
+    it = c.item('Aircon_Study', 'Aircon'); P.aircon2(c, it, 'x', 2250, -1, 2100, 3000, 2230)
     it = c.item('Curtains_Study', 'Curtains'); c.curtain_full(it, 250, 2250, 1375, 300, 300, 5, 2540)
     it = c.item('False_Ceiling_Study', 'False_Ceiling')
-    SLABH(it, [(250, 1510), (2250, 1510), (2250, 3720), (250, 3720), (250, 3250), (480, 3250), (480, 2250), (250, 2250)], RRECT(650, 1850, 1800, 3450, 200, 6), 2550, 2650, 'fceil', 'cove')
-    c.downlights(it, [(2080, 1700), (400, 1700), (400, 3500), (1300, 1660), (1300, 3600)], 2550)
+    SLABH(it, [(250, 1510), (2250, 1510), (2250, SW0), (250, SW0)], RRECT(800, 1850, 1800, 3050, 200, 6), 2550, 2650, 'fceil', 'cove')
+    c.downlights(it, [(2080, 1700), (420, 1700), (1300, 1660), (1300, 3200), (420, 3200)], 2550)
     # ---------- Living ----------
     it = c.item('TV_Feature_Wall_Marble_with_Fluted_Walnut_Flanks', 'Furniture')
     B(it, 2400, 2440, 1700, 3640, 0, 2650, 'marble')
@@ -56,26 +58,27 @@ def build(c):
     it = c.item('Curtains_Living', 'Curtains'); c.curtain_full(it, 2400, 5550, 1375, 360, 360, 5, 2540)
     it = c.item('Living_Floor_Lamp', 'Lighting'); P.floor_lamp(c, it, 2990, 1600)
     # ---------- NEW: hall lounge (cabinets removed) – kept south of a clear path to the study door ----------
-    LX, LY = 1225, 5500          # lounge centre
+    LX, LY = 1500, 5000          # lounge centre
     it = c.item('Lounge_Feature_Wall_Backlit_Onyx_with_Fluted_Walnut', 'Furniture')
-    B(it, 250, 290, 3870, 6300, 0, 2650, 'wallp')
+    B(it, 250, 290, SW1, 6300, 0, 2650, 'wallp')
     B(it, 290, 330, 4850, 6150, 120, 2420, 'onyx')
     B(it, 290, 336, 4846, 4850, 120, 2420, 'led'); B(it, 290, 336, 6150, 6154, 120, 2420, 'led')
     for (y0, y1) in ((4560, 4840), (6160, 6260)):
         B(it, 290, 310, y0, y1, 0, 2550, 'walnut'); y = y0 + 12.0
         while y < y1 - 8: CYL(it, 310, y, 9, 0, 2550, 'walnut2', 8); y += 20
     B(it, 290, 400, 4850, 6150, 0, 120, 'charcoal'); B(it, 290, 400, 4850, 6150, 120, 135, 'marble'); B(it, 300, 390, 4860, 6140, 2420, 2430, 'charcoal')
-    it = c.item('Lounge_Chairs_Side_Table_Sculpture', 'Furniture')
-    P.lounge_chair(c, it, 850, 5300, 30, 'cush'); P.lounge_chair(c, it, 1650, 5800, 210, 'leather')
-    CYL(it, 1550, 5100, 230, 0, 20, 'gold', 32); CYL(it, 1550, 5100, 60, 20, 480, 'traver', 20); CYL(it, 1550, 5100, 250, 480, 520, 'traver', 36)
-    CYL(it, 1500, 5060, 60, 520, 700, 'ceramic', 18); CYL(it, 1620, 5150, 45, 520, 760, 'sculpt', 14)
-    it = c.item('Lounge_Round_Rug', 'Decor'); PRZ(it, [(LX + 760 * math.cos(2 * math.pi * k / 64), LY + 700 * math.sin(2 * math.pi * k / 64)) for k in range(64)], 0, 8, 'rug1')
-    PRZ(it, [(LX + 680 * math.cos(2 * math.pi * k / 64), LY + 620 * math.sin(2 * math.pi * k / 64)) for k in range(64)], 8, 10, 'rug2')
+    it = c.item('Lounge_Sofa_outside_Study', 'Furniture')
+    c.sofa2(it, '+x', 1330, 5000, 2000, 900, 3, True, True, None, 'sofa', 'sofa2', ('pil1', 'pil2'))
+    it = c.item('Lounge_Side_Table_Sculpture', 'Furniture')
+    CYL(it, 850, 3780, 200, 0, 20, 'gold', 32); CYL(it, 850, 3780, 50, 20, 520, 'traver', 20); CYL(it, 850, 3780, 210, 520, 560, 'traver', 36)
+    CYL(it, 800, 3750, 55, 560, 730, 'ceramic', 18); CYL(it, 910, 3820, 40, 560, 790, 'sculpt', 14)
+    it = c.item('Lounge_Round_Rug', 'Decor'); PRZ(it, [(LX + 760 * math.cos(2 * math.pi * k / 64), LY + 900 * math.sin(2 * math.pi * k / 64)) for k in range(64)], 0, 8, 'rug1')
+    PRZ(it, [(LX + 680 * math.cos(2 * math.pi * k / 64), LY + 820 * math.sin(2 * math.pi * k / 64)) for k in range(64)], 8, 10, 'rug2')
     it = c.item('Lounge_Sculptural_Pendant_Cluster', 'Lighting')
-    for (dx_, dy_, zb) in ((0, 0, 1700), (180, -120, 1850), (-160, 140, 1950), (120, 200, 2050)):
+    for (dx_, dy_, zb) in ((0, 0, 2000), (180, -120, 2100), (-160, 140, 2180), (120, 200, 2250)):
         x, y = LX + dx_, LY + dy_
         CYL(it, x, y, 3, zb + 120, 2650, 'metal', 6); CYL(it, x, y, 120, zb, zb + 120, 'onyx', 20); CYL(it, x, y, 90, zb - 10, zb, 'lightw', 16)
-    it = c.item('Lounge_Floor_Lamp', 'Lighting'); P.floor_lamp(c, it, 530, 6020)
+    it = c.item('Lounge_Floor_Lamp', 'Lighting'); P.floor_lamp(c, it, 640, 6170)
     # ---------- NEW: entrance glass partition flush with shelter wall ----------
     it = c.item('Entry_Glass_Partition_Flush_with_Shelter_Wall', 'Partitions')
     x0, x1, y0, y1 = 2080, 2600, 6300, 6420
@@ -92,19 +95,19 @@ def build(c):
     SLABH(it, [(2400, 1510), (5550, 1510), (5550, 3950), (5300, 3950), (5300, 4400), (2400, 4400)], WA, 2550, 2650, 'fceil', 'cove')
     c.downlights(it, [(2560, 1700), (3500, 1680), (4400, 1680), (5330, 1750), (5380, 3200), (2520, 3000), (2600, 4220), (3500, 4250), (4400, 4250)], 2550)
     it = c.item('False_Ceiling_Hall_with_Lounge_Dome', 'False_Ceiling')
-    dome = [(1225 + 650 * math.cos(2 * math.pi * k / 48), 5500 + 620 * math.sin(2 * math.pi * k / 48)) for k in range(48)]
-    SLABH(it, [(290, 3870), (2400, 3870), (2400, 4400), (5300, 4400), (5300, 4950), (5550, 4950), (5550, 6700), (3740, 6700), (3740, 6420), (2600, 6420), (2600, 6300), (290, 6300)], dome, 2550, 2650, 'fceil', 'cove')
-    c.downlights(it, [(700, 4300), (1500, 4300), (2200, 4100), (3500, 4100), (4500, 4600), (4500, 5600), (3700, 6100), (4400, 6500), (2900, 5800), (2300, 5300)], 2550)
+    dome = [(LX + 650 * math.cos(2 * math.pi * k / 48), LY + 620 * math.sin(2 * math.pi * k / 48)) for k in range(48)]
+    SLABH(it, [(290, SW1), (2250, SW1), (2250, 3870), (2400, 3870), (2400, 4400), (5300, 4400), (5300, 4950), (5550, 4950), (5550, 6700), (3740, 6700), (3740, 6420), (2600, 6420), (2600, 6300), (290, 6300)], dome, 2550, 2650, 'fceil', 'cove')
+    c.downlights(it, [(700, 3700), (1700, 3750), (2200, 4100), (3500, 4100), (4500, 4600), (4500, 5600), (3700, 6100), (4400, 6500), (2900, 5800), (2300, 5300)], 2550)
     K.ceil_rooms(c); K.led(c, [(7945, 7965, 5560, 6670)])
     # ---------- kitchen: closed + open + folding glass ----------
     K.kitchen_closed(c, 'Kitchen_Closed'); K.kitchen_common(c); K.kitchen_open(c, 'Kitchen_Open'); K.kitchen_glass(c)
     K.yard_baths(c)
     # ---------- improvements ----------
-    K.power_common(c, [('x', 2248, -1, 1800, 1050), ('x', 2248, -1, 2550, 1050, True), ('x', 2248, -1, 3400, 1050),   # study desks
+    K.power_common(c, [('x', 252, 1, 1600, 1050), ('x', 252, 1, 2420, 1050, True), ('x', 252, 1, 3250, 1050),         # study desks
                        ('x', 2443, 1, 2350, 300, True), ('x', 2443, 1, 3050, 300),                                     # TV wall
-                       ('f', 1225, 0, 5500, 0), ('x', 310, 1, 4700, 300),                                              # lounge
+                       ('x', 310, 1, 4100, 300), ('x', 310, 1, 4700, 300),                                              # lounge
                        ('x', 4940, 1, 7200, 1150)])
-    K.trunking_common(c, [[(360, 2750), (360, 3950), (2400, 3950), (2400, 4400), (5340, 4400)]])
+    K.trunking_common(c, [[(2140, 2550), (2140, 3950), (2400, 3950), (2400, 4400), (5340, 4400)]])
 
 HIDE_DEF = ['Ceiling', 'Beams_Highlight', 'Structural_Highlight', 'Kitchen_Door_Closed', 'Kitchen_Open', 'Kitchen_Glass_Open', 'Kitchen_Glass_Closed', 'Power_Points', 'Aircon_Trunking']
 MODES = {
@@ -124,30 +127,31 @@ VIEWS = [
  ('Living – organic wave ceiling', (5100, 4050, 1250), (3950, 2950, 2600), 88, ''),
  ('Lounge – backlit onyx feature wall', (3400, 4500, 1550), (300, 5600, 1200), 68, ''),
  ('Lounge – from living room', (3300, 3300, 1600), (900, 5300, 900), 75, ''),
- ('Lounge – pendant and dome ceiling', (2300, 4300, 1300), (1225, 5500, 2600), 85, ''),
- ('Study door – clear approach from the lounge', (2350, 4450, 1600), (700, 3880, 1100), 75, ''),
+ ('Lounge – pendant and dome ceiling', (2400, 3800, 1300), (1500, 5000, 2600), 85, ''),
+ ('Study door – clear approach from the lounge', (2300, 4900, 1600), (1700, 3500, 1100), 75, ''),
+ ('Lounge – sofa', (2300, 6000, 1550), (500, 4300, 800), 78, ''),
  ('Entrance partition – from foyer', (3150, 7900, 1550), (2250, 6300, 1250), 62, ''),
  ('Entrance partition – from lounge', (1300, 4300, 1600), (2350, 6360, 1100), 75, ''),
- ('Study – two standing desks', (550, 2600, 1650), (2250, 2600, 1100), 80, ''),
- ('Study – towards half-glass wall', (1000, 1650, 1600), (1700, 3850, 1100), 80, ''),
- ('Study – from living through glass', (2500, 5000, 1600), (1500, 2600, 1100), 70, ''),
+ ('Study – two standing desks', (2050, 2450, 1650), (250, 2450, 1100), 80, ''),
+ ('Study – towards half-glass wall', (1400, 1650, 1600), (900, 3500, 1100), 80, ''),
+ ('Study – from lounge', (1900, 4500, 1600), (700, 2400, 1100), 70, ''),
  ('Dining – table for 8', (4300, 4100, 1600), (7000, 6000, 700), 80, ''),
  ('Dining – from pantry end', (7950, 4300, 1600), (4500, 6200, 800), 80, ''),
  ('Dining – coffer ceiling and fan', (4500, 4000, 1300), (6800, 5600, 2500), 85, ''),
 ] + VC.KITCHEN_OPEN_VIEWS + [v if not v[0].startswith('NIGHT · Living') else ('NIGHT · Living and lounge', (5000, 4300, 1650), (1500, 4300, 1000), 85, 'night') for v in VC.tail(True)]
 LABELS = [
- ('Living', 3900, 2600), ('Lounge (feature space)', 1225, 5600), ('Clear path to study door', 900, 4300), ('Study', 1250, 2600), ('Dining', 6150, 5600), ('Dry pantry', 8150, 5850),
+ ('Living', 3900, 2600), ('Lounge sofa', 900, 5000), ('Path to study door', 1800, 4100), ('Study', 1250, 2400), ('Dining', 6150, 5600), ('Dry pantry', 8150, 5850),
  ('Kitchen', 5900, 8000), ('Service yard', 8900, 8000), ('Foyer', 2700, 7500), ('Household shelter', 900, 7600), ('Bedroom 3', 7000, 1500),
  ('Bedroom 2 (kids)', 10000, 1800), ('Master bedroom', 12900, 2600), ('Common bath', 9900, 6000), ('Ensuite', 12000, 6000),
 ]
 DIMS = [
  ((2600, 6360), (3740, 6360), 'Clear way in from foyer ≈ 1140'),
  ((5150, 5050), (7150, 5050), 'Table 2000 × 1000'), ((4600, 4700), (4600, 3900), 'Walkway to bedrooms ≈ 800'),
- ((700, 3880), (700, 4780), 'Clear in front of study door ≈ 900'),
+ ((1750, 3510), (1750, 4400), 'In front of study door ≈ 900'),
  ((5850, 2700), (8400, 2700), 'Bedroom 3 width 2550'),
 ]
-INFO = ("Plan B. Changes: hall cabinets removed – the zone is now a lounge (set back to keep a ~900 mm clear path to the study door) with a backlit onyx feature wall, two lounge chairs, "
-        "side table, sculpture, round rug, dome cove ceiling and pendant cluster. New entrance partition sits in line with the household-shelter wall face "
+INFO = ("Plan B. Changes: the study's front wall is pulled in to line up with the end of the TV, with the two standing desks on the west wall and the sliding door at the TV end. "
+        "Hall cabinets removed – the space outside the study is a lounge with a 2 m sofa against the backlit onyx feature wall, side table, round rug, dome cove ceiling and pendant cluster. New entrance partition sits in line with the household-shelter wall face "
         "(x 2080–2600), freestanding with a shadow gap – nothing fixed to the shelter. Kitchen: closed or open version; open keeps the stove-side top cabinets "
         "with a ducted hood, tall units at the yard end, a counter facing dining and bi-fold glass that can close the kitchen. "
         "Note: removing the kitchen front wall must be confirmed with HDB / your ID. Power points and aircon trunking are indicative only.")
