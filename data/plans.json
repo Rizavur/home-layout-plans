@@ -41,8 +41,7 @@
    "D1 desks only · D2 with fold-down wall bed",
    "Tall hall cabinets and marble TV wall",
    "Open or closed kitchen with bi-fold glass"
-  ],
-  "tint": "red"
+  ]
  },
  {
   "key": "e",
@@ -65,7 +64,8 @@
    "Bedroom 3 kept as a guest bedroom",
    "Dining for 8 beside an open kitchen",
    "Marble TV wall with tall storage"
-  ]
+  ],
+  "tint": "red"
  },
  {
   "key": "g",
@@ -76,6 +76,7 @@
    "TV on the maid-room feature wall, hidden door",
    "L-sofa on the bedroom wall, chaise to the dining side",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "tint": "red"
  }
 ]
