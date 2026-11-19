@@ -29,7 +29,7 @@ export default function Landing({ visible, onOpenPlan, onCompare }: LandingProps
         </div>
         <div id="cards" onPointerMove={track}>
           {PLANS.map((p, n) => (
-            <button key={p.key} className="card" style={{ animationDelay: `${0.25 + n * 0.08}s` }} onClick={() => onOpenPlan(p.key)}>
+            <button key={p.key} className={p.tint ? `card tint-${p.tint}` : 'card'} style={{ animationDelay: `${0.25 + n * 0.08}s` }} onClick={() => onOpenPlan(p.key)}>
               <div className="shot"><img src={previewUrl(p.key)} alt={`${p.title} – plan view`} decoding="async" /></div>
               <div className="body">
                 <span className="tag mono">{p.short}</span>

@@ -18,10 +18,10 @@ PREV = os.path.join(HERE, '..', 'prev')
 # The plans shown on the home page, in order. Each plan is built by plan_<key>.py.
 PLANS = [
  {'key': 'a', 'short': 'Plan A', 'title': 'Plan A – Original layout', 'bullets': ['Dining for 7 by the household shelter', 'Study room beside the kitchen (desks or single bed)', 'Bedroom 3: queen bed or 2 standing desks', 'Closed kitchen · improvements only']},
- {'key': 'b', 'short': 'Plan B', 'title': 'Plan B – Lounge and open kitchen', 'bullets': ['Study behind the TV wall, half-glass', 'Hall cabinets replaced by a lounge with onyx feature wall', 'New entrance glass partition in line with the shelter', 'Open or closed kitchen with bi-fold glass']},
+ {'key': 'b', 'short': 'Plan B', 'title': 'Plan B – Lounge and open kitchen', 'bullets': ['Study behind the TV wall, desks on the west wall', 'Lounge with a sofa outside the study, onyx feature wall', 'New entrance glass partition in line with the shelter', 'Open or closed kitchen with bi-fold glass']},
  {'key': 'c', 'short': 'Plan C', 'title': 'Plan C – Study by the shelter', 'bullets': ['TV wall moved to the east wall', 'Sofas on the west side, art above', 'Study by the shelter, flush with the cabinets, key niche', 'Open or closed kitchen with bi-fold glass']},
- {'key': 'd', 'short': 'Plan D', 'title': 'Plan D – Bedroom 3 as study', 'bullets': ['No study room – bedroom 3 is the study', 'D1 desks only · D2 with fold-down wall bed', 'Tall hall cabinets and marble TV wall', 'Open or closed kitchen with bi-fold glass']},
- {'key': 'e', 'short': 'Plan E', 'title': 'Plan E – U-shaped lounge', 'bullets': ['U-shaped lounge seating, round coffee table', 'Angled corner TV wall with storage behind', 'Dining outside the kitchen, rest like Plan A', 'Open or closed kitchen with bi-fold glass']},
+ {'key': 'd', 'short': 'Plan D', 'title': 'Plan D – Bedroom 3 as study', 'bullets': ['No study room – bedroom 3 is the study', 'D1 desks only · D2 with fold-down wall bed', 'Tall hall cabinets and marble TV wall', 'Open or closed kitchen with bi-fold glass'], 'tint': 'red'},
+ {'key': 'e', 'short': 'Plan E', 'title': 'Plan E – U-shaped lounge', 'bullets': ['U-shaped lounge seating, round coffee table', 'Angled corner TV wall with storage behind', 'Dining outside the kitchen, rest like Plan A', 'Open or closed kitchen with bi-fold glass'], 'tint': 'red'},
  {'key': 'f', 'short': 'Plan F', 'title': 'Plan F – Open study nook', 'bullets': ['Open study nook for two by the west wall, no extra walls', 'Bedroom 3 kept as a guest bedroom', 'Dining for 8 beside an open kitchen', 'Marble TV wall with tall storage']},
 ]
 

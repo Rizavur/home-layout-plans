@@ -15,8 +15,8 @@
   "short": "Plan B",
   "title": "Plan B – Lounge and open kitchen",
   "bullets": [
-   "Study behind the TV wall, half-glass",
-   "Hall cabinets replaced by a lounge with onyx feature wall",
+   "Study behind the TV wall, desks on the west wall",
+   "Lounge with a sofa outside the study, onyx feature wall",
    "New entrance glass partition in line with the shelter",
    "Open or closed kitchen with bi-fold glass"
   ]
@@ -41,7 +41,8 @@
    "D1 desks only · D2 with fold-down wall bed",
    "Tall hall cabinets and marble TV wall",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "tint": "red"
  },
  {
   "key": "e",
@@ -52,7 +53,8 @@
    "Angled corner TV wall with storage behind",
    "Dining outside the kitchen, rest like Plan A",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "tint": "red"
  },
  {
   "key": "f",
