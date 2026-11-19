@@ -6,7 +6,7 @@
 For each plan this runs export.py (geometry -> JSON), moves the JSON files into ../data/,
 re-renders the home-page preview into ../prev/ when the plan changed, and writes
 ../data/plans.json (plan list for the home page) and ../data/themes.json (interior themes).
-Then run the web build:  cd ../web && npm run build
+It then rebuilds the web bundle (web/build.mjs), which embeds plans/themes and a cache-busting build id.
 """
 import glob, json, os, shutil, subprocess, sys
 from PIL import Image
@@ -54,4 +54,6 @@ if __name__ == '__main__':
     for k in keys: build_plan(k)
     json.dump(PLANS, open(os.path.join(DATA, 'plans.json'), 'w'), indent=1, ensure_ascii=False)
     json.dump(build_themes(), open(os.path.join(DATA, 'themes.json'), 'w'), separators=(',', ':'))
-    print('done – now run:  cd ../web && npm run build')
+    # rebuild the web bundle too: it embeds plans/themes and the cache-busting build id
+    subprocess.run(['node', 'build.mjs'], cwd=os.path.join(HERE, '..', 'web'), check=True)
+    print('done (data + web bundle)')
