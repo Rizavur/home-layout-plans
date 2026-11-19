@@ -21,7 +21,6 @@ def build(c):
     it = c.item('Living_L_Sofa_West_Side_Facing_TV', 'Furniture'); c.sofa2(it, '+x', 1330, 2745, 2390, 1000, 3, True, False, (395, 1195, 800), 'sofa', 'sofa2', ('pil1', 'pil2'))
     it = c.item('Living_Loveseat_by_Window', 'Furniture'); c.sofa2(it, '+y', 2900, 2250, 1600, 820, 2, True, True, None, 'sofa', 'sofa2', ('pil2', 'pil1'))
     it = c.item('Living_Coffee_Table_Travertine_Pebble', 'Furniture'); P.ppebble(c, it, 2950, 2990, 520, 380, 0.7, 400, 'traver', 'walnut', True); CYL(it, 3150, 2950, 100, 400, 450, 'ceramic', 20)
-    it = c.item('Living_Rug', 'Decor'); PRZ(it, RRECT(1250, 4300, 1700, 3950, 150, 6), 0, 8, 'rug1'); PRZ(it, RRECT(1370, 4180, 1820, 3830, 100, 6), 8, 10, 'rug2')
     it = c.item('Living_Wall_Art_Marble_Diptych_above_Sofa', 'Decor'); P.painting(c, it, 'x', 290, 1, 1990, 2730, 1050, 1950, 'artm'); P.painting(c, it, 'x', 290, 1, 2790, 3530, 1050, 1950, 'artm')
     it = c.item('Curtains_Living', 'Curtains'); c.curtain_full(it, 290, 5550, 1375, 420, 420, 6, 2540)
     it = c.item('Living_Floor_Lamp', 'Lighting'); P.floor_lamp(c, it, 1750, 1700)

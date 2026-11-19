@@ -14,7 +14,6 @@ def build(c):
     CYL(it, cx, cy, 400, 362, 400, 'traver', 48); CYL(it, cx, cy, 390, 358, 362, 'gold', 48); CYL(it, cx, cy, 240, 0, 358, 'walnut', 36)
     for k in range(32): a = 2 * math.pi * k / 32; CYL(it, cx + 246 * math.cos(a), cy + 246 * math.sin(a), 15, 0, 358, 'walnut2', 8)
     CYL(it, cx + 120, cy - 60, 90, 400, 450, 'ceramic', 20); B(it, cx - 200, cx + 20, cy - 40, cy + 120, 400, 440, 'artbg')
-    it = c.item('Living_Rug', 'Decor'); PRZ(it, RRECT(1300, 4400, 2250, 4450, 150, 6), 0, 8, 'rug1'); PRZ(it, RRECT(1420, 4280, 2370, 4330, 100, 6), 8, 10, 'rug2')
     # angled corner TV wall with full-height storage behind the TV (fixed to west wall; free-standing 50 mm off the shelter wall)
     X2, Y1, YS = 2222, 4511, 6250
     ang = math.degrees(math.atan2(YS - Y1, X2 - 290)); L = math.hypot(X2 - 290, YS - Y1)
