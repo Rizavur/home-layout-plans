@@ -30,7 +30,8 @@
    "Sofas on the west side, art above",
    "Study by the shelter, flush with the cabinets, key niche",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "tint": "green"
  },
  {
   "key": "d",
@@ -41,7 +42,8 @@
    "D1 desks only · D2 with fold-down wall bed",
    "Tall hall cabinets and marble TV wall",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "tint": "green"
  },
  {
   "key": "e",
