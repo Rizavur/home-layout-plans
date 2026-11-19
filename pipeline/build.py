@@ -23,6 +23,7 @@ PLANS = [
  {'key': 'd', 'short': 'Plan D', 'title': 'Plan D – Bedroom 3 as study', 'bullets': ['No study room – bedroom 3 is the study', 'D1 desks only · D2 with fold-down wall bed', 'Tall hall cabinets and marble TV wall', 'Open or closed kitchen with bi-fold glass'], 'tint': 'red'},
  {'key': 'e', 'short': 'Plan E', 'title': 'Plan E – U-shaped lounge', 'bullets': ['U-shaped lounge seating, round coffee table', 'Angled corner TV wall with storage behind', 'Dining outside the kitchen, rest like Plan A', 'Open or closed kitchen with bi-fold glass'], 'tint': 'red'},
  {'key': 'f', 'short': 'Plan F', 'title': 'Plan F – Open study nook', 'bullets': ['Open study nook for two by the west wall, no extra walls', 'Bedroom 3 kept as a guest bedroom', 'Dining for 8 beside an open kitchen', 'Marble TV wall with tall storage']},
+ {'key': 'g', 'short': 'Plan G', 'title': 'Plan G – Maid room and study', 'bullets': ['Study wall carried to the window: maid room + study', 'TV on the maid-room feature wall, hidden door', 'L-sofa on the bedroom wall, chaise to the dining side', 'Open or closed kitchen with bi-fold glass']},
 ]
 
 # Interior themes: base themes plus the extra ones, in the order shown in the side panel.

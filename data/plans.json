@@ -66,5 +66,16 @@
    "Dining for 8 beside an open kitchen",
    "Marble TV wall with tall storage"
   ]
+ },
+ {
+  "key": "g",
+  "short": "Plan G",
+  "title": "Plan G – Maid room and study",
+  "bullets": [
+   "Study wall carried to the window: maid room + study",
+   "TV on the maid-room feature wall, hidden door",
+   "L-sofa on the bedroom wall, chaise to the dining side",
+   "Open or closed kitchen with bi-fold glass"
+  ]
  }
 ]
