@@ -320,5 +320,5 @@ if __name__ == '__main__':
         out['plans'][k] = estimate(k)
         p = out['plans'][k]
         print(k, 'reno', p['reno_total'], 'optional', p['optional_total'], 'furniture', p['furn_total'], 'total', p['reno_total'] + p['furn_total'])
-    out['summary'] = {k: {'reno': p['reno_total'], 'items': p['furn_total'], 'total': p['reno_total'] + p['furn_total'], 'optional': p['optional_total']} for k, p in out['plans'].items()}
+    out['summary'] = {k: {'reno': p['reno_total'], 'items': p['furn_total'], 'appliances': sum(l['amount'] for l in p['furn'] if l['cat'] == 'Appliances'), 'furniture': sum(l['amount'] for l in p['furn'] if l['cat'] != 'Appliances'), 'total': p['reno_total'] + p['furn_total'], 'optional': p['optional_total']} for k, p in out['plans'].items()}
     json.dump(out, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'costs.json'), 'w'), indent=1)

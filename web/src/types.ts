@@ -57,7 +57,7 @@ export interface VariantData { chunks: Chunk[]; mats: Record<string, Material> }
 
 export interface PlanSummary { key: string; short: string; title: string; bullets: string[]; /** optional card background tint on the home page */ tint?: 'red' | 'green';
   /** estimated cost in S$ (renovation, furniture & appliances, total, optional extras) */
-  cost?: { reno: number; items: number; total: number; optional: number } }
+  cost?: { reno: number; items: number; furniture: number; appliances: number; total: number; optional: number } }
 
 export interface Theme {
   name: string;

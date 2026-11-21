@@ -1,6 +1,7 @@
 import Icon from './Icon';
 import LandingBackground from './LandingBackground';
 import { PLANS, previewUrl } from '../config/data';
+import Costs, { sgd } from './Costs';
 
 /** Home page: one card per plan with its plan-view preview. */
 import type { PointerEvent } from 'react';
@@ -9,34 +10,6 @@ interface LandingProps {
   visible: boolean;
   onOpenPlan: (key: string) => void;
   onCompare: () => void;
-}
-
-const sgd = (n: number) => 'S$' + Math.round(n).toLocaleString('en-SG');
-const SHEET = 'https://claude.ai/artifact/TrfCXRvmeacHoa4r6398DU';
-
-/** Estimated cost per plan: renovation (lower rate of two contractor quotes) plus furniture & appliances. */
-function CostSummary() {
-  const rows = PLANS.filter((p) => p.cost);
-  if (!rows.length) return null;
-  const low = Math.min(...rows.map((p) => p.cost!.total));
-  return (
-    <section className="costs">
-      <div className="chead">
-        <h2 className="ctitle">Estimated cost</h2>
-        <a className="btn ghost" href={SHEET} target="_blank" rel="noreferrer">Itemised breakdown <span className="arr"><Icon name="arrowRight" size={16} /></span></a>
-      </div>
-      <div className="ctable">
-        <table>
-          <thead><tr><th>Plan</th><th>Renovation</th><th>Furniture &amp; appliances</th><th>Total</th></tr></thead>
-          <tbody>{rows.map((p) => (
-            <tr key={p.key} className={p.cost!.total === low ? 'low' : ''}>
-              <td>{p.title.replace(' – ', ' · ')}</td><td>{sgd(p.cost!.reno)}</td><td>{sgd(p.cost!.items)}</td><td><b>{sgd(p.cost!.total)}</b></td>
-            </tr>))}</tbody>
-        </table>
-      </div>
-      <p className="cnote">Renovation uses the lower rate of two contractor quotes for each kind of work, with quantities measured from each plan's model (its first layout option). Furniture and appliances are mid-range Singapore retail prices. Optional extras not included: invisible grilles, Wi-Fi access points and fridge kerb, about {sgd(rows[0].cost!.optional)}.</p>
-    </section>
-  );
 }
 
 export default function Landing({ visible, onOpenPlan, onCompare }: LandingProps) {
@@ -69,7 +42,7 @@ export default function Landing({ visible, onOpenPlan, onCompare }: LandingProps
             </button>
           ))}
         </div>
-        <CostSummary />
+        <Costs />
         <p className="fine">Browser mock-ups – furniture is simplified compared with the SketchUp files. Power points and aircon trunking are indicative only. Removing the kitchen front wall (open-kitchen options) must be confirmed with HDB / your ID.</p>
       </div>
     </div>
