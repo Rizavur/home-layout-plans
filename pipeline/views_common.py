@@ -13,7 +13,7 @@ def tail(br3_view=True):
      ('Foyer – towards the main door', (2850, 6560, 1600), (2750, 8600, 1000), 82, ''),
      ('Foyer – shoe bench', (2450, 6620, 1550), (3700, 7700, 800), 72, ''),
      ('Foyer – curved bench close-up', (2350, 6450, 1350), (3650, 6950, 520), 72, ''),
-     ('Household shelter', (1350, 6800, 1700), (450, 8400, 500), 88, ''),
+     ('Household shelter – helper mattress', (1450, 6640, 1850), (1000, 8250, 0), 84, ''),
     ]
     if br3_view: v += [('Bedroom 3 – queen bed and painting', (8350, 3450, 1650), (5850, 1450, 1200), 88, ''),
                        ('Bedroom 3 – towards the door', (6150, 700, 1600), (8100, 3300, 1000), 85, '')]

@@ -210,6 +210,7 @@ def setup(L, LQ):
     M['acoustic'] = ('Acoustic_Panel_Felt_Greige', 160, 152, 142, 255)
     M['wallk'] = ('Wall_Paint_White', 243, 243, 241, 255)
     M['pil1'] = ('Cushion_Linen_Taupe', 196, 182, 160, 255)
+    M['matf'] = ('Foldable_Mattress_Fabric_Grey', 170, 174, 176, 255)
     M['pil2'] = ('Cushion_Velvet_Caramel', 132, 118, 104, 255)
     M['towel'] = ('Towel_Oat_Cotton', 226, 216, 198, 255)
     M['sculpt'] = ('Sculpture_Bronze', 140, 105, 70, 255)

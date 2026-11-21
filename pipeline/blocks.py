@@ -77,10 +77,19 @@ def foyer(c, corner='round'):
     B(it, 3290, 3310, 7553, 8247, 6, 2644, 'white')                                                       # flush push-to-open door
     B(it, 3286, 3290, 7553, 7556, 6, 2644, 'reveal'); B(it, 3286, 3290, 8244, 8247, 6, 2644, 'reveal')
     it = c.item('Foyer_Entry_Runner_Rug', 'Decor'); PRZ(it, RRECT(2250, 3150, 6450, 8150, 40, 4), 0, 10, 'rug2')
-    it = c.item('Shelter_Freestanding_Cabinets_not_fixed_to_walls', 'Furniture'); cabinet(it, '+x', 6570, 8630, 650, 390, 0, 2300, 4, 'white', 80, [1900], 'bar')
-    it = c.item('Shelter_Foldable_Single_Mattress_shown_unfolded', 'Furniture')
-    for (y0, y1) in ((6680, 7310), (7315, 7945), (7950, 8580)): B(it, 680, 1580, y0, y1, 0, 120, 'linen')
-    B(it, 720, 1540, 6700, 7080, 120, 200, 'linen')
+    it = c.item('Shelter_Freestanding_Cabinets_not_fixed_to_walls', 'Furniture'); cabinet(it, '+x', 6570, 8630, 610, 350, 0, 2300, 4, 'white', 80, [1900], 'bar')
+    # Helper's tri-fold mattress, 800 x 1850 x 100 mm (a little smaller than a standard single), laid out for the night.
+    # Room left: ~110 mm to the (now 350 deep) cabinet fronts and ~80 mm to the east wall; it folds to 800 x 617 x 300 mm and stands by the cabinets by day.
+    it = c.item('Shelter_Helper_Trifold_Mattress_800x1850_laid_out', 'Furniture')
+    MX0, MX1, MY0, MY1 = 720, 1520, 6700, 8550
+    seg = (MY1 - MY0) / 3.0
+    for k in range(3):
+        y0, y1 = MY0 + k * seg + (3 if k else 0), MY0 + (k + 1) * seg - (3 if k < 2 else 0)
+        P.soft_slab(c, it, c.RRECT(MX0, MX1, y0, y1, 30, 4), 0, 100, 'matf', 30, 3)
+    for k in (1, 2): B(it, MX0 + 20, MX1 - 20, MY0 + k * seg - 3, MY0 + k * seg + 3, 8, 92, 'charcoal')    # fold seams
+    it = c.item('Shelter_Helper_Pillow_and_Folded_Blanket', 'Decor')
+    P.soft_slab(c, it, c.RRECT(MX0 + 90, MX1 - 90, MY0 + 50, MY0 + 400, 70, 5), 100, 230, 'linen2', 55, 3)
+    P.soft_slab(c, it, c.RRECT(MX0 + 30, MX1 - 30, MY1 - 560, MY1 - 60, 40, 4), 100, 160, 'duvet', 25, 2)
 
 def dining9(c):
     B, PRZ, RRECT, CYL = c.B, c.PRZ, c.RRECT, c.CYL
