@@ -1,21 +1,34 @@
 import math
 import planlib as P, blocks as K, views_common as VC
 def build(c):
-    B, CYL, PRZ, RRECT, SLABH, RR = c.B, c.CYL, c.PRZ, c.RRECT, c.SLABH, c.RR
+    B, CYL, PRZ, RRECT, SLABH, RR, ARC = c.B, c.CYL, c.PRZ, c.RRECT, c.SLABH, c.RR, c.ARC
     K.fixtures(c)
     # ---- v13 hall joinery (rebuilt from its dimensions) ----
     it = c.item('TV_Feature_Wall_Seamless_Marble', 'Furniture'); B(it, 250, 296, 1665, 3535, 0, 2650, 'marble')
     it = c.item('Joinery_TV_Wall_Tall_Cabinet_and_Display_Bay', 'Furniture')
-    c.cabinet(it, '+x', 3538, 4500, 650, 400, 0, 2650, 2, K.WM, 100, [2250], 'bar', hm='gold')
+    # rounded end beside the TV wall: a full-height bullnose post instead of a sharp exposed corner
+    RE = 150
+    end = [(250, 3538), (650 - RE, 3538)] + ARC(650 - RE, 3538 + RE, RE, -90, 0, 14)[1:] + [(650, 3700), (250, 3700)]
+    PRZ(it, P._offset(end, -30), 0, 100, 'charcoal'); P.soft_slab(c, it, end, 100, 2650, K.WM, 8, 3, False)
+    B(it, 646, 652, 3700, 3704, 100, 2650, 'reveal')
+    c.cabinet(it, '+x', 3704, 4500, 650, 400, 0, 2650, 2, K.WM, 100, [2250], 'bar', hm='gold')
     c.cabinet(it, '+x', 5000, 5840, 650, 400, 0, 2650, 2, K.WM, 100, [2250], 'bar', hm='gold')
     B(it, 250, 650, 4500, 5000, 0, 900, K.WM); B(it, 250, 650, 4500, 5000, 2250, 2650, K.WM); B(it, 250, 270, 4500, 5000, 900, 2250, 'walnut')
     for z in (900, 1350, 1800): B(it, 270, 650, 4500, 5000, z, z + 25, 'marble'); B(it, 280, 640, 4510, 4520, z + 445 - 6 if z < 1800 else 2244, z + 445 if z < 1800 else 2250, 'led')
     CYL(it, 450, 4750, 70, 925, 1150, 'ceramic', 18); CYL(it, 450, 4750, 60, 1375, 1450, 'sculpt', 16)
-    it = c.item('Joinery_Living_Tall_Cabinets_with_Corner_Niche', 'Furniture')
-    c.cabinet(it, '-y', 700, 2060, 5842, 458, 0, 2650, 3, K.WM, 100, [2250], 'bar', hm='gold')
-    B(it, 250, 700, 5842, 6300, 0, 450, K.WM); B(it, 250, 700, 5842, 6300, 2100, 2650, K.WM); B(it, 250, 700, 6280, 6300, 450, 2100, 'walnut')
-    for z in (450, 1000, 1550): B(it, 270, 700, 5842, 6280, z, z + 25, 'marble')
-    B(it, 650, 700, 5842, 6300, 450, 2100, K.WM); CYL(it, 470, 6060, 80, 475, 700, 'ceramic', 18); CYL(it, 470, 6060, 50, 1025, 1180, 'gold', 14)
+    # ---- the run along the shelter side: inside corner closed with a slim filler, one rounded outside corner at the foyer
+    it = c.item('Joinery_Living_Tall_Cabinets_with_Rounded_Corner', 'Furniture')
+    B(it, 250, 650, 5842, 6300, 0, 2650, K.WM)                                     # blind corner box (reached from neither side)
+    B(it, 650, 700, 5842, 5862, 100, 2650, K.WM); B(it, 650, 700, 5862, 5902, 0, 100, 'charcoal')   # filler panel so doors and handles clear
+    B(it, 698, 702, 5838, 5842, 100, 2650, 'reveal')
+    c.cabinet(it, '-y', 700, 1850, 5842, 458, 0, 2650, 3, K.WM, 100, [2250], 'bar', hm='gold')
+    RC = 230                                                                        # bullnose radius of the outside corner
+    corner = [(1850, 5842)] + ARC(1850, 5842 + RC, RC, -90, 0, 18)[1:] + [(2080, 6300), (1850, 6300)]
+    PRZ(it, P._offset(corner, -40), 0, 100, 'charcoal')                            # recessed plinth follows the curve
+    P.soft_slab(c, it, corner, 100, 2650, K.WM, 8, 3, False)
+    for z in (2246, ):                                                              # door line carried round the curve
+        PRZ(it, ARC(1850, 5842 + RC, RC + 1.5, -90, 0, 18) + list(reversed(ARC(1850, 5842 + RC, RC - 2, -90, 0, 18))), z, z + 4, 'reveal')
+    B(it, 1848, 1852, 5838, 5842, 100, 2650, 'reveal')
     # ---- Living (A layout, TV on the seamless marble wall) ----
     it = c.item('TV_75_inch', 'Furniture'); B(it, 296, 326, 1750, 3410, 860, 1795, 'screen')
     it = c.item('TV_Console_Walnut_Fluted_Marble_Top', 'Furniture')
@@ -34,10 +47,10 @@ def build(c):
     SLABH(it, [(296, 1510), (5550, 1510), (5550, 3950), (5300, 3950), (5300, 4400), (650, 4400), (650, 3538), (296, 3538)], WA, 2550, 2650, 'fceil', 'cove')
     c.downlights(it, [(470, 2200), (470, 2850), (1800, 1680), (2700, 1680), (3600, 1680), (4500, 1680), (1800, 4250), (2700, 4250), (3600, 4250), (4500, 4250), (5320, 1750), (5320, 3600)], 2550)
     it = c.item('False_Ceiling_Hall_around_Tall_Cabinets', 'False_Ceiling')
-    SLABH(it, [(650, 4400), (5300, 4400), (5300, 4950), (5550, 4950), (5550, 5000), (5100, 5000), (5100, 6700), (3740, 6700), (3740, 6300), (2060, 6300), (2060, 5842), (650, 5842)],
+    SLABH(it, [(650, 4400), (5300, 4400), (5300, 4950), (5550, 4950), (5550, 5000), (5100, 5000), (5100, 6700), (3740, 6700), (3740, 6300), (2080, 6300)] + ARC(1850, 6072, 230, 0, -90, 12) + [(650, 5842)],
           [(2950 + 600 * math.cos(2 * math.pi * k / 48), 5150 + 600 * math.sin(2 * math.pi * k / 48)) for k in range(48)], 2550, 2650, 'fceil', 'cove')
     c.downlights(it, [(900, 4600), (900, 5600), (1700, 5650), (4000, 4600), (4500, 5600), (3700, 6150), (4400, 6500), (2500, 6100)], 2550)
-    K.dining9(c); K.foyer(c, 'round'); K.curtains_bed(c); K.bedrooms(c, br3='study')
+    K.dining9(c); K.foyer(c, 'flush'); K.curtains_bed(c); K.bedrooms(c, br3='study')
     # ---- Bedroom 3 as the study: 2 x 1000 standing desks facing the window ----
     it = c.item('Bedroom3_Study_Two_Standing_Desks_Facing_Window', 'Furniture')
     for cx in (6450, 7550): P.sdesk(c, it, '-y', 1000, cx, 1000, 585); c.station(it, '-y', cx, 1000, 585)

@@ -20,6 +20,10 @@ def foyer(c, corner='round'):
         PRZ(it, poly, 2625, 2650, 'white'); B(it, 1850, 1870, 6300, 6530, 100, 2625, 'greige')
         CYL(it, 1960, 6440, 50, 125, 330, 'ceramic', 16); CYL(it, 1950, 6430, 45, 1275, 1420, 'gold', 16)
         PRZ(it, ARC(cen[0], cen[1], r + 6, -90, 0, 16) + ARC(cen[0], cen[1], r + 1, 0, -90, 16), 100, 2625, 'glass')
+    elif corner == 'flush':
+        # Plan D: the hall run's rounded corner unit ends at y 6300; carry on with a plain tall door, flush and square
+        cabinet(it, '+x', 6300, 6530, 2080, 230, 0, 2650, 1, WM, 100, [2100], None)
+        B(it, 2078, 2082, 6296, 6300, 100, 2650, 'reveal')
     elif corner == 'niche':
         # straight end panel flush with the study wall, open niche for keys and daily items (Plan C)
         B(it, 1850, 2080, 6300, 6530, 0, 100, 'charcoal'); B(it, 1850, 2080, 6300, 6530, 2560, 2650, WM)

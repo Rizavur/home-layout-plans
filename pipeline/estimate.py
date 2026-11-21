@@ -184,6 +184,7 @@ def estimate(key):
         add('Carpentry – living', 'Full-height storage behind the angled TV wall', 'tall', 8.5)
         add('Carpentry – living', 'Marble-look tile on TV feature wall', 'tile_feature')
     for n, label in (('Joinery_Living_Tall_Cabinets_with_Corner_Niche', 'Living tall cabinets with corner niche'),
+                     ('Joinery_Living_Tall_Cabinets_with_Rounded_Corner', 'Hall tall cabinets with rounded corner'),
                      ('Joinery_TV_Wall_Tall_Cabinet_and_Display_Bay', 'Tall cabinet and display bay beside the TV'),
                      ('Living_Tall_Storage_Cabinet', 'Living tall storage cabinet'),
                      ('Study_Full_Height_Cabinet_Sliding_Doors', 'Study full-height cabinet')):

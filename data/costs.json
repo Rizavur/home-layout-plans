@@ -3694,21 +3694,21 @@
     },
     {
      "cat": "Carpentry \u2013 living",
-     "item": "Living tall cabinets with corner niche",
-     "qty": 5.9,
+     "item": "Hall tall cabinets with rounded corner",
+     "qty": 5.3,
      "unit": "ft",
      "rate": 270,
-     "amount": 1593,
+     "amount": 1431,
      "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
      "note": ""
     },
     {
      "cat": "Carpentry \u2013 living",
      "item": "Tall cabinet and display bay beside the TV",
-     "qty": 7.6,
+     "qty": 7.0,
      "unit": "ft",
      "rate": 270,
-     "amount": 2052,
+     "amount": 1890,
      "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
      "note": ""
     },
@@ -4456,7 +4456,7 @@
      "note": ""
     }
    ],
-   "reno_total": 75719,
+   "reno_total": 75395,
    "optional_total": 4900,
    "furn_total": 32658
   },
@@ -7468,11 +7468,11 @@
    "optional": 4900
   },
   "d": {
-   "reno": 75719,
+   "reno": 75395,
    "items": 32658,
    "appliances": 9051,
    "furniture": 23607,
-   "total": 108377,
+   "total": 108053,
    "optional": 4900
   },
   "e": {

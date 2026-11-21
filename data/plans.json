@@ -69,11 +69,11 @@
   ],
   "tint": "green",
   "cost": {
-   "reno": 75719,
+   "reno": 75395,
    "items": 32658,
    "appliances": 9051,
    "furniture": 23607,
-   "total": 108377,
+   "total": 108053,
    "optional": 4900
   }
  },
