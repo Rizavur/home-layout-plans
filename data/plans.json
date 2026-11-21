@@ -8,7 +8,13 @@
    "Study room beside the kitchen (desks or single bed)",
    "Bedroom 3: queen bed or 2 standing desks",
    "Closed kitchen · improvements only"
-  ]
+  ],
+  "cost": {
+   "reno": 76620,
+   "items": 33584,
+   "total": 110204,
+   "optional": 4900
+  }
  },
  {
   "key": "b",
@@ -19,7 +25,13 @@
    "Lounge with a sofa outside the study, onyx feature wall",
    "New entrance glass partition in line with the shelter",
    "Open or closed kitchen with bi-fold glass"
-  ]
+  ],
+  "cost": {
+   "reno": 81865,
+   "items": 35595,
+   "total": 117460,
+   "optional": 4900
+  }
  },
  {
   "key": "c",
@@ -31,7 +43,13 @@
    "Study by the shelter, flush with the cabinets, key niche",
    "Open or closed kitchen with bi-fold glass"
   ],
-  "tint": "green"
+  "tint": "green",
+  "cost": {
+   "reno": 78806,
+   "items": 34565,
+   "total": 113371,
+   "optional": 4900
+  }
  },
  {
   "key": "d",
@@ -43,7 +61,13 @@
    "Tall hall cabinets and marble TV wall",
    "Open or closed kitchen with bi-fold glass"
   ],
-  "tint": "green"
+  "tint": "green",
+  "cost": {
+   "reno": 75902,
+   "items": 32536,
+   "total": 108438,
+   "optional": 4900
+  }
  },
  {
   "key": "e",
@@ -55,7 +79,13 @@
    "Dining outside the kitchen, rest like Plan A",
    "Open or closed kitchen with bi-fold glass"
   ],
-  "tint": "red"
+  "tint": "red",
+  "cost": {
+   "reno": 74876,
+   "items": 32718,
+   "total": 107594,
+   "optional": 4900
+  }
  },
  {
   "key": "f",
@@ -67,7 +97,13 @@
    "Dining for 8 beside an open kitchen",
    "Marble TV wall with tall storage"
   ],
-  "tint": "red"
+  "tint": "red",
+  "cost": {
+   "reno": 74035,
+   "items": 34565,
+   "total": 108600,
+   "optional": 4900
+  }
  },
  {
   "key": "g",
@@ -79,6 +115,12 @@
    "L-sofa on the bedroom wall, chaise to the dining side",
    "Open or closed kitchen with bi-fold glass"
   ],
-  "tint": "red"
+  "tint": "red",
+  "cost": {
+   "reno": 82804,
+   "items": 34996,
+   "total": 117800,
+   "optional": 4900
+  }
  }
 ]

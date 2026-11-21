@@ -36,6 +36,12 @@ def build_themes():
     return {k: themes[k] for k in ORDER if k in themes}
 
 
+def _costs():
+    """Per-plan cost summary written by estimate.py (renovation, furniture & appliances, total), if there is one."""
+    try: return json.load(open(os.path.join(DATA, 'costs.json')))['summary']
+    except Exception: return {}
+
+
 def build_plan(key):
     print('plan', key.upper())
     subprocess.run([sys.executable, 'export.py', 'plan_' + key], cwd=HERE, check=True)
@@ -53,7 +59,8 @@ if __name__ == '__main__':
     os.makedirs(DATA, exist_ok=True); os.makedirs(PREV, exist_ok=True)
     keys = sys.argv[1:] or [p['key'] for p in PLANS]
     for k in keys: build_plan(k)
-    json.dump(PLANS, open(os.path.join(DATA, 'plans.json'), 'w'), indent=1, ensure_ascii=False)
+    PLANS_OUT = [dict(p, cost=_costs().get(p['key'])) for p in PLANS]
+    json.dump(PLANS_OUT, open(os.path.join(DATA, 'plans.json'), 'w'), indent=1, ensure_ascii=False)
     json.dump(build_themes(), open(os.path.join(DATA, 'themes.json'), 'w'), separators=(',', ':'))
     # rebuild the web bundle too: it embeds plans/themes and the cache-busting build id
     subprocess.run(['node', 'build.mjs'], cwd=os.path.join(HERE, '..', 'web'), check=True)

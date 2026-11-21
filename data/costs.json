@@ -1,0 +1,7480 @@
+{
+ "generated": "Nov 2026",
+ "rates": {
+  "haulage": {
+   "rate": 1500,
+   "unit": "lump",
+   "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)"
+  },
+  "cleaning": {
+   "rate": 500,
+   "unit": "lump",
+   "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)"
+  },
+  "floor_tiles": {
+   "rate": 8100,
+   "unit": "lump",
+   "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)"
+  },
+  "plinth": {
+   "rate": 400,
+   "unit": "lump",
+   "source": "Q1 #4 = Q2 #10"
+  },
+  "kerb_washer": {
+   "rate": 300,
+   "unit": "lump",
+   "source": "Q2 #29d (Q1 #5 $400)"
+  },
+  "remove_yard": {
+   "rate": 500,
+   "unit": "lump",
+   "source": "Q1 #6 (Lakeside scope)"
+  },
+  "cb_wall": {
+   "rate": 950,
+   "unit": "lump",
+   "source": "Q1 #7 (Lakeside scope)"
+  },
+  "mb_overlay": {
+   "rate": 950,
+   "unit": "lump",
+   "source": "Q1 #8 (Lakeside scope)"
+  },
+  "hack_wall": {
+   "rate": 950,
+   "unit": "lump",
+   "source": "Q2 #52 wall demolition incl. PE endorsement"
+  },
+  "wardrobe": {
+   "rate": 270,
+   "unit": "ft",
+   "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)"
+  },
+  "l_surcharge": {
+   "rate": 550,
+   "unit": "lump",
+   "source": "Q1 #16 L-shape corner surcharge"
+  },
+  "tall": {
+   "rate": 270,
+   "unit": "ft",
+   "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)"
+  },
+  "half": {
+   "rate": 170,
+   "unit": "ft",
+   "source": "Q1 #13 $950 / 1.7 m incl. laminate top"
+  },
+  "top": {
+   "rate": 168,
+   "unit": "ft",
+   "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)"
+  },
+  "mirror_cab": {
+   "rate": 180,
+   "unit": "ft",
+   "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)"
+  },
+  "vanity": {
+   "rate": 350,
+   "unit": "ft",
+   "source": "Q2 #19 $700 / 2 ft with integrated basin"
+  },
+  "kitchen_tb": {
+   "rate": 305,
+   "unit": "ft",
+   "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)"
+  },
+  "sint_tb": {
+   "rate": 178,
+   "unit": "ft",
+   "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)"
+  },
+  "sint_top": {
+   "rate": 120,
+   "unit": "ft",
+   "source": "Q1 #23 $1,140 / 9.5 ft"
+  },
+  "tv_feature": {
+   "rate": 338,
+   "unit": "ft",
+   "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light"
+  },
+  "tile_feature": {
+   "rate": 680,
+   "unit": "lump",
+   "source": "Q2 #24aa marble-look tile on the feature wall"
+  },
+  "fluted": {
+   "rate": 400,
+   "unit": "ft",
+   "source": "Q2 #15 $3,200 / 8 ft fluted feature wall"
+  },
+  "backing": {
+   "rate": 1000,
+   "unit": "lump",
+   "source": "Q2 #23b laminate backing panel"
+  },
+  "partition": {
+   "rate": 71,
+   "unit": "ft",
+   "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition"
+  },
+  "fixed_glass": {
+   "rate": 400,
+   "unit": "panel",
+   "source": "Q1 #29 aluminium-framed fixed glass"
+  },
+  "mirror": {
+   "rate": 600,
+   "unit": "lump",
+   "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)"
+  },
+  "db_door": {
+   "rate": 300,
+   "unit": "lump",
+   "source": "Q1 #10 DB door in matching laminate"
+  },
+  "hs_feature": {
+   "rate": 2800,
+   "unit": "lump",
+   "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)"
+  },
+  "pipe_box": {
+   "rate": 450,
+   "unit": "lump",
+   "source": "Q2 #49 box up pipes"
+  },
+  "bedroom_door": {
+   "rate": 400,
+   "unit": "each",
+   "source": "Q2 #35/#36 laminate swing door (Q1 $500)"
+  },
+  "toilet_door": {
+   "rate": 400,
+   "unit": "each",
+   "source": "Q2 #37 aluminium slide & swing (Q1 $500)"
+  },
+  "kitchen_bifold": {
+   "rate": 2100,
+   "unit": "lump",
+   "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance"
+  },
+  "kitchen_slide": {
+   "rate": 1300,
+   "unit": "lump",
+   "source": "Q2 #39 glass pocket sliding door"
+  },
+  "glass_slide": {
+   "rate": 1200,
+   "unit": "panel",
+   "source": "Q2 #31a $4,800 / 4 slim-frame fluted glass panels"
+  },
+  "yard_door": {
+   "rate": 800,
+   "unit": "lump",
+   "source": "Q1 #28 sliding door to yard"
+  },
+  "yard_glass": {
+   "rate": 400,
+   "unit": "lump",
+   "source": "Q1 #29 fixed glass beside the yard door"
+  },
+  "yard_window": {
+   "rate": 900,
+   "unit": "lump",
+   "source": "Q1 #30 yard sliding window"
+  },
+  "shower_screen": {
+   "rate": 600,
+   "unit": "each",
+   "source": "Q1 #31 tempered glass shower screen"
+  },
+  "plumbing": {
+   "rate": 560,
+   "unit": "lump",
+   "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)"
+  },
+  "electrical": {
+   "rate": 2000,
+   "unit": "lump",
+   "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)"
+  },
+  "downlight": {
+   "rate": 20,
+   "unit": "each",
+   "source": "Q2 #58 downlight housing"
+  },
+  "led": {
+   "rate": 12,
+   "unit": "m",
+   "source": "Q2 #63 COB strip light"
+  },
+  "driver": {
+   "rate": 9,
+   "unit": "m",
+   "source": "Q2 #64 drivers $420 / 46 m"
+  },
+  "profile": {
+   "rate": 10,
+   "unit": "m",
+   "source": "Q2 #65 strip housing $330 / 33 m"
+  },
+  "fceil": {
+   "rate": 640,
+   "unit": "zone",
+   "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)"
+  },
+  "aircon5": {
+   "rate": 7000,
+   "unit": "set",
+   "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)"
+  },
+  "aircon_extra": {
+   "rate": 1400,
+   "unit": "unit",
+   "source": "Pro-rata of Q2 #32 ($7,000 / 5) per extra fan coil"
+  },
+  "painting": {
+   "rate": 1600,
+   "unit": "lump",
+   "source": "Q2 #46 Nippon Vinilex 5000, whole house"
+  },
+  "grille_living": {
+   "rate": 1000,
+   "unit": "lump",
+   "source": "Q2 #50 invisible grille, living"
+  },
+  "grille_beds": {
+   "rate": 1600,
+   "unit": "lump",
+   "source": "Q2 #56 invisible grilles, 3 bedrooms"
+  },
+  "wifi": {
+   "rate": 2100,
+   "unit": "lump",
+   "source": "Q2 #66 5 access points, PoE switch, controller, set-up"
+  },
+  "fridge_kerb": {
+   "rate": 200,
+   "unit": "lump",
+   "source": "Q2 #28b kerb with tiles for fridge"
+  }
+ },
+ "prices": {
+  "washer": {
+   "price": 860,
+   "source": "LG 9 kg front-load FB1209S6M, Harvey Norman"
+  },
+  "dryer": {
+   "price": 1140,
+   "source": "Midea 9 kg heat-pump dryer, Courts"
+  },
+  "stack_kit": {
+   "price": 60,
+   "source": "Stacking kit (estimate)"
+  },
+  "fridge": {
+   "price": 1450,
+   "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts"
+  },
+  "hob": {
+   "price": 800,
+   "source": "60 cm induction hob (estimate, mid-range)"
+  },
+  "hood": {
+   "price": 504,
+   "source": "Samsung 60 cm telescopic hood (launch price)"
+  },
+  "oven": {
+   "price": 578,
+   "source": "Fujioh 70 L built-in oven FV-EL61"
+  },
+  "dishwasher": {
+   "price": 910,
+   "source": "Bosch Series 2 60 cm fully integrated, Courts"
+  },
+  "microwave": {
+   "price": 200,
+   "source": "Countertop microwave (estimate)"
+  },
+  "heater": {
+   "price": 650,
+   "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250"
+  },
+  "tv75": {
+   "price": 1299,
+   "source": "LG 75-inch UHD 4K, Harvey Norman"
+  },
+  "sofa_l": {
+   "price": 2497,
+   "source": "Castlery Lena L-shape sectional"
+  },
+  "sofa_3": {
+   "price": 1199,
+   "source": "Castlery Adams 3-seater"
+  },
+  "sofa_2": {
+   "price": 999,
+   "source": "2-seater / loveseat (estimate)"
+  },
+  "sofa_mod": {
+   "price": 749,
+   "source": "Castlery Tovi armless module"
+  },
+  "coffee": {
+   "price": 500,
+   "source": "Coffee table (estimate)"
+  },
+  "side_table": {
+   "price": 379,
+   "source": "Castlery Lavine marble side table"
+  },
+  "dining_tbl": {
+   "price": 1599,
+   "source": "Castlery Kelsey marble dining table 180 cm"
+  },
+  "dining_ch": {
+   "price": 330,
+   "source": "Castlery Kelsey leather chair (from the 4-chair set price)"
+  },
+  "stool": {
+   "price": 150,
+   "source": "Counter stool (estimate)"
+  },
+  "king_bed": {
+   "price": 1299,
+   "source": "Castlery Dalton king bed frame"
+  },
+  "king_mat": {
+   "price": 1340,
+   "source": "Princebed Imperial Deluxe pocketed spring, king"
+  },
+  "queen_bed": {
+   "price": 1099,
+   "source": "Castlery Joseph queen bed frame"
+  },
+  "queen_mat": {
+   "price": 990,
+   "source": "Princebed Imperial Deluxe, queen"
+  },
+  "ss_bed": {
+   "price": 600,
+   "source": "Upholstered super-single floor bed (estimate)"
+  },
+  "ss_mat": {
+   "price": 810,
+   "source": "Princebed Imperial Deluxe, super single"
+  },
+  "single_bed": {
+   "price": 300,
+   "source": "Single bed frame (estimate)"
+  },
+  "single_mat": {
+   "price": 730,
+   "source": "Princebed Imperial Deluxe, single"
+  },
+  "trifold": {
+   "price": 122,
+   "source": "Princebed Para Foam 3-fold single, 4 inch"
+  },
+  "bedside": {
+   "price": 449,
+   "source": "Castlery Vento bedside table"
+  },
+  "desk": {
+   "price": 599,
+   "source": "TTRacing Titus electric standing desk"
+  },
+  "chair": {
+   "price": 350,
+   "source": "Mid-range ergonomic chair"
+  },
+  "monitor": {
+   "price": 449,
+   "source": "Acer DA271K 27-inch 4K"
+  },
+  "fan": {
+   "price": 299,
+   "source": "Fanztec 52-inch DC ceiling fan with LED, Courts"
+  },
+  "fan_less": {
+   "price": 499,
+   "source": "Bladeless tower fan (estimate)"
+  },
+  "pendant": {
+   "price": 350,
+   "source": "Dining linear pendant (estimate)"
+  },
+  "pend_clust": {
+   "price": 600,
+   "source": "Sculptural pendant cluster (estimate)"
+  },
+  "floor_lamp": {
+   "price": 200,
+   "source": "Floor lamp (estimate)"
+  },
+  "sconce": {
+   "price": 120,
+   "source": "Wall sconce (estimate)"
+  },
+  "ceil_light": {
+   "price": 100,
+   "source": "Ceiling light (estimate)"
+  },
+  "curtain": {
+   "price": 400,
+   "source": "Day + night curtains per window (S$280-750 range)"
+  },
+  "wc": {
+   "price": 300,
+   "source": "Toilet bowl (S$200-400 range)"
+  },
+  "shower": {
+   "price": 350,
+   "source": "Rain shower set (estimate)"
+  },
+  "basin_tap": {
+   "price": 150,
+   "source": "Basin mixer (estimate)"
+  },
+  "sink_tap": {
+   "price": 400,
+   "source": "Kitchen sink + tap (estimate)"
+  },
+  "bath_acc": {
+   "price": 200,
+   "source": "Bathroom accessories, both bathrooms (estimate)"
+  },
+  "rack": {
+   "price": 350,
+   "source": "Ceiling drying rack (estimate)"
+  },
+  "robot": {
+   "price": 600,
+   "source": "Robot vacuum for the pantry bay (estimate)"
+  },
+  "art": {
+   "price": 150,
+   "source": "Wall art (estimate)"
+  }
+ },
+ "plans": {
+  "a": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (marble with fluted walnut flanks)",
+     "qty": 7.5,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2535,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Study full-height cabinet",
+     "qty": 5.2,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1404,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Dining-wall top + bottom cabinets",
+     "qty": 6.4,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 1952,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, dining wall",
+     "qty": 6.4,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1139,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall larder with microwave",
+     "qty": 3.1,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 837,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Study partition walls",
+     "qty": 14.9,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 1058,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen sliding pocket door (closed kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1300,
+     "amount": 1300,
+     "source": "Q2 #39 glass pocket sliding door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Study sliding door, fluted glass",
+     "qty": 2,
+     "unit": "panel",
+     "rate": 1200,
+     "amount": 2400,
+     "source": "Q2 #31a $4,800 / 4 slim-frame fluted glass panels",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (5 zones)",
+     "qty": 5,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 3200,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 44,
+     "unit": "each",
+     "rate": 20,
+     "amount": 880,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (38 m + 24 m)",
+     "qty": 62.1,
+     "unit": "m",
+     "rate": 12,
+     "amount": 745,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 62.1,
+     "unit": "m",
+     "rate": 9,
+     "amount": 559,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 23.7,
+     "unit": "m",
+     "rate": 10,
+     "amount": 237,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Extra fan coils (6 units in total)",
+     "qty": 1,
+     "unit": "unit",
+     "rate": 1400,
+     "amount": 1400,
+     "source": "Pro-rata of Q2 #32 ($7,000 / 5) per extra fan coil",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "L Sofa Boucle with Chaise",
+     "qty": 1,
+     "price": 2497,
+     "amount": 2497,
+     "source": "Castlery Lena L-shape sectional",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Loveseat by Window",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 7,
+     "price": 330,
+     "amount": 2310,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 5,
+     "price": 299,
+     "amount": 1495,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Study ceiling light",
+     "qty": 1,
+     "price": 100,
+     "amount": 100,
+     "source": "Ceiling light (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 4,
+     "price": 400,
+     "amount": 1600,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 76620,
+   "optional_total": 4900,
+   "furn_total": 33584
+  },
+  "b": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (marble with fluted walnut flanks)",
+     "qty": 8.2,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2772,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Lounge feature wall, fluted walnut (backlit onyx panel extra)",
+     "qty": 9.2,
+     "unit": "ft",
+     "rate": 400,
+     "amount": 3680,
+     "source": "Q2 #15 $3,200 / 8 ft fluted feature wall",
+     "note": "Onyx slab not in either quote"
+    },
+    {
+     "cat": "Carpentry \u2013 study",
+     "item": "Wall cabinets over the desks",
+     "qty": 6.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 1025,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Dining-wall top + bottom cabinets",
+     "qty": 6.4,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 1952,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, dining wall",
+     "qty": 6.4,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1139,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall larder with microwave",
+     "qty": 3.1,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 837,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Study partition (half wall + glass)",
+     "qty": 15.9,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 1129,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Framed glass panels on the study half wall",
+     "qty": 2,
+     "unit": "panel",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q1 #29 aluminium-framed fixed glass",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Entrance partition with glass",
+     "qty": 1,
+     "unit": "panel",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 aluminium-framed fixed glass",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen sliding pocket door (closed kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1300,
+     "amount": 1300,
+     "source": "Q2 #39 glass pocket sliding door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Study sliding door, fluted glass",
+     "qty": 1,
+     "unit": "panel",
+     "rate": 1200,
+     "amount": 1200,
+     "source": "Q2 #31a $4,800 / 4 slim-frame fluted glass panels",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (7 zones)",
+     "qty": 7,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 4480,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 50,
+     "unit": "each",
+     "rate": 20,
+     "amount": 1000,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (43 m + 28 m)",
+     "qty": 71.2,
+     "unit": "m",
+     "rate": 12,
+     "amount": 854,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 71.2,
+     "unit": "m",
+     "rate": 9,
+     "amount": 641,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 28.2,
+     "unit": "m",
+     "rate": 10,
+     "amount": 282,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Extra fan coils (6 units in total)",
+     "qty": 1,
+     "unit": "unit",
+     "rate": 1400,
+     "amount": 1400,
+     "source": "Pro-rata of Q2 #32 ($7,000 / 5) per extra fan coil",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "2 Seater Sofa by Window",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "3 Seater Sofa along Wall",
+     "qty": 1,
+     "price": 1199,
+     "amount": 1199,
+     "source": "Castlery Adams 3-seater",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Lounge Sofa outside Study",
+     "qty": 1,
+     "price": 1199,
+     "amount": 1199,
+     "source": "Castlery Adams 3-seater",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Lounge side table",
+     "qty": 1,
+     "price": 379,
+     "amount": 379,
+     "source": "Castlery Lavine marble side table",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Lounge pendant cluster",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Sculptural pendant cluster (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 2,
+     "price": 200,
+     "amount": 400,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 5,
+     "price": 400,
+     "amount": 2000,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 81865,
+   "optional_total": 4900,
+   "furn_total": 35595
+  },
+  "c": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove kitchen front wall for the open kitchen (needs HDB approval)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q2 #52 wall demolition incl. PE endorsement",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (east marble with fluted walnut flanks)",
+     "qty": 7.5,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2535,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 study",
+     "item": "Wall cabinets over the desks",
+     "qty": 5.9,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 991,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Counter facing dining, half height",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 1292,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top for the counter",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 912,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Fluted laminate back panel on the counter",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #23b laminate backing panel",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall units at the yard end (larder, microwave)",
+     "qty": 2.0,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 540,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Study wall flush with shelter",
+     "qty": 6.6,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 469,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Study half-glass wall",
+     "qty": 5.9,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 419,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Framed glass panels on the study half wall",
+     "qty": 2,
+     "unit": "panel",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q1 #29 aluminium-framed fixed glass",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen bi-fold glass (open kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Study sliding door, fluted glass",
+     "qty": 1,
+     "unit": "panel",
+     "rate": 1200,
+     "amount": 1200,
+     "source": "Q2 #31a $4,800 / 4 slim-frame fluted glass panels",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (7 zones)",
+     "qty": 7,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 4480,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 48,
+     "unit": "each",
+     "rate": 20,
+     "amount": 960,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (45 m + 27 m)",
+     "qty": 72.2,
+     "unit": "m",
+     "rate": 12,
+     "amount": 866,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 72.2,
+     "unit": "m",
+     "rate": 9,
+     "amount": 650,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 26.8,
+     "unit": "m",
+     "rate": 10,
+     "amount": 268,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Extra fan coils (6 units in total)",
+     "qty": 1,
+     "unit": "unit",
+     "rate": 1400,
+     "amount": 1400,
+     "source": "Pro-rata of Q2 #32 ($7,000 / 5) per extra fan coil",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "L Sofa West Side Facing TV",
+     "qty": 1,
+     "price": 2497,
+     "amount": 2497,
+     "source": "Castlery Lena L-shape sectional",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Loveseat by Window",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Counter stools",
+     "qty": 3,
+     "price": 150,
+     "amount": 450,
+     "source": "Counter stool (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 4,
+     "price": 400,
+     "amount": 1600,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 78806,
+   "optional_total": 4900,
+   "furn_total": 34565
+  },
+  "d": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove kitchen front wall for the open kitchen (needs HDB approval)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q2 #52 wall demolition incl. PE endorsement",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (seamless marble)",
+     "qty": 6.1,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2062,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Living tall cabinets with corner niche",
+     "qty": 5.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1593,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Tall cabinet and display bay beside the TV",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2052,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Counter facing dining, half height",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 1292,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top for the counter",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 912,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Fluted laminate back panel on the counter",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #23b laminate backing panel",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall units at the yard end (larder, microwave)",
+     "qty": 2.0,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 540,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen bi-fold glass (open kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (6 zones)",
+     "qty": 6,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 3840,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 46,
+     "unit": "each",
+     "rate": 20,
+     "amount": 920,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (41 m + 26 m)",
+     "qty": 67.0,
+     "unit": "m",
+     "rate": 12,
+     "amount": 804,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 67.0,
+     "unit": "m",
+     "rate": 9,
+     "amount": 603,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 26.0,
+     "unit": "m",
+     "rate": 10,
+     "amount": 260,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Stacking kit",
+     "qty": 1,
+     "price": 60,
+     "amount": 60,
+     "source": "Stacking kit (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "L Sofa Boucle with Chaise",
+     "qty": 1,
+     "price": 2497,
+     "amount": 2497,
+     "source": "Castlery Lena L-shape sectional",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Loveseat by Window",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Counter stools",
+     "qty": 3,
+     "price": 150,
+     "amount": 450,
+     "source": "Counter stool (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 4,
+     "price": 400,
+     "amount": 1600,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 75902,
+   "optional_total": 4900,
+   "furn_total": 32536
+  },
+  "e": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove kitchen front wall for the open kitchen (needs HDB approval)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q2 #52 wall demolition incl. PE endorsement",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Angled corner TV wall with console",
+     "qty": 8.5,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2873,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Full-height storage behind the angled TV wall",
+     "qty": 8.5,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2295,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Counter facing dining, half height",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 1292,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top for the counter",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 912,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Fluted laminate back panel on the counter",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #23b laminate backing panel",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall units at the yard end (larder, microwave)",
+     "qty": 2.0,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 540,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Entrance partition with glass",
+     "qty": 1,
+     "unit": "panel",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 aluminium-framed fixed glass",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen bi-fold glass (open kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (5 zones)",
+     "qty": 5,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 3200,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 40,
+     "unit": "each",
+     "rate": 20,
+     "amount": 800,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (37 m + 24 m)",
+     "qty": 61.7,
+     "unit": "m",
+     "rate": 12,
+     "amount": 740,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 61.7,
+     "unit": "m",
+     "rate": 9,
+     "amount": 555,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 24.5,
+     "unit": "m",
+     "rate": 10,
+     "amount": 245,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "West Sofa Facing East",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "East Long Sofa Facing West",
+     "qty": 1,
+     "price": 1199,
+     "amount": 1199,
+     "source": "Castlery Adams 3-seater",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Window seat modules",
+     "qty": 3,
+     "price": 749,
+     "amount": 2247,
+     "source": "Castlery Tovi armless module",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Counter stools",
+     "qty": 3,
+     "price": 150,
+     "amount": 450,
+     "source": "Counter stool (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 4,
+     "price": 400,
+     "amount": 1600,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 74876,
+   "optional_total": 4900,
+   "furn_total": 32718
+  },
+  "f": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove kitchen front wall for the open kitchen (needs HDB approval)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q2 #52 wall demolition incl. PE endorsement",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (seamless marble)",
+     "qty": 6.1,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 2062,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Living tall storage cabinet",
+     "qty": 2.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 756,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 study",
+     "item": "Wall cabinets over the desks",
+     "qty": 5.9,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 991,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Counter facing dining, half height",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 1292,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top for the counter",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 912,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Fluted laminate back panel on the counter",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #23b laminate backing panel",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall units at the yard end (larder, microwave)",
+     "qty": 2.0,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 540,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen bi-fold glass (open kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (6 zones)",
+     "qty": 6,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 3840,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 46,
+     "unit": "each",
+     "rate": 20,
+     "amount": 920,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (41 m + 27 m)",
+     "qty": 68.0,
+     "unit": "m",
+     "rate": 12,
+     "amount": 816,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 68.0,
+     "unit": "m",
+     "rate": 9,
+     "amount": 612,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 27.0,
+     "unit": "m",
+     "rate": 10,
+     "amount": 270,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "L Sofa Boucle with Chaise",
+     "qty": 1,
+     "price": 2497,
+     "amount": 2497,
+     "source": "Castlery Lena L-shape sectional",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Loveseat by Window",
+     "qty": 1,
+     "price": 999,
+     "amount": 999,
+     "source": "2-seater / loveseat (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Counter stools",
+     "qty": 3,
+     "price": 150,
+     "amount": 450,
+     "source": "Counter stool (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 4,
+     "price": 400,
+     "amount": 1600,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 74035,
+   "optional_total": 4900,
+   "furn_total": 34565
+  },
+  "g": {
+   "reno": [
+    {
+     "cat": "Preliminaries",
+     "item": "Haulage and clearing of debris",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1500,
+     "amount": 1500,
+     "source": "Q1 #1 haulage & debris (Q2 only quotes it inside hacking)",
+     "note": ""
+    },
+    {
+     "cat": "Preliminaries",
+     "item": "General cleaning (end of works)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q2 #47 whole-house cleaning (Q1 #2 $600)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "60 x 60 polished homogeneous floor tiles, skirting, resin grout \u2013 living, dining, 3 bedrooms (and study/hall areas)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 8100,
+     "amount": 8100,
+     "source": "Q2 #5 + #5a + #6: tiles $6,000 + resin grout $1,600 + skirting $500 (Q1 #3 $10,000)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Cement plinth for kitchen cabinets",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #4 = Q2 #10",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Kerb for washer and dryer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q2 #29d (Q1 #5 $400)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove existing yard door/window, make good",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 500,
+     "amount": 500,
+     "source": "Q1 #6 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Brick partition with alcove at common bathroom",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #7 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Overlay master bathroom floor",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q1 #8 (Lakeside scope)",
+     "note": ""
+    },
+    {
+     "cat": "Tiling & masonry",
+     "item": "Remove kitchen front wall for the open kitchen (needs HDB approval)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 950,
+     "amount": 950,
+     "source": "Q2 #52 wall demolition incl. PE endorsement",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Master wardrobe + tall cabinet, full height",
+     "qty": 9.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2511,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 2 wardrobe, full height",
+     "qty": 5.4,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1458,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 L-shaped wardrobe, full height",
+     "qty": 8.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 2376,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "L-shape corner surcharge (bedroom 3)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 550,
+     "amount": 550,
+     "source": "Q1 #16 L-shape corner surcharge",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Bedroom 3 bedside nook, half height",
+     "qty": 1.9,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 323,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 bedrooms",
+     "item": "Maid room wardrobe, full height",
+     "qty": 3.3,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 891,
+     "source": "Q2 #11/#12 $3,100 / 11.5 ft, $3,780 / 14 ft (Q1 $290/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shoe cabinet with niche + curved shoe bench and top cabinet",
+     "qty": 2.9,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 783,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "DB box door in matching laminate",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 300,
+     "amount": 300,
+     "source": "Q1 #10 DB door in matching laminate",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Shelter feature wall: concealed jib panel + cabinet run with display",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2800,
+     "amount": 2800,
+     "source": "Q2 #27 HS feature wall with casement storage (Q1 #11 $4,000)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Full-length mirror on the shelter jib panel",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 foyer & shelter",
+     "item": "Freestanding cabinets inside the shelter (not fixed)",
+     "qty": 6.8,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 1836,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "TV feature wall with console (marble with fluted walnut and hidden maid door)",
+     "qty": 9.6,
+     "unit": "ft",
+     "rate": 338,
+     "amount": 3245,
+     "source": "Q2 #24 $2,700 / 8 ft TV console + backdrop + strip light",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 living",
+     "item": "Marble-look tile on TV feature wall",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 680,
+     "amount": 680,
+     "source": "Q2 #24aa marble-look tile on the feature wall",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 study",
+     "item": "Wall cabinets over the desks",
+     "qty": 5.9,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 991,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Dry pantry: half-height cabinet with top (1.7 m)",
+     "qty": 5.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 952,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Carpentry \u2013 dining",
+     "item": "Pantry mirror with frame",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #14 mirror with laminate frame (Q2 #54 $1,900)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Hob/sink wall: top + bottom cabinets",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 3020,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Extra wall cabinets over the fridge",
+     "qty": 2.7,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 454,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top + backsplash, hob/sink wall",
+     "qty": 9.9,
+     "unit": "ft",
+     "rate": 178,
+     "amount": 1762,
+     "source": "Q2 #29a top + backing $1,560 / 8.75 ft (Q1 top + backsplash $240/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Counter facing dining, half height",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 170,
+     "amount": 1292,
+     "source": "Q1 #13 $950 / 1.7 m incl. laminate top",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Sintered stone top for the counter",
+     "qty": 7.6,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 912,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Fluted laminate back panel on the counter",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #23b laminate backing panel",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Tall units at the yard end (larder, microwave)",
+     "qty": 2.0,
+     "unit": "ft",
+     "rate": 270,
+     "amount": 540,
+     "source": "Full-height casement cabinet at the wardrobe rate, Q2 #12 (Q2 tall shoe/kitchen $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top + bottom cabinet",
+     "qty": 2.3,
+     "unit": "ft",
+     "rate": 305,
+     "amount": 702,
+     "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: top cabinet over gas heater",
+     "qty": 2.1,
+     "unit": "ft",
+     "rate": 168,
+     "amount": 353,
+     "source": "Q2 #30 $420 / 2.5 ft (Q2 #18 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Yard: sintered stone tops",
+     "qty": 4.4,
+     "unit": "ft",
+     "rate": 120,
+     "amount": 528,
+     "source": "Q1 #23 $1,140 / 9.5 ft",
+     "note": ""
+    },
+    {
+     "cat": "Kitchen & yard",
+     "item": "Box up yard pipes",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 450,
+     "amount": 450,
+     "source": "Q2 #49 box up pipes",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath vanity with integrated basin",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1225,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Common bath mirror cabinets",
+     "qty": 3.5,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 630,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite vanity with integrated basin",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 350,
+     "amount": 1995,
+     "source": "Q2 #19 $700 / 2 ft with integrated basin",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Ensuite mirror cabinets",
+     "qty": 5.7,
+     "unit": "ft",
+     "rate": 180,
+     "amount": 1026,
+     "source": "Q1 #19 $1,620 / 9 ft (Q2 $200/ft)",
+     "note": ""
+    },
+    {
+     "cat": "Bathrooms",
+     "item": "Tempered glass shower screen, master bathroom",
+     "qty": 1,
+     "unit": "each",
+     "rate": 600,
+     "amount": 600,
+     "source": "Q1 #31 tempered glass shower screen",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "New wall from window to shelter",
+     "qty": 16.8,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 1193,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Partitions & glass",
+     "item": "Maid room / study dividing wall",
+     "qty": 5.5,
+     "unit": "ft",
+     "rate": 71,
+     "amount": 391,
+     "source": "Q2 #21 $600 / 8.5 ft full-height 2-sided partition",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bedroom doors (master, bedroom 2, bedroom 3)",
+     "qty": 3,
+     "unit": "each",
+     "rate": 400,
+     "amount": 1200,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Maid room door (concealed in fluted wall)",
+     "qty": 1,
+     "unit": "each",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q2 #35/#36 laminate swing door (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Bathroom doors",
+     "qty": 2,
+     "unit": "each",
+     "rate": 400,
+     "amount": 800,
+     "source": "Q2 #37 aluminium slide & swing (Q1 $500)",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Kitchen bi-fold glass (open kitchen)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q1 #27 slide & fold aluminium door + window at kitchen entrance",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Study sliding door, fluted glass",
+     "qty": 1,
+     "unit": "panel",
+     "rate": 1200,
+     "amount": 1200,
+     "source": "Q2 #31a $4,800 / 4 slim-frame fluted glass panels",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Sliding door to yard (no bottom track)",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 800,
+     "amount": 800,
+     "source": "Q1 #28 sliding door to yard",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Fixed glass beside the yard door",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 400,
+     "amount": 400,
+     "source": "Q1 #29 fixed glass beside the yard door",
+     "note": ""
+    },
+    {
+     "cat": "Doors & windows",
+     "item": "Yard sliding window",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 900,
+     "amount": 900,
+     "source": "Q1 #30 yard sliding window",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "False ceiling zones with curtain pelmets (8 zones)",
+     "qty": 8,
+     "unit": "zone",
+     "rate": 640,
+     "amount": 5120,
+     "source": "Q2 #33 $3,200 / 5 zones incl. curtain pelmets (Q1 $4,200)",
+     "note": "Curved cove designs may cost more"
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Downlight housings",
+     "qty": 48,
+     "unit": "each",
+     "rate": 20,
+     "amount": 960,
+     "source": "Q2 #58 downlight housing",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED strips: coves and carpentry (49 m + 27 m)",
+     "qty": 75.2,
+     "unit": "m",
+     "rate": 12,
+     "amount": 902,
+     "source": "Q2 #63 COB strip light",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "LED drivers",
+     "qty": 75.2,
+     "unit": "m",
+     "rate": 9,
+     "amount": 677,
+     "source": "Q2 #64 drivers $420 / 46 m",
+     "note": ""
+    },
+    {
+     "cat": "Ceilings & lighting",
+     "item": "Aluminium profiles for carpentry LED strips",
+     "qty": 26.6,
+     "unit": "m",
+     "rate": 10,
+     "amount": 266,
+     "source": "Q2 #65 strip housing $330 / 33 m",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Electrical additions & alterations incl. fitting installation",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2000,
+     "amount": 2000,
+     "source": "Q1 #34 electrical A&A estimate (Q2 A&A $3,300)",
+     "note": ""
+    },
+    {
+     "cat": "Electrical & plumbing",
+     "item": "Install sanitary fittings, taps, sink, washer",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 560,
+     "amount": 560,
+     "source": "Q1 #32 + #33 $280 + $280 (Q2 #45 $700)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Mitsubishi Starmex system, 5 fan coils",
+     "qty": 1,
+     "unit": "set",
+     "rate": 7000,
+     "amount": 7000,
+     "source": "Q2 #32 Mitsubishi Starmex, 2 x System 3, 5 fan coils (Q1 $7,500)",
+     "note": ""
+    },
+    {
+     "cat": "Air-conditioning",
+     "item": "Extra fan coils (7 units in total)",
+     "qty": 2,
+     "unit": "unit",
+     "rate": 1400,
+     "amount": 2800,
+     "source": "Pro-rata of Q2 #32 ($7,000 / 5) per extra fan coil",
+     "note": ""
+    },
+    {
+     "cat": "Painting",
+     "item": "Whole-house painting",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #46 Nippon Vinilex 5000, whole house",
+     "note": ""
+    }
+   ],
+   "optional": [
+    {
+     "cat": "Optional",
+     "item": "Invisible grille, living",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1000,
+     "amount": 1000,
+     "source": "Q2 #50 invisible grille, living",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Invisible grilles, 3 bedrooms",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 1600,
+     "amount": 1600,
+     "source": "Q2 #56 invisible grilles, 3 bedrooms",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Wi-Fi access points + set-up",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 2100,
+     "amount": 2100,
+     "source": "Q2 #66 5 access points, PoE switch, controller, set-up",
+     "note": ""
+    },
+    {
+     "cat": "Optional",
+     "item": "Kerb for fridge",
+     "qty": 1,
+     "unit": "lump",
+     "rate": 200,
+     "amount": 200,
+     "source": "Q2 #28b kerb with tiles for fridge",
+     "note": ""
+    }
+   ],
+   "furn": [
+    {
+     "cat": "Appliances",
+     "item": "Washing machine",
+     "qty": 1,
+     "price": 860,
+     "amount": 860,
+     "source": "LG 9 kg front-load FB1209S6M, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dryer",
+     "qty": 1,
+     "price": 1140,
+     "amount": 1140,
+     "source": "Midea 9 kg heat-pump dryer, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Fridge",
+     "qty": 1,
+     "price": 1450,
+     "amount": 1450,
+     "source": "Panasonic 497 L 2-door NR-BW530XMMS, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Induction hob",
+     "qty": 1,
+     "price": 800,
+     "amount": 800,
+     "source": "60 cm induction hob (estimate, mid-range)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Cooker hood",
+     "qty": 1,
+     "price": 504,
+     "amount": 504,
+     "source": "Samsung 60 cm telescopic hood (launch price)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Built-in oven",
+     "qty": 1,
+     "price": 578,
+     "amount": 578,
+     "source": "Fujioh 70 L built-in oven FV-EL61",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Dishwasher",
+     "qty": 1,
+     "price": 910,
+     "amount": 910,
+     "source": "Bosch Series 2 60 cm fully integrated, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Microwave",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Countertop microwave (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Gas water heater (installed)",
+     "qty": 1,
+     "price": 650,
+     "amount": 650,
+     "source": "Rubine BENE 10FE gas heater $400 + BTO installation $250",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "75-inch TV",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "LG 75-inch UHD 4K, Harvey Norman",
+     "note": ""
+    },
+    {
+     "cat": "Appliances",
+     "item": "Robot vacuum",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Robot vacuum for the pantry bay (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "L Sofa on Bedroom Wall Chaise to Dining",
+     "qty": 1,
+     "price": 2497,
+     "amount": 2497,
+     "source": "Castlery Lena L-shape sectional",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Coffee table",
+     "qty": 1,
+     "price": 500,
+     "amount": 500,
+     "source": "Coffee table (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining table",
+     "qty": 1,
+     "price": 1599,
+     "amount": 1599,
+     "source": "Castlery Kelsey marble dining table 180 cm",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Dining chairs",
+     "qty": 8,
+     "price": 330,
+     "amount": 2640,
+     "source": "Castlery Kelsey leather chair (from the 4-chair set price)",
+     "note": ""
+    },
+    {
+     "cat": "Living & dining",
+     "item": "Counter stools",
+     "qty": 3,
+     "price": 150,
+     "amount": 450,
+     "source": "Counter stool (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King bed frame (master)",
+     "qty": 1,
+     "price": 1299,
+     "amount": 1299,
+     "source": "Castlery Dalton king bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "King mattress",
+     "qty": 1,
+     "price": 1340,
+     "amount": 1340,
+     "source": "Princebed Imperial Deluxe pocketed spring, king",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Bedside tables (master)",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Castlery Vento bedside table",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen bed frame (bedroom 3)",
+     "qty": 1,
+     "price": 1099,
+     "amount": 1099,
+     "source": "Castlery Joseph queen bed frame",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Queen mattress",
+     "qty": 1,
+     "price": 990,
+     "amount": 990,
+     "source": "Princebed Imperial Deluxe, queen",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single floor bed (bedroom 2)",
+     "qty": 1,
+     "price": 600,
+     "amount": 600,
+     "source": "Upholstered super-single floor bed (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Super-single mattress",
+     "qty": 1,
+     "price": 810,
+     "amount": 810,
+     "source": "Princebed Imperial Deluxe, super single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Single bed frame (maid room)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Single bed frame (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Single mattress (maid room)",
+     "qty": 1,
+     "price": 730,
+     "amount": 730,
+     "source": "Princebed Imperial Deluxe, single",
+     "note": ""
+    },
+    {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (shelter)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Electric standing desks",
+     "qty": 2,
+     "price": 599,
+     "amount": 1198,
+     "source": "TTRacing Titus electric standing desk",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "Ergonomic chairs",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Mid-range ergonomic chair",
+     "note": ""
+    },
+    {
+     "cat": "Study",
+     "item": "27-inch 4K monitors",
+     "qty": 2,
+     "price": 449,
+     "amount": 898,
+     "source": "Acer DA271K 27-inch 4K",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Ceiling fans with light",
+     "qty": 4,
+     "price": 299,
+     "amount": 1196,
+     "source": "Fanztec 52-inch DC ceiling fan with LED, Courts",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bladeless tower fan (dining)",
+     "qty": 1,
+     "price": 499,
+     "amount": 499,
+     "source": "Bladeless tower fan (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Dining pendant",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Dining linear pendant (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Floor lamps",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Floor lamp (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Lighting & fans",
+     "item": "Bedside wall sconces",
+     "qty": 2,
+     "price": 120,
+     "amount": 240,
+     "source": "Wall sconce (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Day + night curtains",
+     "qty": 5,
+     "price": 400,
+     "amount": 2000,
+     "source": "Day + night curtains per window (S$280-750 range)",
+     "note": ""
+    },
+    {
+     "cat": "Soft furnishing & decor",
+     "item": "Wall art",
+     "qty": 4,
+     "price": 150,
+     "amount": 600,
+     "source": "Wall art (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Toilet bowl (master bathroom)",
+     "qty": 1,
+     "price": 300,
+     "amount": 300,
+     "source": "Toilet bowl (S$200-400 range)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Rain shower sets",
+     "qty": 2,
+     "price": 350,
+     "amount": 700,
+     "source": "Rain shower set (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Basin mixers",
+     "qty": 2,
+     "price": 150,
+     "amount": 300,
+     "source": "Basin mixer (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Kitchen sink and tap",
+     "qty": 1,
+     "price": 400,
+     "amount": 400,
+     "source": "Kitchen sink + tap (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Bathroom accessories",
+     "qty": 1,
+     "price": 200,
+     "amount": 200,
+     "source": "Bathroom accessories, both bathrooms (estimate)",
+     "note": ""
+    },
+    {
+     "cat": "Sanitary & fittings",
+     "item": "Ceiling drying rack",
+     "qty": 1,
+     "price": 350,
+     "amount": 350,
+     "source": "Ceiling drying rack (estimate)",
+     "note": ""
+    }
+   ],
+   "reno_total": 82804,
+   "optional_total": 4900,
+   "furn_total": 34996
+  }
+ },
+ "summary": {
+  "a": {
+   "reno": 76620,
+   "items": 33584,
+   "total": 110204,
+   "optional": 4900
+  },
+  "b": {
+   "reno": 81865,
+   "items": 35595,
+   "total": 117460,
+   "optional": 4900
+  },
+  "c": {
+   "reno": 78806,
+   "items": 34565,
+   "total": 113371,
+   "optional": 4900
+  },
+  "d": {
+   "reno": 75902,
+   "items": 32536,
+   "total": 108438,
+   "optional": 4900
+  },
+  "e": {
+   "reno": 74876,
+   "items": 32718,
+   "total": 107594,
+   "optional": 4900
+  },
+  "f": {
+   "reno": 74035,
+   "items": 34565,
+   "total": 108600,
+   "optional": 4900
+  },
+  "g": {
+   "reno": 82804,
+   "items": 34996,
+   "total": 117800,
+   "optional": 4900
+  }
+ }
+}
