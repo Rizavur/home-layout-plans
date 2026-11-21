@@ -222,6 +222,28 @@ def orient(l, d):
     if n[0] * d[0] + n[1] * d[1] + n[2] * d[2] < 0: l = list(reversed(l))
     return l
 def prism_faces(ax, pts, a0, a1, m):
+    if ax == 4:
+        # smooth sweep: a list of rings (same point count) joined side by side; caps only on the first / last ring
+        rings, cap0, cap1 = pts
+        R = [[(round(p[0], 2), round(-p[1], 2), round(p[2], 2)) for p in r] for r in rings]
+        out = []
+        def cen(l): return (sum([p[0] for p in l]) / len(l), sum([p[1] for p in l]) / len(l), sum([p[2] for p in l]) / len(l))
+        k = len(R[0])
+        for j in range(len(R) - 1):
+            lo, hi = R[j], R[j + 1]
+            c0, c1 = cen(lo), cen(hi); cc = ((c0[0] + c1[0]) / 2, (c0[1] + c1[1]) / 2, (c0[2] + c1[2]) / 2)
+            for i in range(k):
+                q = [lo[i], lo[(i + 1) % k], hi[(i + 1) % k], hi[i]]
+                if len(set(q)) < 3: continue
+                mq = cen(q)
+                for tri in ([q[0], q[1], q[2]], [q[0], q[2], q[3]]):
+                    if len(set(tri)) < 3: continue
+                    out.append((m, 0, 0, orient(tri, (mq[0] - cc[0], mq[1] - cc[1], mq[2] - cc[2])), []))
+        if cap0 and len(R) > 1:
+            c0, c1 = cen(R[0]), cen(R[1]); out.append((m, 0, 0, orient(R[0], (c0[0] - c1[0], c0[1] - c1[1], c0[2] - c1[2])), []))
+        if cap1 and len(R) > 1:
+            c0, c1 = cen(R[-1]), cen(R[-2]); out.append((m, 0, 0, orient(R[-1], (c0[0] - c1[0], c0[1] - c1[1], c0[2] - c1[2])), []))
+        return out
     if ax == 3:
         lo = [(round(p[0], 2), round(-p[1], 2), round(p[2], 2)) for p in pts[0]]; hi = [(round(p[0], 2), round(-p[1], 2), round(p[2], 2)) for p in pts[1]]
         allp = lo + hi; n_ = float(len(allp))

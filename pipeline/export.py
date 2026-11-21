@@ -1,3 +1,4 @@
+import math
 import json, base64, struct, sys, importlib, math
 import core, mesh, planlib
 EMISSIVE = {'Paper_Shade_Washi', 'Cove_Wash_Warm', 'Cove_Wash_Soft', 'LED_Strip_Warm_3000K', 'Cove_Light_Warm', 'Light_Diffuser_Opal', 'Onyx_Backlit_Honey'}
@@ -58,8 +59,42 @@ def build_plan(modname, style='lux', only=None, ceil='wave'):
         for m, bs in it['boxes'].items():
             if m in ('glass', 'fglass', 'led', 'cove', 'lightw', 'rug1', 'rug2'): continue
             for b in bs: boxes.append((it['name'], b, it['layer']))
-    build_plan.sig = SIG
+    build_plan.sig = SIG; build_plan.items = L['ITEMS']
     return chunks, mats, boxes, mod
+def pano_points(mod, items):
+    """Walk-through points: each room label, nudged to a spot with clear floor around it (default layout option)."""
+    modes = getattr(mod, 'MODES', {}); hide = set(list(modes.values())[0]['hide']) if modes else set()
+    skip = {'Ceiling', 'False_Ceiling', 'Lighting', 'Curtains', 'Aircon_Trunking', 'Power_Points', 'Ceiling_Wood', 'Windows', 'Walls_and_Beams', 'Decor'}
+    obs = []
+    for it in items:
+        if it['layer'] in hide or it['layer'] in skip: continue
+        xs, ys, zs = [], [], []
+        for bs in it['boxes'].values():
+            for b in bs: xs += [b[0], b[1]]; ys += [b[2], b[3]]; zs += [b[4], b[5]]
+        for (ax, pts, a0, a1, m) in it['prisms']:
+            if ax == 2:
+                for (u, v) in pts: xs.append(u); ys.append(v)
+                zs += [a0, a1]
+            elif ax == 3:
+                for q in pts[0] + pts[1]: xs.append(q[0]); ys.append(q[1]); zs.append(q[2])
+            elif ax == 4:
+                for r in pts[0]:
+                    for q in r: xs.append(q[0]); ys.append(q[1]); zs.append(q[2])
+        if not xs or min(zs) > 1700 or max(zs) < 150: continue
+        obs.append((min(xs), max(xs), min(ys), max(ys)))
+    def clear(x, y):
+        d = 1e9
+        for (x0, x1, y0, y1) in obs:
+            dx = max(x0 - x, 0, x - x1); dy = max(y0 - y, 0, y - y1); d = min(d, (dx * dx + dy * dy) ** 0.5)
+        return d
+    out = []
+    for (name, x, y) in list(mod.LABELS) + [('Bedroom corridor', 8400, 4150), ('Bedroom corridor – end', 11600, 4150)]:
+        cands = [(x, y)] + [(x + r * math.cos(k * math.pi / 8), y + r * math.sin(k * math.pi / 8)) for r in range(100, 700, 100) for k in range(16)]
+        good = [c for c in cands if clear(*c) >= 330]
+        best = good[0] if good else max(cands[:1 + 16 * 3], key=lambda c: clear(*c))
+        out.append([name, round(best[0]), round(best[1])])
+    return out
+
 VARIABLE = None
 CVAR = None
 CEILS = ['crescent', 'arc', 'pill', 'island']
@@ -115,6 +150,7 @@ if __name__ == '__main__':
     for b in bad: print('CAMERA CLASH', b)
     data['views'] = [{'name': norm_name(v[0]), 'eye': v[1], 'target': v[2], 'fov': v[3], 'tag': v[4], 'mode': (v[5] if len(v) > 5 else None)} for v in mod.VIEWS]
     data['modeLabel'] = getattr(mod, 'MODE_LABEL', 'Layout option'); data['labels'] = mod.LABELS; data['dims'] = mod.DIMS; data['info'] = mod.INFO; data['modes'] = mod.MODES; data['hideDefault'] = []; data['families'] = fams; data['ceils'] = ceils
+    data['pano'] = pano_points(mod, build_plan.items)
     s = json.dumps(data, separators=(',', ':'))
     open(modname + '.json', 'w').write(s)
     print('json MB', len(s) / 1e6)

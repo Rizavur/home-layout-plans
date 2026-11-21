@@ -225,6 +225,12 @@ def setup(L, LQ):
     _sl = c.SLABH; c.SLABH = lambda it, o, h, z0, z1, m, mh: fceil_slab(c, _sl, it, o, h, z0, z1, m, mh)
     c.downlights = lambda it, pts, z: trimless_downlights(c, it, pts, z)
     c.station = lambda it, face, cx, cy, D: station3(c, it, face, cx, cy, D)
+    M['alu'] = ('Aluminium_Anodised_Silver', 190, 192, 196, 255)
+    M['keycap'] = ('Keycap_PBT_Charcoal', 52, 53, 57, 255)
+    M['rubber'] = ('Rubber_Black_Matt', 30, 30, 32, 255)
+    M['mousepad'] = ('Desk_Mat_Felt_Grey', 92, 94, 97, 255)
+    c.puff = lambda it, poly, z0, z1, m, crown=12, d=14: soft_slab(c, it, poly, z0, z1, m, max(crown, d) * 1.2, 3, False)
+    c.chair2 = lambda it, face, cx, cy: (_sty('chair2') or office_chair)(c, it, face, cx, cy)
     M['blksteel'] = ('Black_Steel_Powdercoat', 34, 34, 36, 255)
     M['cane'] = ('Rattan_Cane_Natural', 206, 176, 128, 255)
     M['paper'] = ('Paper_Shade_Washi', 250, 244, 228, 255)
@@ -472,19 +478,34 @@ def station2(c, it, face, cx, cy, D):
     p = T(-420, 250); c.CYL(it, p[0], p[1], 40, 750, 850, 'ceramic', 16)
 
 # ======================= realism upgrade =======================
+def sweep(it, rings, m, cap0=True, cap1=True):
+    """Smooth surface through a list of rings (3D point lists of equal length): shaded smoothly, capped at the ends."""
+    it['prisms'].append((4, (rings, cap0, cap1), 0, 0, m))
+
 def soft_slab(c, it, poly, z0, z1, m, r=40, n=3, bottom=True):
-    """Prism with rounded (quarter-circle) top and optionally bottom edges."""
-    r = min(r, (z1 - z0) / 2.0 - 1)
-    if r < 4: c.PRZ(it, poly, z0, z1, m); return
+    """Upholstered / eased slab: one smooth surface with a rounded (quarter-circle) top edge and optionally bottom edge."""
+    r = min(r, (z1 - z0) / 2.0 - 0.5 if bottom else (z1 - z0) - 0.5)
+    if r < 3: c.PRZ(it, poly, z0, z1, m); return
+    N = max(4, n + 2)                                   # ~15-22 deg steps: smooth after normal smoothing
     zb = z0 + (r if bottom else 0); zt = z1 - r
-    c.PRZ(it, poly, zb, zt, m)
-    for k in range(n):
-        a0 = (k / float(n)) * math.pi / 2; a1 = ((k + 1) / float(n)) * math.pi / 2
-        ins = r * (1 - math.cos(a1 * 0.999 + a0 * 0.001))
-        ins = r * (1 - math.cos((a0 + a1) / 2))
-        p = c.inset(poly, ins) if ins > 0.5 else poly
-        c.PRZ(it, p, zt + r * math.sin(a0), zt + r * math.sin(a1), m)
-        if bottom: c.PRZ(it, p, zb - r * math.sin(a1), zb - r * math.sin(a0), m)
+    rings = []
+    def ring(ins, z):
+        p = _offset(poly, -ins) if ins > 0.3 else poly
+        rings.append([(x, y, z) for (x, y) in p])
+    if bottom:
+        for k in range(N + 1):
+            a = (k / float(N)) * math.pi / 2
+            ring(r * (1 - math.sin(a)), zb - r * math.cos(a))
+    else:
+        ring(0, z0)
+    if zt - zb > 0.5: ring(0, zt)
+    for k in range(1, N + 1):
+        a = (k / float(N)) * math.pi / 2
+        ring(r * (1 - math.cos(a)), zt + r * math.sin(a))
+    sweep(it, rings, m)
+
+def smooth_puff(poly, z0, z1, m, crown=12, d=14, it=None, c=None):
+    soft_slab(c, it, poly, z0, z1, m, max(crown, d) * 1.2, 3, False)
 
 def _pillow_outline(w, h, pinch, n_edge=8, corner=0.10):
     """Square-ish outline with gently concave sides and softly pinched corners (local u,v)."""
@@ -518,12 +539,12 @@ def cushion3d(c, it, O, U, V, w, h, t, m, crown=0.5, pinch=None):
         sc = math.cos(th) ** (0.55 + 0.6 * (1 - crown))       # outline scale
         tt = (t / 2.0) * math.sin(th)                          # height above the seam
         rings.append((sc, tt))
-    for side in (1, -1):
-        for k in range(N):
-            (s0, t0), (s1, t1) = rings[k], rings[k + 1]
-            lo = [P3(u * s0, v * s0, side * t0) for (u, v) in base]
-            hi = [P3(u * s1, v * s1, side * t1) for (u, v) in base]
-            it['prisms'].append((3, (lo, hi), 0, 0, m))
+    R = []
+    for k in range(N, -1, -1):
+        s0, t0 = rings[k]; R.append([P3(u * s0, v * s0, -t0) for (u, v) in base])
+    for k in range(1, N + 1):
+        s0, t0 = rings[k]; R.append([P3(u * s0, v * s0, t0) for (u, v) in base])
+    sweep(it, R, m)
     # seam piping
     lo = [P3(u * 1.004, v * 1.004, -4) for (u, v) in base]; hi = [P3(u * 1.004, v * 1.004, 4) for (u, v) in base]
     it['prisms'].append((3, (lo, hi), 0, 0, m))
@@ -659,13 +680,8 @@ def station3(c, it, face, cx, cy, D):
     f = {'+x': (1.0, 0.0, 0.0), '-x': (-1.0, 0.0, 0.0), '+y': (0.0, 1.0, 0.0), '-y': (0.0, -1.0, 0.0)}[face]
     Rv = (-f[1], f[0], 0.0)
     sv = D - 150
-    c.PRZ(it, c.LP(T, c.RRECT(-110, 110, sv - 40, sv + 110, 40, 5)), 750, 758, 'metal')
-    c.PRZ(it, c.LP(T, c.RRECT(-24, 24, sv + 50, sv + 80, 10, 3)), 758, 1070, 'metal')
-    o = T(0, sv)
-    c.PR3(it, c.RRECT(-312, 312, 900, 1265, 10, 4), (o[0], o[1], 0), Rv, (0.0, 0.0, 1.0), f, 0, 14, 'screen')
-    c.PR3(it, c.RRECT(-304, 304, 914, 1257, 6, 3), (o[0], o[1], 0), Rv, (0.0, 0.0, 1.0), f, -2, 0, 'display')
-    c.PR3(it, c.RRECT(-200, 200, 940, 1200, 60, 5), (o[0], o[1], 0), Rv, (0.0, 0.0, 1.0), f, 14, 40, 'charcoal')
-    keyboard(c, it, T); mouse(c, it, T)
+    monitor2(c, it, T, f, Rv, sv)
+    keyboard2(c, it, T); mouse2(c, it, T)
     # mug (left of the keyboard, on a coaster) and a notebook – all within the narrowest (850 mm) desk
     p = T(-300, 215)
     c.CYL(it, p[0], p[1], 48, 750, 754, 'walnut', 18); c.CYL(it, p[0], p[1], 38, 754, 850, 'ceramic', 18); c.CYL(it, p[0], p[1], 32, 846, 851, 'walnut', 14)
@@ -762,3 +778,147 @@ def dchair4(c, it, cx, cy, back):
     sh = 0
     _loft(it, [(oc[0] + bd[0] * 337 + px * a, oc[1] + bd[1] * 337 + py * a, 520) for a in (-3, 3, 3, -3)][:2] + [(oc[0] + bd[0] * 339 + px * 3, oc[1] + bd[1] * 339 + py * 3, 520), (oc[0] + bd[0] * 339 - px * 3, oc[1] + bd[1] * 339 - py * 3, 520)],
               [(oc[0] + bd[0] * (337 + 52) + px * a, oc[1] + bd[1] * (337 + 52) + py * a, 840) for a in (-3, 3)] + [(oc[0] + bd[0] * (339 + 52) + px * 3, oc[1] + bd[1] * (339 + 52) + py * 3, 840), (oc[0] + bd[0] * (339 + 52) - px * 3, oc[1] + bd[1] * (339 + 52) - py * 3, 840)], 'leather3')
+
+# ======================= detailed small objects (smooth surfaces) =======================
+def ellipsoid(it, cx, cy, cz, a, b, h, m, nu=18, nv=8, squash=1.0):
+    """Ellipsoid (radii a, b in plan, h up) as one smooth surface."""
+    R = []
+    for j in range(nv + 1):
+        t = -math.pi / 2 + math.pi * j / nv
+        cr, sz = math.cos(t), math.sin(t)
+        R.append([(cx + a * cr * math.cos(2 * math.pi * k / nu), cy + b * cr * math.sin(2 * math.pi * k / nu), cz + h * sz) for k in range(nu)])
+    sweep(it, R, m, False, False)
+
+def tube(it, pts, r, m, n=10, r1=None):
+    """Round tube along a 3D polyline (radius r, tapering to r1)."""
+    r1 = r if r1 is None else r1
+    R = []
+    for i, p in enumerate(pts):
+        q0 = pts[max(0, i - 1)]; q1 = pts[min(len(pts) - 1, i + 1)]
+        d = (q1[0] - q0[0], q1[1] - q0[1], q1[2] - q0[2]); L = math.sqrt(sum(x * x for x in d)) or 1.0; d = (d[0] / L, d[1] / L, d[2] / L)
+        up = (0.0, 0.0, 1.0) if abs(d[2]) < 0.9 else (1.0, 0.0, 0.0)
+        u = (d[1] * up[2] - d[2] * up[1], d[2] * up[0] - d[0] * up[2], d[0] * up[1] - d[1] * up[0]); Lu = math.sqrt(sum(x * x for x in u)); u = (u[0] / Lu, u[1] / Lu, u[2] / Lu)
+        v = (d[1] * u[2] - d[2] * u[1], d[2] * u[0] - d[0] * u[2], d[0] * u[1] - d[1] * u[0])
+        rr = r + (r1 - r) * i / max(1, len(pts) - 1)
+        R.append([(p[0] + rr * (math.cos(2 * math.pi * k / n) * u[0] + math.sin(2 * math.pi * k / n) * v[0]),
+                   p[1] + rr * (math.cos(2 * math.pi * k / n) * u[1] + math.sin(2 * math.pi * k / n) * v[1]),
+                   p[2] + rr * (math.cos(2 * math.pi * k / n) * u[2] + math.sin(2 * math.pi * k / n) * v[2])) for k in range(n)])
+    sweep(it, R, m)
+
+def keyboard2(c, it, T, cu=0.0, cv=219.0, z=750):
+    """Tenkeyless keyboard: anodised aluminium case with eased edges, sculpted keycaps in six rows (U = 19.05 mm)."""
+    U = 19.05
+    rows = [[1, -0.5] + [1] * 4 + [-0.25] + [1] * 4 + [-0.25] + [1] * 4,
+            [1] * 13 + [2], [1.5] + [1] * 12 + [1.5], [1.75] + [1] * 11 + [2.25], [2.25] + [1] * 10 + [2.75],
+            [1.25, 1.25, 1.25, 6.25, 1.25, 1.25, 1.25, 1.25]]
+    W = 15 * U; H = 6 * U
+    # case: slightly wedge-shaped (thicker at the back), rounded edges
+    case = c.LP(T, c.RRECT(cu - W / 2 - 9, cu + W / 2 + 9, cv - H / 2 - 9, cv + H / 2 + 9, 9, 4))
+    soft_slab(c, it, case, z, z + 16, 'alu', 4, 3)
+    c.PRZ(it, c.LP(T, c.RRECT(cu - W / 2 - 1, cu + W / 2 + 1, cv - H / 2 - 1, cv + H / 2 + 1, 3, 2)), z + 15, z + 16.5, 'rubber')    # key well
+    for (j, row) in enumerate(rows):
+        v0 = cv + H / 2 - (j + 1) * U + (2 if j == 0 else 0)    # function row furthest from the user (user sits at v < 0)
+        u = cu - W / 2
+        for w in row:
+            if w < 0: u += -w * U; continue
+            a0, a1, b0, b1 = u + 0.8, u + w * U - 0.8, v0 + 0.8, v0 + U - 0.8
+            base = c.LP(T, c.RRECT(a0, a1, b0, b1, 2.2, 2))
+            top = c.LP(T, c.RRECT(a0 + 2.4, a1 - 2.4, b0 + 2.2, b1 - 3.0, 2.0, 2))
+            zt = z + 23.5 + (j - 3) * 0.6
+            sweep(it, [[(x, y, z + 16) for (x, y) in base], [(x, y, zt - 1.2) for (x, y) in _offset(base, -1.6)], [(x, y, zt) for (x, y) in top]], 'keycap')
+            u += w * U
+
+def mouse2(c, it, T, cu=330.0, cv=225.0, z=750):
+    """Ergonomic mouse: one smooth shell (hump towards the palm), button split, scroll wheel, on a felt desk mat."""
+    soft_slab(c, it, c.LP(T, c.RRECT(cu - 95, cu + 95, cv - 125, cv + 125, 18, 4)), z, z + 3, 'mousepad', 1.2, 2)
+    z += 3
+    N, K = 10, 28
+    rings = []
+    for j in range(N + 1):
+        t = j / float(N)
+        h = 38 * math.sin(t * math.pi / 2) ** 0.9 if j < N else 38
+        s = math.cos(t * math.pi / 2) ** 0.55 if j < N else 0.0
+        R = []
+        for k in range(K):
+            ang = 2 * math.pi * k / K
+            ca, sa = math.cos(ang), math.sin(ang)
+            b = 62 if sa < 0 else 56                      # longer towards the palm (user side, v < 0)
+            a = 31 - 3 * sa                                # a little wider under the palm
+            hump = -10 * t                                 # highest point sits behind the middle
+            R.append((cu + a * ca * s, cv + b * sa * s + hump, z + 2 + h))
+        rings.append([(T(x, y)[0], T(x, y)[1], zz) for (x, y, zz) in R])
+    rings.insert(0, [(x, y, z) for (x, y, zz) in rings[0]])
+    sweep(it, rings, 'mouse', True, False)
+    w = T(cu, cv + 26); ellipsoid(it, w[0], w[1], z + 34, 3.5, 7, 7, 'rubber', 10, 6)        # scroll wheel
+    for sgn in (-1, 1):                                                                           # button split
+        q = T(cu + sgn * 0.0, cv + 40); pass
+
+def monitor2(c, it, T, f, Rv, sv, z=750):
+    """27-inch monitor: 4 mm bezel, slim panel with a rounded rear housing, oval column and an eased oval foot."""
+    o = T(0, sv)
+    def P(u, h, t): return (o[0] + u * Rv[0] + t * f[0], o[1] + u * Rv[1] + t * f[1], h)
+    Wd, z0, z1 = 615, z + 150, z + 150 + 360
+    # panel: front face rounded rectangle, 10 mm deep, eased edge
+    face = c.RRECT(-Wd / 2, Wd / 2, z0, z1, 6, 3)
+    rings = []
+    for (t, ins) in ((-1.5, 2.0), (0, 0.0), (9, 0.0), (11, 1.6), (12, 4.0)):
+        rings.append([P(u, h, t) for (u, h) in _offset(face, -ins)])
+    sweep(it, rings, 'screen')
+    c.PR3(it, c.RRECT(-Wd / 2 + 5, Wd / 2 - 5, z0 + 5, z1 - 18, 2, 2), (o[0], o[1], 0), Rv, (0.0, 0.0, 1.0), f, -2.0, -1.6, 'display')
+    # rear housing: dome over the middle of the back
+    hb = c.RRECT(-200, 200, z0 + 60, z1 - 70, 70, 5)
+    rings = [[P(u, h, 12 + d) for (u, h) in _offset(hb, -ins)] for (d, ins) in ((0, 0), (14, 4), (24, 16), (30, 40), (32, 70))]
+    sweep(it, rings, 'screen', False, True)
+    # column and foot
+    col = [(x * 1.0, y) for (x, y) in c.ELL(0, 0, 26, 14, 16)]
+    tube_pts = []
+    for (h, t) in ((z + 6, 120), (z + 250, 96), (z0 + 170, 52)):
+        tube_pts.append([P(u, h, t + v) for (u, v) in col])
+    sweep(it, tube_pts, 'alu')
+    foot = [(u, 120 + v) for (u, v) in c.ELL(0, 0, 130, 95, 28)]
+    footw = [(o[0] + u * Rv[0] + v * f[0], o[1] + u * Rv[1] + v * f[1]) for (u, v) in foot]
+    soft_slab(c, it, footw, z, z + 9, 'alu', 3, 3, False)
+
+def office_chair(c, it, face, cx, cy):
+    """Ergonomic mesh task chair: polished 5-star base with twin-wheel casters, gas lift, contoured seat, curved mesh back, padded arms."""
+    T = c.LF(face, cx, cy)
+    def P(u, v, z): q = T(u, v); return (q[0], q[1], z)
+    # base
+    for k in range(5):
+        a = 2 * math.pi * k / 5 + 0.3
+        ca, sa = math.cos(a), math.sin(a)
+        tube(it, [P(ca * 40, sa * 40, 118), P(ca * 170, sa * 170, 104), P(ca * 290, sa * 290, 82)], 17, 'alu', 10, 11)
+        w = P(ca * 300, sa * 300, 0)
+        tube(it, [P(ca * 300, sa * 300, 82), P(ca * 300, sa * 300, 62)], 7, 'chrome', 8)
+        for s in (-1, 1):
+            ellipsoid(it, w[0] - sa * 0 + s * 9 * (-sa), w[1] + s * 9 * ca, 27, 9, 9, 27, 'rubber', 12, 6)
+        ellipsoid(it, w[0], w[1], 46, 22, 22, 14, 'metal', 12, 5)
+    ellipsoid(it, *P(0, 0, 112), 52, 52, 22, 'alu', 18, 6)
+    tube(it, [P(0, 0, 120), P(0, 0, 300)], 26, 'metal', 16)
+    tube(it, [P(0, 0, 300), P(0, 0, 425)], 14, 'chrome', 14)
+    # seat: tilt mechanism + contoured cushion with waterfall front
+    soft_slab(c, it, c.LP(T, c.RRECT(-110, 110, -120, 110, 20, 3)), 410, 440, 'metal', 8, 3)
+    seat = c.LP(T, c.RRECT(-250, 250, -230, 240, 95, 6))
+    soft_slab(c, it, seat, 440, 465, 'metal', 6, 3)
+    soft_slab(c, it, _offset(seat, -6), 462, 530, 'mesh', 26, 4)
+    # back: curved band of mesh in a dark frame, lofted with a gentle S-curve and backward lean
+    lev = [(560, 0.92), (640, 1.0), (740, 1.0), (860, 0.97), (980, 0.94), (1080, 0.88), (1140, 0.78)]
+    band_o, band_i = [], []
+    for (z, sc) in lev:
+        lean = (z - 560) * math.tan(math.radians(14)) + 18 * math.sin((z - 560) / 580.0 * math.pi)
+        R0 = 410; half = math.radians(31 * sc)
+        vc = 150 - lean
+        def arc(r):
+            return [P(r * math.cos(math.radians(270) - half + 2 * half * k / 16), vc + r * math.sin(math.radians(270) - half + 2 * half * k / 16), z) for k in range(17)]
+        band_o.append(arc(R0 + 8)); band_i.append(arc(R0 - 8))
+    rings = [bo + list(reversed(bi)) for (bo, bi) in zip(band_o, band_i)]
+    sweep(it, rings, 'mesh')
+    mid = [[((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, a[2]) for (a, b) in zip(bo, bi)] for (bo, bi) in zip(band_o, band_i)]
+    edge = [r[0] for r in mid] + mid[-1][1:] + [r[-1] for r in reversed(mid)][1:] + list(reversed(mid[0]))[1:]
+    tube(it, edge, 10, 'metal', 8)
+    # spine connecting seat to back
+    tube(it, [P(0, -120, 460), P(0, -230, 470), P(0, -300, 560), P(0, -330, 700)], 20, 'metal', 12, 16)
+    # arms
+    for s in (-1, 1):
+        tube(it, [P(s * 225, -40, 450), P(s * 262, -30, 520), P(s * 268, -20, 650)], 15, 'metal', 10)
+        soft_slab(c, it, c.LP(T, c.RRECT(s * 268 - 42, s * 268 + 42, -170, 110, 40, 5)), 650, 682, 'rubber', 12, 3, True)

@@ -4,6 +4,7 @@
 // While a photo is running the normal render loop hands every frame to `tick()`; moving the camera cancels it.
 import * as THREE from 'three';
 import { FullScreenQuad } from 'three/addons/postprocessing/Pass.js';
+import { skyData } from './context';
 
 type PathTracer = {
   bounces: number; filteredGlossyFactor: number; minSamples: number; fadeDuration: number; renderScale: number;
@@ -94,16 +95,21 @@ export class PhotoRenderer {
   private denoise: FullScreenQuad | null = null;
   target: number;
 
+  /** set for a 360° panorama: an equirectangular camera standing at this point */
+  private equirectAt: THREE.Vector3 | null = null;
+
   constructor(private renderer: THREE.WebGLRenderer, private scene: THREE.Scene, private camera: THREE.PerspectiveCamera,
-              private lights: { hemi: THREE.Light; amb: THREE.Light; fill: THREE.Light }, private night: boolean, mobile: boolean) {
-    this.target = mobile ? 200 : 500;
+              private lights: { hemi: THREE.Light; amb: THREE.Light; fill: THREE.Light }, private night: boolean, mobile: boolean,
+              opts: { equirectAt?: THREE.Vector3; samples?: number } = {}) {
+    this.target = opts.samples || (mobile ? 200 : 500);
+    this.equirectAt = opts.equirectAt || null;
   }
 
   get samples(): number { return this.tracer ? Math.floor(this.tracer.samples) : 0; }
 
   /** Load the path tracer, swap in physically based materials and build the acceleration structure (blocks for a moment). */
   async start(): Promise<void> {
-    const mod = await import('three-gpu-pathtracer') as unknown as { WebGLPathTracer: new (r: THREE.WebGLRenderer) => PathTracer };
+    const mod = await import('three-gpu-pathtracer') as unknown as { WebGLPathTracer: new (r: THREE.WebGLRenderer) => PathTracer; EquirectCamera: new () => THREE.Camera };
     const scene = this.scene;
     // three 0.160 scenes have no background/environment rotation, which the path tracer reads (also from its own scenes)
     const proto = THREE.Scene.prototype as unknown as Record<string, unknown>;
@@ -119,7 +125,7 @@ export class PhotoRenderer {
 
     this.saved = { env: scene.environment, bg: scene.background as THREE.Color | THREE.Texture | null, hemi: this.lights.hemi.intensity,
       amb: this.lights.amb.intensity, fill: this.lights.fill.intensity, exposure: this.renderer.toneMappingExposure };
-    this.sky = skyTexture(this.night);
+    this.sky = this.night ? skyTexture(true) : skyData(false, 4.4, 1024, 512);
     scene.environment = this.sky; scene.background = this.sky;
     // ambient / hemisphere / fill lights are fakes for the raster view: the sky does that job now
     this.lights.hemi.intensity = 0; this.lights.amb.intensity = 0; this.lights.fill.intensity = 0;
@@ -142,6 +148,7 @@ export class PhotoRenderer {
           rep = new THREE.MeshStandardMaterial({ color: 0xffffff, metalness: 1, roughness: 0.02, side: THREE.DoubleSide });
         } else {
           const c = m.clone(); c.normalMap = null; c.envMap = null; c.transparent = false; c.opacity = 1;   // the tracer needs tangents for normal maps; skip them
+          if (!this.night && c.emissiveMap) { c.emissiveMap = null; c.emissive.set(0); c.emissiveIntensity = 0; }   // lit windows of the neighbours: night only
           rep = c;
         }
         rep.name = name;
@@ -154,8 +161,10 @@ export class PhotoRenderer {
     });
 
     if (!this.night) {
-      const box = new THREE.Box3().setFromObject(this.scene);
-      this.portals = windowPortals(this.scene, box.getCenter(new THREE.Vector3()), this.camera.position);
+      // the flat only (not the neighbourhood outside), so each window light faces into the rooms
+      const box = new THREE.Box3();
+      for (const ch of this.scene.children) if (ch.name !== 'Outdoors' && ch.visible) box.expandByObject(ch);
+      this.portals = windowPortals(this.scene, box.getCenter(new THREE.Vector3()), this.equirectAt || this.camera.position);
     }
     const t = new mod.WebGLPathTracer(this.renderer);
     t.bounces = 5; t.filteredGlossyFactor = 0.5; t.minSamples = 1; t.fadeDuration = 0; t.renderScale = 1;
@@ -171,7 +180,9 @@ export class PhotoRenderer {
       const auto = renderer.autoClear; renderer.autoClear = false;
       m.map = target.texture; q.render(renderer); renderer.autoClear = auto;
     };
-    t.setScene(this.scene, this.camera);
+    let cam: THREE.Camera = this.camera;
+    if (this.equirectAt) { cam = new mod.EquirectCamera(); cam.position.copy(this.equirectAt); cam.updateMatrixWorld(true); }
+    t.setScene(this.scene, cam);
     this.tracer = t;
   }
 
@@ -196,6 +207,7 @@ export class PhotoRenderer {
     for (const L of this.portals) L.removeFromParent();
     this.portals = [];
     this.denoise?.dispose(); this.denoise = null;
-    this.tracer?.dispose(); this.tracer = null; this.sky?.dispose(); this.sky = null;
+    try { this.tracer?.dispose(); } catch { /* never fully set up */ }
+    this.tracer = null; this.sky?.dispose(); this.sky = null;
   }
 }

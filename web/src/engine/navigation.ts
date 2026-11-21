@@ -29,6 +29,8 @@ export class Navigator {
   /** the tool button that is highlighted */
   tool: Tool = 'look';
   look = { yaw: 0, pitch: 0, pointers: new Map<number, [number, number]>(), lastPinch: 0 };
+  /** touch fling: turning speed (rad/ms) that carries on after the finger lifts, slowing down */
+  private spin = { yaw: 0, pitch: 0, last: 0, samples: [] as [number, number, number][] };
   tween: Tween | null = null;
   keys = new Set<string>();
   private _off: (() => void)[] = [];
@@ -71,6 +73,7 @@ export class Navigator {
   setTool(tool: Tool, fromView = false): void {
     const was = this.nav; this.tool = tool;
     const c = this.controls;
+    this.dom.style.cursor = tool === 'look' ? 'grab' : '';
     if (tool === 'look') {
       this.nav = 'look'; this.syncLookFromCamera(); c.enabled = false; this.applyLook();
     } else if (tool === 'tape') {
@@ -141,8 +144,19 @@ export class Navigator {
   update(now: number): boolean {
     let moved = this.stepTween(now);
     if (!moved) moved = this.walkStep();
+    if (!moved) moved = this.spinStep(now);
     if (this.nav === 'orbit' && this.controls.update()) moved = true;   // damping still settling
     return moved;
+  }
+  /** Momentum after a touch flick (eases out over about half a second). */
+  spinStep(now: number): boolean {
+    const sp = this.spin;
+    if (this.nav !== 'look' || (Math.abs(sp.yaw) < 1e-5 && Math.abs(sp.pitch) < 1e-5)) { sp.yaw = sp.pitch = 0; return false; }
+    const dt = Math.min(50, now - sp.last); sp.last = now;
+    this.look.yaw += sp.yaw * dt; this.look.pitch = Math.max(-1.45, Math.min(1.45, this.look.pitch + sp.pitch * dt));
+    const k = Math.pow(0.994, dt); sp.yaw *= k; sp.pitch *= k;
+    this.applyLook();
+    return true;
   }
   walkStep(): boolean {
     const k = this.keys; if (k.size === 0) return false;
@@ -166,25 +180,49 @@ export class Navigator {
     const on = <E extends Event>(t: EventTarget, n: string, f: (e: E) => void, o?: AddEventListenerOptions) => {
       t.addEventListener(n, f as EventListener, o); this._off.push(() => t.removeEventListener(n, f as EventListener, o));
     };
+    // Look-around follows the usual 360-viewer convention (street-view maps, virtual tours):
+    //  - mouse and touch both "grab" the scene: it moves with the pointer, 1:1 with the lens (drag left = turn right)
+    //  - touch: a flick keeps turning and slows down (momentum); pinch zooms the lens
+    //  - mouse: no momentum (stops where you let go), wheel zooms; the cursor shows an open / closed hand
     on<PointerEvent>(el, 'pointerdown', (e) => {
       if (this.nav !== 'look') return;
       el.setPointerCapture(e.pointerId); look.pointers.set(e.pointerId, [e.clientX, e.clientY]); look.lastPinch = 0;
+      this.spin.yaw = this.spin.pitch = 0; this.spin.samples = [];
+      if (e.pointerType === 'mouse') el.style.cursor = 'grabbing';
     });
     on<PointerEvent>(el, 'pointermove', (e) => {
+      if (this.nav === 'look' && e.pointerType === 'mouse' && !look.pointers.size) el.style.cursor = 'grab';
       if (this.nav !== 'look' || !look.pointers.has(e.pointerId)) return;
       const prev = look.pointers.get(e.pointerId)!; look.pointers.set(e.pointerId, [e.clientX, e.clientY]);
       if (look.pointers.size === 1) {
-        const radPerPx = (this.camera.fov * Math.PI / 180) / Math.max(1, el.clientHeight);   // follows the lens
-        look.yaw += (e.clientX - prev[0]) * radPerPx;
-        look.pitch = Math.max(-1.45, Math.min(1.45, look.pitch - (e.clientY - prev[1]) * radPerPx));
+        const radPerPx = (this.camera.fov * Math.PI / 180) / Math.max(1, el.clientHeight);   // follows the lens: the scene stays under the pointer
+        const dy = (e.clientX - prev[0]) * radPerPx, dp = (e.clientY - prev[1]) * radPerPx;
+        look.yaw += dy;
+        look.pitch = Math.max(-1.45, Math.min(1.45, look.pitch + dp));
+        if (e.pointerType !== 'mouse') {
+          const t = performance.now(); this.spin.samples.push([t, dy, dp]);
+          while (this.spin.samples.length && t - this.spin.samples[0][0] > 90) this.spin.samples.shift();
+        }
         this.applyLook();
       } else if (look.pointers.size === 2) {
         const [a, b] = [...look.pointers.values()]; const dist = Math.hypot(a[0] - b[0], a[1] - b[1]);
         if (look.lastPinch) this.zoomLens(look.lastPinch / dist);
-        look.lastPinch = dist;
+        look.lastPinch = dist; this.spin.samples = [];
       }
     });
-    const end = (e: PointerEvent) => { look.pointers.delete(e.pointerId); look.lastPinch = 0; };
+    const end = (e: PointerEvent) => {
+      if (!look.pointers.has(e.pointerId)) return;
+      look.pointers.delete(e.pointerId); look.lastPinch = 0;
+      if (e.pointerType === 'mouse') { el.style.cursor = this.nav === 'look' ? 'grab' : ''; return; }
+      // touch flick: carry on turning at the speed of the last ~90 ms of the swipe
+      const sm = this.spin.samples, t = performance.now();
+      if (!look.pointers.size && sm.length > 1 && t - sm[sm.length - 1][0] < 60) {
+        const dt = Math.max(16, t - sm[0][0]);
+        this.spin.yaw = sm.reduce((a, s) => a + s[1], 0) / dt; this.spin.pitch = sm.reduce((a, s) => a + s[2], 0) / dt;
+        this.spin.last = t; this.invalidate();
+      }
+      this.spin.samples = [];
+    };
     on(el, 'pointerup', end); on(el, 'pointercancel', end);
     on<WheelEvent>(el, 'wheel', (e) => { if (this.nav !== 'look') return; e.preventDefault(); this.zoomLens(Math.exp(e.deltaY * 0.0012)); }, { passive: false });
     on<KeyboardEvent>(window, 'keydown', (e) => { if (!typingIn(e) && !e.metaKey && !e.ctrlKey) this.keys.add(e.key.toLowerCase()); });

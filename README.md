@@ -48,6 +48,9 @@ The app is React + TypeScript, bundled with esbuild. three.js is loaded from a C
 | `web/src/engine/navigation.ts` | Look-around / orbit / pan / zoom tools, walking keys, camera flights |
 | `web/src/engine/textures.ts` | Material textures for realistic mode (`assets/tex`, made by `pipeline/textures_gen.py`) |
 | `web/src/engine/photo.ts` | Photo button: path-traces the current view (three-gpu-pathtracer from the CDN) |
+| `web/src/engine/walk.ts` | 360° walk: room points, floor circles to step between them, showing saved 360° photos |
+| `web/src/engine/context.ts` | The world outside the windows: neighbouring blocks, courtyard, trees, skyline, cloudy sky (from the site plan) |
+| `web/src/lib/github.ts` | Saves rendered 360° photos into this repo (`pano/`) with a GitHub token kept in the browser |
 | `web/src/engine/tape.ts` | Tape measure tool |
 | `web/src/types.ts` | Types for the plan data and viewer options |
 | `web/src/components/` | UI pieces: `Landing`, `TopBar`, `Stepper`, `Toolbar`, `SidePanel`, `ViewList`, `AiRenderDialog`, `Icon` |
@@ -71,6 +74,18 @@ Commit the rebuilt files and push – GitHub Pages serves the repo root.
   and ambient occlusion added once the camera stops moving (skipped on phones). Turn it off for a light mode on older devices.
 - **Photo** (toolbar): path traces the current view in the browser – real bounce light, sky through the windows, glass and
   reflections. The image sharpens over a few hundred passes; moving the camera cancels it. Needs WebGL 2.
+- **360° walk** (toolbar): stand at a point in each room, drag to look all around, click the circles on the floor to move.
+  Where a 360° photo of that point has been saved, it is shown instead of the live 3D view (nothing heavy to render).
+- **Rendering 360° photos once**: in the 360° walk, pick a quality and *Render this point* or *Render missing*. On a machine
+  with a good graphics card the path tracer renders an equirectangular photo per point. With a GitHub key saved (key button:
+  a fine-grained token with *Contents: read and write* on this repo only) each photo is committed to `pano/<plan>/…` with
+  `pano/index.json`; GitHub Pages publishes it a minute later and every device then just shows the photo. Without a key
+  the photo is downloaded. A saved photo belongs to one look: plan, theme, ceiling design, layout option, day or night.
+  After photos have been saved from the browser, run `git pull` before pushing from another clone.
+- **Look-around gestures** follow 360-viewer conventions: mouse and touch both drag the scene (it stays under the pointer),
+  touch flicks carry on and slow down, pinch or scroll zooms the lens; the mouse cursor is an open / closed hand.
+- **Outside the windows**: the neighbouring blocks, courtyard and trees are laid out from the development's site plan
+  (8th storey), only while the camera is inside the flat.
 - Textures are tileable detail maps: the theme supplies the colour, so every theme keeps working. Regenerate them with
   `cd pipeline && python3 textures_gen.py`.
 

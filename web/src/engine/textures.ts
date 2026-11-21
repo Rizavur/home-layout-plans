@@ -30,6 +30,7 @@ const RULES: Rule[] = [
   { re: /Travertine/, file: 'travertine', mm: 1200, mean: MEANS.travertine, normal: 0.5, rough: 0.7 },
   { re: /Rug|Throw/, file: 'rug', mm: 420, mean: MEANS.rug, normal: 0.8, rough: 1 },
   { re: /Boucle/, file: 'boucle', mm: 300, mean: MEANS.boucle, normal: 0.8, rough: 1 },
+  { re: /Chair_Mesh/, file: 'mesh', mm: 90, mean: MEANS.mesh, normal: 0.7, rough: 0.85 },
   { re: /Leather/, file: 'leather', mm: 400, mean: MEANS.leather, normal: 0.4, rough: 0.55 },
   { re: /Sofa|Cushion|Headboard|Duvet|Linen|Pillow|Velvet|Curtain|Felt|Fabric|Bedding|Towel|Chair_Lumbar/, file: 'fabric', mm: 260, mean: MEANS.fabric, normal: 0.6, rough: 1 },
   { re: /^Wall_Paint|^Ceiling_Paint|^False_Ceiling|Boxup_Board/, file: 'paint', mm: 2400, mean: MEANS.paint, normal: 0.06, rough: 0.92 },

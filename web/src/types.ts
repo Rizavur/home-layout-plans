@@ -50,6 +50,8 @@ export interface PlanData {
   families?: string[];
   /** false-ceiling designs available for this plan, besides the default */
   ceils?: string[];
+  /** 360° walk points: [name, x, y] */
+  pano?: [string, number, number][];
 }
 
 /** Variant file (furniture style or ceiling design): only the swapped pieces. */

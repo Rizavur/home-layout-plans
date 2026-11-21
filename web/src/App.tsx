@@ -13,6 +13,7 @@ import TopBar from './components/TopBar';
 import Stepper from './components/Stepper';
 import Toolbar, { ToolHint } from './components/Toolbar';
 import PhotoBar from './components/PhotoBar';
+import WalkBar from './components/WalkBar';
 import SidePanel from './components/SidePanel';
 import AiRenderDialog from './components/AiRenderDialog';
 import Icon from './components/Icon';
@@ -35,6 +36,7 @@ export default function App() {
   const [tool, setTool] = useState<Tool>('look');
   const [loading, setLoading] = useState<string | null>(null);
   const [photo, setPhoto] = useState<{ samples: number; target: number } | null>(null);
+  const [walkVersion, setWalkVersion] = useState(0);
   // ---- remembered choices
   const [theme, setTheme] = useStoredState<string>('theme', 'lux', (v) => typeof v === 'string' && !!THEMES[v]);
   const [ceiling, setCeiling] = useStoredState<string>('ceil', 'wave', (v) => typeof v === 'string' && !!CEILINGS[v]);
@@ -53,7 +55,7 @@ export default function App() {
 
   // ---------------------------------------------------------------- engine lifecycle
   useEffect(() => {
-    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading, onPhoto: (s, t) => setPhoto(s === null ? null : { samples: s, target: t }) });
+    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading, onPhoto: (s, t) => setPhoto(s === null ? null : { samples: s, target: t }), onWalk: () => setWalkVersion((n) => n + 1) });
     v.hq = hq; v.theme = theme; v.ceiling = ceiling;
     viewerRef.current = v;
     (window as unknown as { __viewer?: Viewer }).__viewer = v;   // handy for debugging in the browser console
@@ -198,8 +200,9 @@ export default function App() {
           <div id="labels" ref={labelsRef} />
           <Stepper index={viewIndex} total={plan?.views.length || 0} onStep={stepView} />
           <Toolbar tool={tool} onTool={(t) => viewerRef.current?.setTool(t)} onFit={() => viewerRef.current?.zoomExtents()}
-            onAiRender={() => void openAiRender()} onZip={() => void exportZip()} onPhoto={() => void startPhoto()} />
+            onAiRender={() => void openAiRender()} onZip={() => void exportZip()} onPhoto={() => void startPhoto()} onWalk={() => viewerRef.current?.walk.enter()} />
           <ToolHint tool={tool} />
+          <WalkBar viewer={viewerRef.current} version={walkVersion} planShort={PLANS.find((p) => p.key === planKey)?.short || 'Plan'} />
           <PhotoBar progress={photo} onSave={() => void savePhoto()} onClose={() => viewerRef.current?.stopPhoto()} />
         </div>
         <SidePanel open={panelOpen} title={planTitle} plan={plan} theme={theme} onTheme={setTheme} ceiling={ceiling} onCeiling={setCeiling}

@@ -12,6 +12,8 @@ import { PhotoRenderer } from './photo';
 import { Navigator } from './navigation';
 import { textureFor, addBoxUVs, setTextureLoadCallback } from './textures';
 import { TapeMeasure } from './tape';
+import { Outdoors } from './context';
+import { Walk, EYE_HEIGHT } from './walk';
 import { THEMES, planUrl } from '../config/data';
 import type { Chunk, PlanData, Tool, VariantData, View, ViewOptions, ViewTag } from '../types';
 
@@ -69,6 +71,8 @@ export interface ViewerEvents {
   onLoading: (text: string | null) => void;
   /** photo (path tracing) progress: samples so far, or null when it stopped */
   onPhoto: (samples: number | null, target: number) => void;
+  /** the 360° walk changed (started, ended, moved to another point, panorama shown) */
+  onWalk: () => void;
 }
 
 export class Viewer {
@@ -113,6 +117,12 @@ export class Viewer {
   activeCeiling = 'wave';
   labelEls: [HTMLElement, THREE.Vector3][] = [];
   nav: Navigator;
+  /** neighbouring blocks, courtyard, trees and sky seen through the windows */
+  outdoors!: Outdoors;
+  /** 360° walk between fixed points */
+  walk!: Walk;
+  /** a 360° panorama is being rendered: the normal render loop stands still */
+  private baking = false;
   tape: TapeMeasure;
   tapeLayer: HTMLElement;
   private _onVisible = (): void => this.invalidate();
@@ -123,12 +133,13 @@ export class Viewer {
    */
   constructor(container: HTMLElement, labelsEl: HTMLElement, events: Partial<ViewerEvents> = {}) {
     this.container = container; this.labelsEl = labelsEl;
-    this.events = { onTool: () => {}, onLoading: () => {}, onPhoto: () => {}, ...events };
+    this.events = { onTool: () => {}, onLoading: () => {}, onPhoto: () => {}, onWalk: () => {}, ...events };
     setTextureLoadCallback(() => { this.aoDone = false; this.invalidate(); });
     this._setupRenderer(); this._setupScene();
     this.nav = new Navigator(this.camera, this.renderer.domElement, () => this.invalidate(), (t) => { this.tape?.setActive(t === 'tape'); this.events.onTool(t); });
     this.tapeLayer = document.createElement('div'); this.tapeLayer.className = 'tape-labels'; this.container.appendChild(this.tapeLayer);
     this.tape = new TapeMeasure(this.scene, this.camera, this.renderer.domElement, this.root, this.tapeLayer, () => this.invalidate());
+    this.walk = new Walk(this, { onChange: () => this.events.onWalk() });
     this._startLoop();
   }
 
@@ -154,7 +165,7 @@ export class Viewer {
     this.camera = new THREE.PerspectiveCamera(60, 1, 30, 400000);
     this.hemi = new THREE.HemisphereLight(0xfff6ea, 0xa89a86, 0.55); scene.add(this.hemi);
     const sun = this.sun = new THREE.DirectionalLight(0xffe9cc, 2.6);
-    sun.position.set(7300 - 5500, 9000, 4800 - 9500); sun.target.position.set(7300, 0, 4800);
+    sun.position.set(7300 - 3500, 13000, 4800 - 4950); sun.target.position.set(7300, 0, 4800);   // late-morning sun, high in the south-east sky (as in Singapore), clearing the block opposite
     scene.add(sun, sun.target);
     sun.castShadow = true; sun.shadow.mapSize.set(MOBILE ? 2048 : 4096, MOBILE ? 2048 : 4096);
     Object.assign(sun.shadow.camera, { left: -11000, right: 11000, top: 11000, bottom: -11000, near: 100, far: 40000 });
@@ -164,6 +175,7 @@ export class Viewer {
     this.nightLights = NIGHT_LIGHT_SPOTS.map(([x, z, y]) => {
       const L = new THREE.PointLight(0xffc27a, 0, 5200, 1.2); L.position.set(x, y, z); L.visible = false; scene.add(L); return L;
     });
+    this.outdoors = new Outdoors(); scene.add(this.outdoors.group);
     this.root = new THREE.Group(); scene.add(this.root);           // the model, one group per layer
     this.dimGroup = new THREE.Group(); scene.add(this.dimGroup);   // dimension lines
     this.lineMat = new THREE.LineBasicMaterial({ color: 0xc0631a });
@@ -175,7 +187,7 @@ export class Viewer {
   private _startLoop(): void {
     let lastAbove: boolean | null = null;
     this.renderer.setAnimationLoop((now) => {
-      if (!this.plan) return;
+      if (!this.plan || this.baking) return;
       const moved = this.nav.update(now);
       if (this.photo) {                               // photo mode: every frame goes to the path tracer
         if (moved) { this.stopPhoto(); return; }
@@ -191,7 +203,9 @@ export class Viewer {
       const above = this.isAboveCeiling();
       if (above !== lastAbove) { lastAbove = above; this.applyVisibility(); }
       this._updateClipping();
-      if (wantAO) { this._renderFinal(); this.aoDone = true; }
+      if (this.walk.active) this.walk.place();
+      if (this.walk.render()) { this.aoDone = true; }       // standing at a point with a saved 360° photo
+      else if (wantAO) { this._renderFinal(); this.aoDone = true; }
       else { this.renderer.render(this.scene, this.camera); if (!this.hq) this.aoDone = true; }
       if (this.opts.lab) this._placeLabels();
       this.tape.place(this.container.clientWidth, this.container.clientHeight);
@@ -202,7 +216,7 @@ export class Viewer {
   /** Near/far planes that follow the camera height: tight indoors (sharp depth for ambient occlusion), wide for overviews. */
   private _updateClipping(): void {
     const y = Math.abs(this.camera.position.y);
-    const near = y < 4000 ? 20 : Math.min(2000, y * 0.01), far = y < 4000 ? 60000 : Math.max(60000, y * 5);
+    const near = y < 4000 ? 20 : Math.min(2000, y * 0.01), far = this.outdoors.group.visible ? 2500000 : y < 4000 ? 60000 : Math.max(60000, y * 5);
     if (near !== this.camera.near || far !== this.camera.far) { this.camera.near = near; this.camera.far = far; this.camera.updateProjectionMatrix(); }
   }
 
@@ -238,6 +252,45 @@ export class Viewer {
     this.photo = p; this.events.onPhoto(0, p.target);
   }
 
+  /** Camera flight that stays at eye height (no arc over the walls), for stepping between walk points. */
+  flyToFlat(eye: THREE.Vector3, target: THREE.Vector3, fov: number, ms: number, done: () => void): void {
+    this.stopPhoto();
+    this.nav.flyTo(eye, target, fov, ms, done);
+    if (this.nav.tween) this.nav.tween.lift = 0;
+  }
+
+  /**
+   * Path-trace a 360° (equirectangular) photo standing at plan point (x, y), at eye height.
+   * The page's canvas is borrowed for the render and given back afterwards. Resolves with a JPEG.
+   */
+  async bakePanorama(x: number, y: number, width: number, samples: number, onProgress: (done: number, total: number) => void, cancelled: () => boolean): Promise<Blob | null> {
+    if (!this.plan) return null;
+    this.stopPhoto();
+    const r = this.renderer, size = r.getSize(new THREE.Vector2()), ratio = r.getPixelRatio();
+    const p = new PhotoRenderer(r, this.scene, this.camera, { hemi: this.hemi, amb: this.amb, fill: this.fill }, this.opts.night, MOBILE,
+      { equirectAt: new THREE.Vector3(x, EYE_HEIGHT, y), samples });
+    this.baking = true;
+    // the model as seen from inside the flat: ceilings and the world outside on
+    const tag = this.viewTag; this.viewTag = '';
+    const cam = this.camera.position.clone(); this.camera.position.set(x, EYE_HEIGHT, y); this.applyVisibility();
+    let blob: Blob | null = null;
+    try {
+      r.setPixelRatio(1); r.setSize(width, width / 2, false);
+      await p.start();
+      for (let n = 0; p.tick(); n++) {
+        if (cancelled()) break;
+        if (n % 2 === 0) { onProgress(p.samples, p.target); await new Promise((res) => requestAnimationFrame(() => res(null))); }
+      }
+      if (!cancelled()) blob = await new Promise<Blob | null>((res) => r.domElement.toBlob(res, 'image/jpeg', 0.9));
+    } finally {
+      p.stop();
+      r.setPixelRatio(ratio); r.setSize(size.x, size.y, false);
+      this.camera.position.copy(cam); this.viewTag = tag;
+      this.baking = false; this.aoDone = false; r.shadowMap.needsUpdate = true; this.applyVisibility();
+    }
+    return blob;
+  }
+
   /** Stop path tracing and go back to the normal view. */
   stopPhoto(): void {
     if (!this.photo) return;
@@ -252,6 +305,7 @@ export class Viewer {
     let data: PlanData;
     try { data = await fetchJson<PlanData>(key); }
     catch (e) { this.events.onLoading(`Could not load this plan (${(e as Error).message}). Please reload the page.`); throw e; }
+    if (this.walk?.active) this.walk.exit();
     this.plan = data; this.planKey = key; this.tape?.clear();
     this.opts.mode = data.modes.open ? 'open' : Object.keys(data.modes)[0];
     this._rebuild();
@@ -402,7 +456,11 @@ export class Viewer {
     this.dimGroup.visible = o.lab;
 
     const n = o.night, hq = this.hq;
-    this.scene.background = new THREE.Color(n ? NIGHT_BG : DAY_BG);
+    // the world outside the windows, only when standing in the flat
+    const outside = !planLike && !this.isAboveCeiling();
+    this.outdoors.group.visible = outside; this.outdoors.setNight(n);
+    this.scene.background = outside ? this.outdoors.sky(n) : new THREE.Color(n ? NIGHT_BG : DAY_BG);
+    this.scene.fog = outside ? new THREE.Fog(n ? 0x0b0c10 : 0xdfe6ee, 90000, 1800000) : null;
     this.scene.environment = hq ? this.envTex : null;
     // realistic mode lights the rooms mostly with the soft environment (like daylight bouncing around a room)
     this.hemi.intensity = n ? 0.04 : hq ? 0.25 : 1.1;
@@ -453,6 +511,7 @@ export class Viewer {
 
   /** Move the camera to a scene. Plan views look straight down from high above. */
   showView(view: View, { instant = false }: { instant?: boolean } = {}): void {
+    if (this.walk?.active) this.walk.exit();
     this.viewTag = view.tag || '';
     const eye = new THREE.Vector3(view.eye[0], view.eye[2], view.eye[1]);
     const target = new THREE.Vector3(view.target[0], view.target[2], view.target[1]);

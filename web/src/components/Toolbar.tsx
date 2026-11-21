@@ -11,7 +11,7 @@ const TOOLS: { id: Tool; icon: string; label: string; key: string; title: string
 ];
 
 const HINTS: Record<Tool, string> = {
-  look: 'Look around (L): drag to turn your head · scroll to zoom the lens · W A S D / arrows to walk',
+  look: 'Look around (L): drag the view – it follows your mouse or finger · flick to keep turning on touch screens · scroll or pinch to zoom · W A S D / arrows to walk',
   orbit: 'Orbit (O): drag to rotate · scroll to zoom · right-drag or Shift-drag to pan',
   pan: 'Pan (H): drag to slide the view · scroll to zoom · right-drag to orbit',
   zoom: 'Zoom (Z): drag up/down to zoom · scroll also zooms towards the cursor',
@@ -26,9 +26,10 @@ interface ToolbarProps {
   onAiRender: () => void;
   onZip: () => void;
   onPhoto: () => void;
+  onWalk: () => void;
 }
 
-export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip, onPhoto }: ToolbarProps) {
+export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip, onPhoto, onWalk }: ToolbarProps) {
   return (
     <div id="tools" className="glass">
       {TOOLS.map((t) => (
@@ -37,6 +38,7 @@ export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip, onPhot
         </button>
       ))}
       <button title="Zoom extents (Shift+Z)" onClick={onFit}><Icon name="fit" size={17} /> <span className="t">Fit</span> <kbd>⇧Z</kbd></button>
+      <button className="ai" title="360° walk: stand in each room, look all around, click the floor circles to move" onClick={onWalk}><Icon name="globe" size={17} /> <span className="t">360° walk</span></button>
       <button className="ai" title="Photo: path-trace this view in the browser (real light bounces, glass, reflections)" onClick={onPhoto}><Icon name="camera" size={17} /> <span className="t">Photo</span></button>
       <button className="ai" title="Photo-real render with AI" onClick={onAiRender}><Icon name="sparkles" size={17} /> <span className="t">AI render</span></button>
       <button className="ai" title="Download every scene of this plan with its ChatGPT prompt (ZIP)" onClick={onZip}><Icon name="archive" size={17} /> <span className="t">All scenes ZIP</span></button>

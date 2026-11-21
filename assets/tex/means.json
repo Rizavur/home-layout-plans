@@ -12,5 +12,6 @@
  "fabric": 0.915,
  "boucle": 0.86,
  "rug": 0.82,
- "leather": 0.895
+ "leather": 0.895,
+ "mesh": 0.757
 }

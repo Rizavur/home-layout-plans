@@ -129,5 +129,11 @@ cell = noise(N, 50, 110, seed=130)
 lea = 0.92 + 0.012 * np.clip(fbm(N, 4, 4, seed=131), -2, 2) - 0.03 * np.abs(cell) ** 0.5
 meta['leather'] = save('leather', np.clip(lea, 0, 1)); normal_map('leather', -np.abs(cell) * 0.2, 1.4)
 
+# chair mesh: open diamond knit, dark strands with light gaps
+d1 = np.abs(np.sin(np.pi * (xx + yy) / N * 40)); d2 = np.abs(np.sin(np.pi * (xx - yy) / N * 40))
+strand = np.clip(1.6 - (d1 * d2) ** 0.35 * 1.9, 0, 1)
+mesh = 0.55 + 0.45 * (1 - strand) * 0.0 + 0.45 * strand
+meta['mesh'] = save('mesh', np.clip(0.62 + 0.38 * strand, 0, 1)); normal_map('mesh', strand * 0.6, 2.0)
+
 json.dump({k: round(v, 3) for k, v in meta.items()}, open(os.path.join(OUT, 'means.json'), 'w'), indent=1)
 print(json.dumps(meta, indent=1))

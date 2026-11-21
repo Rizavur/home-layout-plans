@@ -88,7 +88,7 @@ VIEWS = VC.HEAD + [
  ('Yard – stacked washer and dryer', (8250, 7750, 1550), (8960, 9100, 1000), 80, ''),
  ('Yard – folded mattress under the counter', (8700, 8500, 1350), (8870, 7250, 300), 80, ''),
  ('Yard – mattress laid out at night', (8150, 8450, 2250), (8900, 7650, 0), 88, '', 'mat'),
- ('Yard – mattress, feet under the counter', (8870, 8600, 1550), (8870, 7100, 150), 88, '', 'mat'),
+ ('Yard – mattress, feet under the counter', (8870, 8560, 1700), (8870, 7100, 150), 88, '', 'mat'),
 ] + VC.KITCHEN_OPEN_VIEWS + VC.tail(False)
 LABELS = VC.COMMON_LABELS + [('Living', 2900, 2600), ('Dining', 6150, 5600), ('Dry pantry', 8150, 5850), ('Bedroom 3 = study', 7000, 2000)]
 DIMS = [((9285, 6965), (9285, 8640), 'Helper mattress 800 × 1675 (night)'), ((6450, 2750), (6450, 3200), 'Bed down → wardrobe ≈ 450'), ((5850, 1400), (8550, 1400), 'Bedroom 3 width 2700'), ((5150, 5050), (7150, 5050), 'Table 2000 × 1000'), ((4600, 4700), (4600, 3900), 'Walkway to bedrooms ≈ 800')]
