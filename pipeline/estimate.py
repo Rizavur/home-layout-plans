@@ -214,7 +214,7 @@ def estimate(key):
         add('Kitchen & yard', 'Dining-wall top + bottom cabinets', 'kitchen_tb', dw)
         add('Kitchen & yard', 'Sintered stone top + backsplash, dining wall', 'sint_tb', dw)
         add('Kitchen & yard', 'Tall larder with microwave', 'tall', L(by['Kitchen_Tall_Larder_Dry_Goods_with_Microwave_and_Door_Pocket']))
-    add('Kitchen & yard', 'Yard: top + bottom cabinet', 'kitchen_tb', 2.3)
+    add('Kitchen & yard', 'Yard: top + bottom cabinet', 'kitchen_tb', 1.7 if 'Washer_and_Dryer_Stacked' in by else 2.3)
     add('Kitchen & yard', 'Yard: top cabinet over gas heater', 'top', 2.1)
     add('Kitchen & yard', 'Yard: sintered stone tops', 'sint_top', 4.4)
     add('Kitchen & yard', 'Box up yard pipes', 'pipe_box')
@@ -294,6 +294,7 @@ def estimate(key):
     buy('Bedrooms', 'Super-single floor bed (bedroom 2)', 'ss_bed'); buy('Bedrooms', 'Super-single mattress', 'ss_mat')
     if has('Maid_Room_Single_Bed'): buy('Bedrooms', 'Single bed frame (maid room)', 'single_bed'); buy('Bedrooms', 'Single mattress (maid room)', 'single_mat')
     buy('Bedrooms', 'Helper tri-fold mattress (shelter)', 'trifold')
+    if has('Yard_Trifold_Mattress_Folded_under_Counter'): buy('Bedrooms', 'Helper tri-fold mattress (yard, trimmed to 1675 long)', 'trifold')
     desks = 2 if any(has(n) for n in ('Study_Two_Standing_Desks_on_West_Wall', 'Bedroom3_Study_Two_Standing_Desks_Facing_Window', 'Study_Nook_Two_Standing_Desks_on_West_Wall', 'OptA_Study_Two_Standing_Desks')) else 0
     buy('Study', 'Electric standing desks', 'desk', desks); buy('Study', 'Ergonomic chairs', 'chair', desks); buy('Study', '27-inch 4K monitors', 'monitor', desks)
     fans = len([n for n in shown if n.startswith('Ceiling_Fan')])

@@ -12,10 +12,10 @@
   "cost": {
    "reno": 76620,
    "items": 33584,
-   "total": 110204,
-   "optional": 4900,
    "appliances": 8391,
-   "furniture": 25193
+   "furniture": 25193,
+   "total": 110204,
+   "optional": 4900
   }
  },
  {
@@ -31,10 +31,10 @@
   "cost": {
    "reno": 81865,
    "items": 35595,
-   "total": 117460,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 26604
+   "furniture": 26604,
+   "total": 117460,
+   "optional": 4900
   }
  },
  {
@@ -51,10 +51,10 @@
   "cost": {
    "reno": 78806,
    "items": 34565,
-   "total": 113371,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 25574
+   "furniture": 25574,
+   "total": 113371,
+   "optional": 4900
   }
  },
  {
@@ -69,12 +69,12 @@
   ],
   "tint": "green",
   "cost": {
-   "reno": 75902,
-   "items": 32536,
-   "total": 108438,
-   "optional": 4900,
+   "reno": 75719,
+   "items": 32658,
    "appliances": 9051,
-   "furniture": 23485
+   "furniture": 23607,
+   "total": 108377,
+   "optional": 4900
   }
  },
  {
@@ -91,10 +91,10 @@
   "cost": {
    "reno": 74876,
    "items": 32718,
-   "total": 107594,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 23727
+   "furniture": 23727,
+   "total": 107594,
+   "optional": 4900
   }
  },
  {
@@ -111,10 +111,10 @@
   "cost": {
    "reno": 74035,
    "items": 34565,
-   "total": 108600,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 25574
+   "furniture": 25574,
+   "total": 108600,
+   "optional": 4900
   }
  },
  {
@@ -131,10 +131,10 @@
   "cost": {
    "reno": 82804,
    "items": 34996,
-   "total": 117800,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 26005
+   "furniture": 26005,
+   "total": 117800,
+   "optional": 4900
   }
  }
 ]

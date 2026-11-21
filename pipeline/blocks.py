@@ -256,7 +256,8 @@ def kitchen_common(c, stack=False):
             CYLY(it, 8960, 430, 170, fy, fy + s * 25, 'steel', 28); CYLY(it, 8960, 430, 130, fy + s * 25, fy + s * 30, 'screen', 28)
     it = c.item('Yard_Pipe_Boxup', 'Kitchen'); B(it, 7940, 8630, 8650, 9300, 0, 2650, 'white')
     it = c.item('Yard_Cabinets_and_Tabletops', 'Kitchen')
-    cabinet(it, '+y', 7940, 8640, 7560, 610, 0, 870, 1, 'white', 150, None, 'bar', base='mortar_y')
+    # stack=True: the base cabinet is narrowed so the open space under the counter is 820 wide – the helper's mattress feet go in there at night
+    cabinet(it, '+y', 7940, 8450 if stack else 8640, 7560, 610, 0, 870, 1, 'white', 150, None, 'bar', base='mortar_y')
     B(it, 7940, 9290, 6950, 7580, 870, 900, 'quartz')
     if not stack: B(it, 8640, 9290, 8670, 9300, 870, 900, 'quartz')
     cabinet(it, '+y', 8640, 9290, 7300, 350, 1500, 2650, 1, 'white', 0, [2250], 'bar'); cabinet(it, '-y', 8640, 9290, 8950, 350, 1800 if stack else 1500, 2650, 1, 'white', 0, [2250], 'bar')

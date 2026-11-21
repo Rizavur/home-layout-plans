@@ -49,14 +49,20 @@ def build(c):
     K.lights(c, ((5600, 8050), (7000, 8050), (8400, 8050), (2700, 7400), (9300, 4450), (10800, 4450), (9300, 5800), (12000, 5800), (925, 7600)))
     K.ceil_rooms(c); K.led(c, [(7945, 7965, 5560, 6670)])
     K.kitchen_closed(c, 'Kitchen_Closed'); K.kitchen_common(c, stack=True); K.kitchen_open(c, 'Kitchen_Open'); K.kitchen_glass(c); K.yard_baths(c)
-    # ---- Floor mattress in the service yard: stacked washer/dryer frees the corner under the yard counter ----
-    it = c.item('Yard_Mattress_Stored_under_Counter', 'Yard_Mattress_Day')        # 10 cm foldable single, folded 6 layers
-    for k in range(6):
-        P.soft_slab(c, it, c.RRECT(8655, 9280, 7010, 7460, 30, 3), k * 100, k * 100 + 98, 'linen', 20, 2)
-    it = c.item('Yard_Single_Mattress_Night_through_Doorway', 'Yard_Mattress_Night')  # 900 x 1900, head in the kitchen, feet in the yard
-    P.soft_slab(c, it, c.RRECT(7390, 9285, 7650, 8550, 60, 5), 0, 100, 'linen', 35, 3)
-    P.soft_slab(c, it, c.RRECT(7700, 9285, 7655, 8545, 50, 5), 100, 130, 'duvet', 12, 2)
-    P.soft_slab(c, it, c.RRECT(7420, 7900, 7780, 8420, 80, 5), 100, 230, 'linen2', 55, 3)
+    # ---- Helper's tri-fold mattress in the service yard. Stacking the washer and dryer frees the space under the north counter.
+    # Laid out: 800 wide x 1675 long x 100 mm, head at the washer, feet under the counter (open space x 8450-9290, 870 high).
+    # By day it folds to 800 x 560 x 300 mm and slides under the counter.
+    MX0, MX1, MY0, MY1 = 8470, 9270, 6965, 8640
+    it = c.item('Yard_Trifold_Mattress_Folded_under_Counter', 'Yard_Mattress_Day')
+    for k in range(3): P.soft_slab(c, it, c.RRECT(MX0, MX1, 6990, 7550, 30, 3), k * 100, k * 100 + 98, 'matf', 25, 2)
+    it = c.item('Yard_Trifold_Mattress_800x1675_Head_at_Washer_Feet_under_Counter', 'Yard_Mattress_Night')
+    seg = (MY1 - MY0) / 3.0
+    for k in range(3):
+        y0, y1 = MY0 + k * seg + (3 if k else 0), MY0 + (k + 1) * seg - (3 if k < 2 else 0)
+        P.soft_slab(c, it, c.RRECT(MX0, MX1, y0, y1, 30, 4), 0, 100, 'matf', 30, 3)
+    for k in (1, 2): c.B(it, MX0 + 20, MX1 - 20, MY0 + k * seg - 3, MY0 + k * seg + 3, 8, 92, 'charcoal')
+    P.soft_slab(c, it, c.RRECT(MX0 + 90, MX1 - 90, MY1 - 400, MY1 - 40, 70, 5), 100, 230, 'linen2', 55, 3)      # pillow at the washer end
+    P.soft_slab(c, it, c.RRECT(MX0 + 30, MX1 - 30, MY0 + 30, MY0 + 900, 40, 4), 100, 150, 'duvet', 25, 2)    # blanket over the feet end
     K.power_common(c, [('x', 296, 1, 2300, 300, True), ('x', 296, 1, 3000, 300), ('y', 350, 1, 6450, 1050, True), ('y', 350, 1, 7550, 1050), ('x', 8550, -1, 3100, 650), ('x', 4940, 1, 7200, 1150)])
     K.trunking_common(c, [[(360, 2750), (360, 3500), (700, 3500), (700, 4400), (5340, 4400)]])
 D2 = ['D2_WallBed_Folded', 'D2_WallBed_Down']
@@ -65,7 +71,7 @@ for k, v in VC.KMODES.items():
     MODES[k] = {'label': v['label'] + ' · D1 desks only', 'hide': v['hide'] + D2 + ['Yard_Mattress_Night']}
 MODES['d2f'] = {'label': 'D2 · wall bed FOLDED (open kitchen)', 'hide': VC.KMODES['open']['hide'] + ['D1_Study_Only', 'D2_WallBed_Down', 'Yard_Mattress_Night']}
 MODES['d2d'] = {'label': 'D2 · wall bed DOWN (open kitchen)', 'hide': VC.KMODES['open']['hide'] + ['D1_Study_Only', 'D2_WallBed_Folded', 'Yard_Mattress_Night']}
-MODES['mat'] = {'label': 'Night · single mattress laid out in the yard (open kitchen)', 'hide': VC.KMODES['open']['hide'] + D2 + ['Yard_Mattress_Day']}
+MODES['mat'] = {'label': 'Night · helper mattress laid out in the yard (open kitchen)', 'hide': VC.KMODES['open']['hide'] + D2 + ['Yard_Mattress_Day']}
 VIEWS = VC.HEAD + [
  ('Living – sofas, pebble table, rug', (5300, 4400, 1650), (300, 1300, 700), 88, ''),
  ('Living – seamless marble TV wall', (3900, 2580, 1350), (296, 2580, 950), 75, ''),
@@ -80,14 +86,14 @@ VIEWS = VC.HEAD + [
  ('D2 Bedroom 3 – wall bed DOWN', (6050, 1500, 1700), (8300, 2400, 500), 80, '', 'd2d'),
  ('D2 Bedroom 3 – wall bed DOWN from door', (8200, 3500, 1650), (6900, 1800, 400), 85, '', 'd2d'),
  ('Yard – stacked washer and dryer', (8250, 7750, 1550), (8960, 9100, 1000), 80, ''),
- ('Yard – folded mattress under the counter', (8400, 8450, 1350), (8960, 7150, 300), 80, ''),
- ('Yard – mattress laid out at night', (6400, 7900, 1700), (8900, 8100, 50), 80, '', 'mat'),
- ('Yard – mattress from the yard end', (9150, 7750, 1600), (7400, 8250, 100), 88, '', 'mat'),
+ ('Yard – folded mattress under the counter', (8700, 8500, 1350), (8870, 7250, 300), 80, ''),
+ ('Yard – mattress laid out at night', (8150, 8450, 2250), (8900, 7650, 0), 88, '', 'mat'),
+ ('Yard – mattress, feet under the counter', (8870, 8600, 1550), (8870, 7100, 150), 88, '', 'mat'),
 ] + VC.KITCHEN_OPEN_VIEWS + VC.tail(False)
 LABELS = VC.COMMON_LABELS + [('Living', 2900, 2600), ('Dining', 6150, 5600), ('Dry pantry', 8150, 5850), ('Bedroom 3 = study', 7000, 2000)]
-DIMS = [((7390, 7600), (9285, 7600), 'Floor mattress 900 × 1900 (night)'), ((6450, 2750), (6450, 3200), 'Bed down → wardrobe ≈ 450'), ((5850, 1400), (8550, 1400), 'Bedroom 3 width 2700'), ((5150, 5050), (7150, 5050), 'Table 2000 × 1000'), ((4600, 4700), (4600, 3900), 'Walkway to bedrooms ≈ 800')]
+DIMS = [((9285, 6965), (9285, 8640), 'Helper mattress 800 × 1675 (night)'), ((6450, 2750), (6450, 3200), 'Bed down → wardrobe ≈ 450'), ((5850, 1400), (8550, 1400), 'Bedroom 3 width 2700'), ((5150, 5050), (7150, 5050), 'Table 2000 × 1000'), ((4600, 4700), (4600, 3900), 'Walkway to bedrooms ≈ 800')]
 INFO = ("Plan D. No study room – bedroom 3 is the study with two 1000 mm standing desks facing the window. D1 = desks only; D2 adds a fold-down "
         "super-single wall bed on the east wall (choose D2 in the option menu to see it folded or down). Hall tall cabinets and the seamless marble TV wall as in the earlier design "
         "(rebuilt from their dimensions, so details are simplified). Kitchen: closed or open with bi-fold glass; open keeps the stove-side top cabinets and a ducted hood. "
         "Removing the kitchen front wall must be confirmed with HDB / your ID. Power points and trunking are indicative."
-        " Service yard: washer and dryer stacked in one corner, so a 10 cm foldable single mattress (900 × 1900) can be stored folded under the yard counter and laid out at night through the yard doorway (head in the kitchen, feet in the yard) – see the 'Night · single mattress' option.")
+        " Service yard: washer and dryer stacked in one corner, so the helper's 10 cm tri-fold mattress (800 × 1675) folds away under the yard counter by day and is laid out at night with the head at the washer and the feet under the counter – see the 'Night · helper mattress' option.")

@@ -3805,10 +3805,10 @@
     {
      "cat": "Kitchen & yard",
      "item": "Yard: top + bottom cabinet",
-     "qty": 2.3,
+     "qty": 1.7,
      "unit": "ft",
      "rate": 305,
-     "amount": 702,
+     "amount": 519,
      "source": "Q1 #22 $2,900 / 9.5 ft (Q2 $337/ft)",
      "note": ""
     },
@@ -4303,6 +4303,15 @@
      "note": ""
     },
     {
+     "cat": "Bedrooms",
+     "item": "Helper tri-fold mattress (yard, trimmed to 1675 long)",
+     "qty": 1,
+     "price": 122,
+     "amount": 122,
+     "source": "Princebed Para Foam 3-fold single, 4 inch",
+     "note": ""
+    },
+    {
      "cat": "Study",
      "item": "Electric standing desks",
      "qty": 2,
@@ -4447,9 +4456,9 @@
      "note": ""
     }
    ],
-   "reno_total": 75902,
+   "reno_total": 75719,
    "optional_total": 4900,
-   "furn_total": 32536
+   "furn_total": 32658
   },
   "e": {
    "reno": [
@@ -7437,58 +7446,58 @@
   "a": {
    "reno": 76620,
    "items": 33584,
-   "total": 110204,
-   "optional": 4900,
    "appliances": 8391,
-   "furniture": 25193
+   "furniture": 25193,
+   "total": 110204,
+   "optional": 4900
   },
   "b": {
    "reno": 81865,
    "items": 35595,
-   "total": 117460,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 26604
+   "furniture": 26604,
+   "total": 117460,
+   "optional": 4900
   },
   "c": {
    "reno": 78806,
    "items": 34565,
-   "total": 113371,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 25574
+   "furniture": 25574,
+   "total": 113371,
+   "optional": 4900
   },
   "d": {
-   "reno": 75902,
-   "items": 32536,
-   "total": 108438,
-   "optional": 4900,
+   "reno": 75719,
+   "items": 32658,
    "appliances": 9051,
-   "furniture": 23485
+   "furniture": 23607,
+   "total": 108377,
+   "optional": 4900
   },
   "e": {
    "reno": 74876,
    "items": 32718,
-   "total": 107594,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 23727
+   "furniture": 23727,
+   "total": 107594,
+   "optional": 4900
   },
   "f": {
    "reno": 74035,
    "items": 34565,
-   "total": 108600,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 25574
+   "furniture": 25574,
+   "total": 108600,
+   "optional": 4900
   },
   "g": {
    "reno": 82804,
    "items": 34996,
-   "total": 117800,
-   "optional": 4900,
    "appliances": 8991,
-   "furniture": 26005
+   "furniture": 26005,
+   "total": 117800,
+   "optional": 4900
   }
  }
 }
