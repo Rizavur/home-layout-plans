@@ -46,7 +46,8 @@ The app is React + TypeScript, bundled with esbuild. three.js is loaded from a C
 | `web/src/App.tsx` | App state: open plan, scene, options, panels; wires the UI to the 3D engine |
 | `web/src/engine/Viewer.ts` | 3D engine: loads models, themes, visibility, lighting, camera moves, screenshots |
 | `web/src/engine/navigation.ts` | Look-around / orbit / pan / zoom tools, walking keys, camera flights |
-| `web/src/engine/textures.ts` | Procedural textures (tiles, marble, wood, fabric) |
+| `web/src/engine/textures.ts` | Material textures for realistic mode (`assets/tex`, made by `pipeline/textures_gen.py`) |
+| `web/src/engine/photo.ts` | Photo button: path-traces the current view (three-gpu-pathtracer from the CDN) |
 | `web/src/engine/tape.ts` | Tape measure tool |
 | `web/src/types.ts` | Types for the plan data and viewer options |
 | `web/src/components/` | UI pieces: `Landing`, `TopBar`, `Stepper`, `Toolbar`, `SidePanel`, `ViewList`, `AiRenderDialog`, `Icon` |
@@ -63,6 +64,15 @@ npm run build     # production build into ../assets and ../index.html
 ```
 
 Commit the rebuilt files and push – GitHub Pages serves the repo root.
+
+## Rendering modes
+
+- **Realistic rendering** (side panel, on by default): textured materials, soft daylight from an interior light map, sun shadows,
+  and ambient occlusion added once the camera stops moving (skipped on phones). Turn it off for a light mode on older devices.
+- **Photo** (toolbar): path traces the current view in the browser – real bounce light, sky through the windows, glass and
+  reflections. The image sharpens over a few hundred passes; moving the camera cancels it. Needs WebGL 2.
+- Textures are tileable detail maps: the theme supplies the colour, so every theme keeps working. Regenerate them with
+  `cd pipeline && python3 textures_gen.py`.
 
 ## Keyboard shortcuts
 

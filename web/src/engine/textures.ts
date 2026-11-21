@@ -1,93 +1,78 @@
-// Procedural textures drawn on canvases: subtle tile joints, marble veins, wood grain and fabric noise.
-// The colour still comes from the material; a texture only adds pattern on top (white = no change).
+// Material textures for realistic mode: tileable detail maps (assets/tex/*.jpg, made by pipeline/textures_gen.py).
+// The colour still comes from the theme; a texture only adds pattern on top of it, so every theme keeps working.
+// `gain` brightens the material colour to make up for the texture's average darkness (1 / mean brightness).
 import * as THREE from 'three';
+import MEANS from '../../../assets/tex/means.json';
 
-function canvas(n: number): [HTMLCanvasElement, CanvasRenderingContext2D] {
-  const c = document.createElement('canvas');
-  c.width = c.height = n;
-  return [c, c.getContext('2d')!];
+interface Rule {
+  re: RegExp;
+  /** file stem in assets/tex */
+  file: string;
+  /** size of one texture repeat, mm */
+  mm: number;
+  /** mean brightness of the map (assets/tex/means.json, written by the generator) */
+  mean: number;
+  /** strength of the matching normal map (_n.jpg), 0 = none */
+  normal: number;
+  /** surface roughness for this kind of material */
+  rough: number;
 }
 
-// small deterministic random generator so textures look the same on every load
-function random(seed: number): () => number {
-  let s = seed;
-  return () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
-}
-
-function tiles(n: number, cols: number, rows: number, grout: string, base: string): HTMLCanvasElement {
-  const [c, g] = canvas(n); const r = random(7);
-  g.fillStyle = base; g.fillRect(0, 0, n, n);
-  for (let i = 0; i < 2600; i++) { g.fillStyle = `rgba(0,0,0,${r() * 0.025})`; g.fillRect(r() * n, r() * n, 2 + r() * 6, 2 + r() * 6); }
-  g.strokeStyle = grout; g.lineWidth = Math.max(1.5, n / 400);
-  for (let i = 0; i <= cols; i++) { g.beginPath(); g.moveTo(i * n / cols, 0); g.lineTo(i * n / cols, n); g.stroke(); }
-  for (let j = 0; j <= rows; j++) { g.beginPath(); g.moveTo(0, j * n / rows); g.lineTo(n, j * n / rows); g.stroke(); }
-  return c;
-}
-
-function marble(n: number, vein: string, seed: number): HTMLCanvasElement {
-  const [c, g] = canvas(n); const r = random(seed);
-  g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
-  for (let k = 0; k < 14; k++) {
-    g.strokeStyle = vein.replace('A', (0.05 + r() * 0.16).toFixed(3)); g.lineWidth = 0.6 + r() * 2.4; g.beginPath();
-    let x = r() * n, y = 0; g.moveTo(x, y);
-    while (y < n) { x += (r() - 0.45) * 40; y += 10 + r() * 30; g.lineTo(x, y); }
-    g.stroke();
-  }
-  return c;
-}
-
-function grain(n: number, dark: string, seed: number): HTMLCanvasElement {
-  const [c, g] = canvas(n); const r = random(seed);
-  g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
-  for (let i = 0; i < 260; i++) {
-    const y = r() * n;
-    g.strokeStyle = `rgba(${dark},${(0.04 + r() * 0.12).toFixed(3)})`; g.lineWidth = 0.5 + r() * 2.5; g.beginPath(); g.moveTo(0, y);
-    for (let x = 0; x <= n; x += 32) g.lineTo(x, y + Math.sin(x / 70 + i) * 3 + (r() - 0.5) * 2);
-    g.stroke();
-  }
-  return c;
-}
-
-function noise(n: number, amount: number, seed: number, blob: number): HTMLCanvasElement {
-  const [c, g] = canvas(n); const r = random(seed);
-  g.fillStyle = '#ffffff'; g.fillRect(0, 0, n, n);
-  for (let i = 0; i < n * n / (blob * blob) * 2.2; i++) {
-    g.fillStyle = `rgba(0,0,0,${(r() * amount).toFixed(3)})`; g.beginPath(); g.arc(r() * n, r() * n, blob * (0.4 + r()), 0, 7); g.fill();
-  }
-  return c;
-}
-
-// material-name pattern -> [draw function, size of one texture repeat in mm]
-const RULES: [RegExp, () => HTMLCanvasElement, number][] = [
-  [/^Floor_Homogeneous/, () => tiles(1024, 2, 2, 'rgba(120,112,100,.55)', '#ffffff'), 1200],
-  [/^Floor_Kitchen/, () => tiles(1024, 2, 2, 'rgba(110,104,96,.6)', '#ffffff'), 1200],
-  [/^Floor_Yard|^Floor_Toilet/, () => tiles(1024, 4, 2, 'rgba(90,90,90,.55)', '#ffffff'), 1200],
-  [/^Wall_Toilet|^Wall_Kitchen/, () => tiles(1024, 4, 2, 'rgba(120,120,120,.45)', '#ffffff'), 1200],
-  [/Marble|Art_Marble/, () => marble(1024, 'rgba(90,92,100,A)', 11), 1600],
-  [/Sintered/, () => marble(1024, 'rgba(60,60,64,A)', 23), 1400],
-  [/Walnut|Oak/, () => grain(1024, '40,22,10', 5), 900],
-  [/Travertine/, () => grain(1024, '120,90,50', 9), 1200],
-  [/Rug|Throw/, () => noise(512, 0.10, 3, 3), 400],
-  [/Sofa|Boucle|Cushion|Headboard|Duvet|Linen|Pillow|Velvet|Curtain|Felt|Leather/, () => noise(512, 0.07, 4, 2), 300],
+const RULES: Rule[] = [
+  { re: /^Floor_Homogeneous|^Floor_Kitchen/, file: 'tile600', mm: 1200, mean: MEANS.tile600, normal: 0.6, rough: 0.22 },
+  { re: /^Floor_Toilet|^Wall_Toilet|^Wall_Kitchen/, file: 'tile300x600', mm: 1200, mean: MEANS.tile300x600, normal: 0.6, rough: 0.3 },
+  { re: /^Floor_Yard/, file: 'tile300', mm: 1200, mean: MEANS.tile300, normal: 0.6, rough: 0.5 },
+  { re: /Marble/, file: 'marble', mm: 1600, mean: MEANS.marble, normal: 0, rough: 0.14 },
+  { re: /Sintered/, file: 'sintered', mm: 1400, mean: MEANS.sintered, normal: 0, rough: 0.2 },
+  { re: /Quartz/, file: 'quartz', mm: 1200, mean: MEANS.quartz, normal: 0, rough: 0.22 },
+  { re: /Walnut/, file: 'walnut', mm: 900, mean: MEANS.walnut, normal: 0.25, rough: 0.55 },
+  { re: /Oak/, file: 'oak', mm: 900, mean: MEANS.oak, normal: 0.25, rough: 0.6 },
+  { re: /Travertine/, file: 'travertine', mm: 1200, mean: MEANS.travertine, normal: 0.5, rough: 0.7 },
+  { re: /Rug|Throw/, file: 'rug', mm: 420, mean: MEANS.rug, normal: 0.8, rough: 1 },
+  { re: /Boucle/, file: 'boucle', mm: 300, mean: MEANS.boucle, normal: 0.8, rough: 1 },
+  { re: /Leather/, file: 'leather', mm: 400, mean: MEANS.leather, normal: 0.4, rough: 0.55 },
+  { re: /Sofa|Cushion|Headboard|Duvet|Linen|Pillow|Velvet|Curtain|Felt|Fabric|Bedding|Towel|Chair_Lumbar/, file: 'fabric', mm: 260, mean: MEANS.fabric, normal: 0.6, rough: 1 },
+  { re: /^Wall_Paint|^Ceiling_Paint|^False_Ceiling|Boxup_Board/, file: 'paint', mm: 2400, mean: MEANS.paint, normal: 0.06, rough: 0.92 },
 ];
 
-/** [texture, mm per repeat] */
-export type TextureInfo = [THREE.Texture, number];
-const cache: Record<string, TextureInfo | null> = {};
+export interface TextureInfo {
+  map: THREE.Texture;
+  normalMap: THREE.Texture | null;
+  normalScale: number;
+  /** mm per repeat */
+  mm: number;
+  /** colour multiplier that makes up for the texture's average darkness */
+  gain: number;
+  rough: number;
+}
 
-/** Texture for a material name, or null. Returns [THREE.Texture, mm per repeat]. */
+const loader = new THREE.TextureLoader();
+const files: Record<string, THREE.Texture> = {};
+const cache: Record<string, TextureInfo | null> = {};
+let onLoad: () => void = () => {};
+
+/** Called whenever a texture image finishes loading (so the viewer can redraw). */
+export function setTextureLoadCallback(fn: () => void): void { onLoad = fn; }
+
+function load(name: string, srgb: boolean): THREE.Texture {
+  const key = name + (srgb ? '' : ':lin');
+  if (files[key]) return files[key];
+  const t = loader.load(`assets/tex/${name}.jpg?v=${__BUILD__}`, () => onLoad());
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.anisotropy = 8;
+  t.colorSpace = srgb ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+  files[key] = t;
+  return t;
+}
+
+/** Texture set for a material name, or null when the material has no pattern. */
 export function textureFor(name: string): TextureInfo | null {
   if (name in cache) return cache[name];
-  let result: TextureInfo | null = null;
-  for (const [re, draw, mm] of RULES) {
-    if (!re.test(name)) continue;
-    const t = new THREE.CanvasTexture(draw());
-    t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
-    result = [t, mm];
-    break;
-  }
-  cache[name] = result;
-  return result;
+  const r = RULES.find((x) => x.re.test(name));
+  cache[name] = r ? {
+    map: load(r.file, true), normalMap: r.normal ? load(r.file + '_n', false) : null, normalScale: r.normal,
+    mm: r.mm, gain: 1 / r.mean, rough: r.rough,
+  } : null;
+  return cache[name];
 }
 
 /** Box-project UVs onto a triangle soup: each triangle uses the plane its normal faces most. */

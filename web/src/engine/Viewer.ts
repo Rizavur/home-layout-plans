@@ -3,10 +3,14 @@
 //
 // Units: millimetres. Plan coordinates (x east, y south, z up) map to three.js as (x, z, y).
 import * as THREE from 'three';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { PhotoRenderer } from './photo';
 import { Navigator } from './navigation';
-import { textureFor, addBoxUVs } from './textures';
+import { textureFor, addBoxUVs, setTextureLoadCallback } from './textures';
 import { TapeMeasure } from './tape';
 import { THEMES, planUrl } from '../config/data';
 import type { Chunk, PlanData, Tool, VariantData, View, ViewOptions, ViewTag } from '../types';
@@ -17,6 +21,27 @@ const MOBILE = Math.min(window.innerWidth, window.innerHeight) < 700 || /Mobi|An
 // warm point lights switched on for the night mood: [x, y(plan), z]
 const NIGHT_LIGHT_SPOTS: [number, number, number][] = [[3200, 2900, 2300], [1150, 5100, 2300], [6150, 5600, 2300], [12900, 2600, 2300], [10000, 1800, 2300],
   [7000, 1500, 2300], [5900, 8000, 2300], [2700, 7400, 2300], [9900, 6000, 2300], [12000, 6000, 2300]];
+
+/**
+ * Soft light of a bright room, as an equirectangular map: warm white above, brighter band at window height,
+ * and a light floor below - so ceilings and the undersides of things get bounce light like in a real room.
+ */
+function interiorEnvironment(): THREE.DataTexture {
+  const w = 128, h = 64, d = new Float32Array(w * h * 4);
+  for (let j = 0; j < h; j++) {
+    const s = Math.sin((0.5 - (j + 0.5) / h) * Math.PI);                 // +1 straight up, -1 straight down
+    const window = Math.exp(-Math.pow((s - 0.15) / 0.28, 2)) * 0.35;       // daylight from the windows
+    const up = [0.56, 0.545, 0.525], down = [0.47, 0.445, 0.41];
+    for (let i = 0; i < w; i++) {
+      const side = 0.85 + 0.15 * Math.cos((i / w) * Math.PI * 2);          // one side of the room a bit brighter
+      const o = (j * w + i) * 4, base = s >= 0 ? up : down;
+      d[o] = (base[0] + window * 1.0) * side; d[o + 1] = (base[1] + window * 1.0) * side; d[o + 2] = (base[2] + window * 1.05) * side; d[o + 3] = 1;
+    }
+  }
+  const t = new THREE.DataTexture(d, w, h, THREE.RGBAFormat, THREE.FloatType);
+  t.mapping = THREE.EquirectangularReflectionMapping; t.needsUpdate = true;
+  return t;
+}
 
 /** Decode a base64 string of little-endian int16 vertex coordinates. */
 function decodePositions(b64: string): Float32Array {
@@ -42,6 +67,8 @@ export interface ViewerEvents {
   onTool: (tool: Tool) => void;
   /** show a loading message, or null to hide it */
   onLoading: (text: string | null) => void;
+  /** photo (path tracing) progress: samples so far, or null when it stopped */
+  onPhoto: (samples: number | null, target: number) => void;
 }
 
 export class Viewer {
@@ -51,8 +78,14 @@ export class Viewer {
   /** the open plan (views, modes, labels, dims, info, ...) */
   plan: PlanData | null = null;
   planKey: string | null = null;
-  /** high-quality rendering: textures, shadows, reflections */
+  /** realistic rendering: textures, soft shadows, ambient occlusion, reflections (off = light mode for older devices) */
   hq = true;
+  /** the running photo (path tracing), if any */
+  photo: PhotoRenderer | null = null;
+  private composer: EffectComposer | null = null;
+  /** time of the last camera movement; ambient occlusion is added once the view has been still for a moment */
+  private lastMove = 0;
+  private aoDone = false;
   opts: ViewOptions = { mode: 'open', fc: true, lab: false, pwr: false, ac: false, cur: true, night: false, wood: false };
   viewTag: ViewTag = '';
   currentView: View | null = null;
@@ -90,7 +123,8 @@ export class Viewer {
    */
   constructor(container: HTMLElement, labelsEl: HTMLElement, events: Partial<ViewerEvents> = {}) {
     this.container = container; this.labelsEl = labelsEl;
-    this.events = { onTool: () => {}, onLoading: () => {}, ...events };
+    this.events = { onTool: () => {}, onLoading: () => {}, onPhoto: () => {}, ...events };
+    setTextureLoadCallback(() => { this.aoDone = false; this.invalidate(); });
     this._setupRenderer(); this._setupScene();
     this.nav = new Navigator(this.camera, this.renderer.domElement, () => this.invalidate(), (t) => { this.tape?.setActive(t === 'tape'); this.events.onTool(t); });
     this.tapeLayer = document.createElement('div'); this.tapeLayer.className = 'tape-labels'; this.container.appendChild(this.tapeLayer);
@@ -103,7 +137,7 @@ export class Viewer {
   // ---------------------------------------------------------------- setup
   private _setupRenderer(): void {
     // preserveDrawingBuffer keeps the last frame so screenshots work in every browser (Safari clears it otherwise)
-    const r = this.renderer = new THREE.WebGLRenderer({ antialias: true, logarithmicDepthBuffer: true, preserveDrawingBuffer: true });
+    const r = this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     r.setPixelRatio(Math.min(window.devicePixelRatio, MOBILE ? 1.25 : 1.5));
     r.outputColorSpace = THREE.SRGBColorSpace;
     r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.0;
@@ -115,16 +149,16 @@ export class Viewer {
 
   private _setupScene(): void {
     const scene = this.scene = new THREE.Scene();
-    try { const pm = new THREE.PMREMGenerator(this.renderer); this.envTex = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); }
+    try { const pm = new THREE.PMREMGenerator(this.renderer); const eq = interiorEnvironment(); this.envTex = pm.fromEquirectangular(eq).texture; eq.dispose(); pm.dispose(); }
     catch { this.envTex = null; }
     this.camera = new THREE.PerspectiveCamera(60, 1, 30, 400000);
     this.hemi = new THREE.HemisphereLight(0xfff6ea, 0xa89a86, 0.55); scene.add(this.hemi);
     const sun = this.sun = new THREE.DirectionalLight(0xffe9cc, 2.6);
     sun.position.set(7300 - 5500, 9000, 4800 - 9500); sun.target.position.set(7300, 0, 4800);
     scene.add(sun, sun.target);
-    sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+    sun.castShadow = true; sun.shadow.mapSize.set(MOBILE ? 2048 : 4096, MOBILE ? 2048 : 4096);
     Object.assign(sun.shadow.camera, { left: -11000, right: 11000, top: 11000, bottom: -11000, near: 100, far: 40000 });
-    Object.assign(sun.shadow, { bias: -0.0004, normalBias: 12, radius: 3 });
+    Object.assign(sun.shadow, { bias: -0.0003, normalBias: 10, radius: 3 });
     this.fill = new THREE.DirectionalLight(0xdfe8ff, 0.25); this.fill.position.set(9000, 6000, 12000); scene.add(this.fill);
     this.amb = new THREE.AmbientLight(0xffffff, 0.12); scene.add(this.amb);
     this.nightLights = NIGHT_LIGHT_SPOTS.map(([x, z, y]) => {
@@ -142,16 +176,73 @@ export class Viewer {
     let lastAbove: boolean | null = null;
     this.renderer.setAnimationLoop((now) => {
       if (!this.plan) return;
-      if (this.nav.update(now)) this.dirty = true;
-      if (!this.dirty) return;                       // nothing changed: skip the frame (saves battery)
+      const moved = this.nav.update(now);
+      if (this.photo) {                               // photo mode: every frame goes to the path tracer
+        if (moved) { this.stopPhoto(); return; }
+        if (this.photo.tick()) this.events.onPhoto(this.photo.samples, this.photo.target);
+        else if (this.photo.samples >= this.photo.target) this.events.onPhoto(this.photo.target, this.photo.target);
+        return;
+      }
+      if (moved) { this.dirty = true; this.lastMove = now; this.aoDone = false; }
+      // realistic mode: once the camera has been still for a moment, redraw once with ambient occlusion
+      const wantAO = this.hq && !this.aoDone && now - this.lastMove > 180;
+      if (!this.dirty && !wantAO) return;             // nothing changed: skip the frame (saves battery)
       this.dirty = false;
       const above = this.isAboveCeiling();
       if (above !== lastAbove) { lastAbove = above; this.applyVisibility(); }
-      this.renderer.render(this.scene, this.camera);
+      this._updateClipping();
+      if (wantAO) { this._renderFinal(); this.aoDone = true; }
+      else { this.renderer.render(this.scene, this.camera); if (!this.hq) this.aoDone = true; }
       if (this.opts.lab) this._placeLabels();
       this.tape.place(this.container.clientWidth, this.container.clientHeight);
     });
     document.addEventListener('visibilitychange', this._onVisible);
+  }
+
+  /** Near/far planes that follow the camera height: tight indoors (sharp depth for ambient occlusion), wide for overviews. */
+  private _updateClipping(): void {
+    const y = Math.abs(this.camera.position.y);
+    const near = y < 4000 ? 20 : Math.min(2000, y * 0.01), far = y < 4000 ? 60000 : Math.max(60000, y * 5);
+    if (near !== this.camera.near || far !== this.camera.far) { this.camera.near = near; this.camera.far = far; this.camera.updateProjectionMatrix(); }
+  }
+
+  /** The finished frame: ambient occlusion in realistic mode when looking at rooms, a plain render otherwise. */
+  private _renderFinal(): void {
+    if (!this.hq || this.isAboveCeiling() || MOBILE) { this.renderer.render(this.scene, this.camera); return; }
+    if (!this.composer) {
+      const w = this.container.clientWidth || 800, h = this.container.clientHeight || 600;
+      const rt = new THREE.WebGLRenderTarget(w, h, { type: THREE.HalfFloatType, samples: 4 });
+      const c = this.composer = new EffectComposer(this.renderer, rt);
+      c.setPixelRatio(this.renderer.getPixelRatio()); c.setSize(w, h);
+      c.addPass(new RenderPass(this.scene, this.camera));
+      const ao = new GTAOPass(this.scene, this.camera, w, h);
+      ao.updateGtaoMaterial({ radius: 420, distanceExponent: 1.6, thickness: 260, scale: 1.0, samples: 16 });
+      ao.updatePdMaterial({ lumaPhi: 10, depthPhi: 2, normalPhi: 3, radius: 6, rings: 2, samples: 16 });
+      ao.blendIntensity = 0.85;
+      c.addPass(ao); c.addPass(new OutputPass());
+    }
+    this.composer.render();
+  }
+
+  // ---------------------------------------------------------------- photo (path tracing)
+  /** Start path tracing the current view. Progress is reported through events.onPhoto. */
+  async startPhoto(): Promise<void> {
+    if (this.photo || !this.plan) return;
+    this.nav.flyTo(this.camera.position.clone(), this.nav.controls.target.clone(), this.camera.fov, 0, () => {});   // stop any glide
+    const p = new PhotoRenderer(this.renderer, this.scene, this.camera, { hemi: this.hemi, amb: this.amb, fill: this.fill }, this.opts.night, MOBILE);
+    this.events.onLoading('Preparing the photo…');
+    await new Promise((r) => setTimeout(r, 60));          // let the message paint before the heavy setup
+    try { await p.start(); }
+    catch (e) { p.stop(); this.events.onLoading(null); this.events.onPhoto(null, 0); this.invalidate(); throw e; }
+    this.events.onLoading(null);
+    this.photo = p; this.events.onPhoto(0, p.target);
+  }
+
+  /** Stop path tracing and go back to the normal view. */
+  stopPhoto(): void {
+    if (!this.photo) return;
+    this.photo.stop(); this.photo = null; this.aoDone = false;
+    this.renderer.shadowMap.needsUpdate = true; this.events.onPhoto(null, 0); this.invalidate();
   }
 
   // ---------------------------------------------------------------- plans and models
@@ -191,6 +282,12 @@ export class Viewer {
 
   private _themeColour(name: string): [number, number, number] { return THEMES[this.theme]?.m[name] || this.plan!.mats[name].c; }
 
+  /** Set a material's colour from the theme, brightened by its texture's gain so patterns don't darken the colour. */
+  private _applyColour(mat: THREE.MeshStandardMaterial, name: string): void {
+    const c = this._themeColour(name), g = (mat.userData.gain as number) || 1;
+    mat.color.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace).multiplyScalar(g);
+  }
+
   private _material(name: string): THREE.MeshStandardMaterial {
     if (this.materials[name]) return this.materials[name];
     const m = this.plan!.mats[name]; const rgb = this._themeColour(name);
@@ -199,12 +296,23 @@ export class Viewer {
     const shiny = /Mirror|Chrome|Glass|Screen|Hob_Black/.test(name);
     const metal = /Chrome|Steel|Gold|Brass|Silver|Metal_Black|Frame_Alum/.test(name);
     const polished = /Marble|Sintered|Quartz|Ceramic|Lacquer/.test(name);
-    const roughness = shiny ? 0.08 : metal ? 0.32 : polished ? 0.28 : /Walnut|Oak|Travertine/.test(name) ? 0.6 : 0.9;
+    const lacquer = /Lacquer|Joinery|Lux_Charcoal|Lux_Greige|Door_Matt|Appliance|Fridge/.test(name);
+    let roughness = shiny ? 0.06 : metal ? 0.3 : polished ? 0.25 : lacquer ? 0.55 : /Walnut|Oak|Travertine/.test(name) ? 0.6 : 0.9;
+    const frosted = /Fluted|Frosted|Opal/.test(name);
     const mat = new THREE.MeshStandardMaterial({
-      color: colour, roughness, metalness: metal ? 0.75 : 0, side: THREE.DoubleSide, envMapIntensity: 0.8,
-      transparent: glassy, opacity: glassy ? Math.max(0.16, m.a * 0.7) : 1, depthWrite: !glassy,
+      color: colour, roughness, metalness: metal ? 0.8 : 0, side: THREE.DoubleSide, envMapIntensity: 0.9,
+      transparent: glassy, opacity: glassy ? (frosted ? 0.82 : Math.max(0.12, m.a * 0.55)) : 1, depthWrite: !glassy,
     });
-    if (this.hq) { const tx = textureFor(name); if (tx) mat.map = tx[0]; }
+    mat.name = name;
+    if (frosted) { mat.roughness = 0.4; mat.emissive = colour.clone(); mat.emissiveIntensity = 0.22; }   // frosted glass glows with the light passing through it
+    if (this.hq) {
+      const tx = textureFor(name);
+      if (tx) {
+        mat.map = tx.map; mat.userData.gain = tx.gain; roughness = tx.rough; mat.roughness = roughness;
+        if (tx.normalMap) { mat.normalMap = tx.normalMap; mat.normalScale.set(tx.normalScale, tx.normalScale); }
+        this._applyColour(mat, name);
+      }
+    }
     if (m.e) { mat.emissive = colour.clone(); mat.emissiveIntensity = 0.35; this.emissive.push(mat); }
     this.materials[name] = mat;
     return mat;
@@ -215,7 +323,7 @@ export class Viewer {
     let g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(decodePositions(chunk.b64), 3));
     try { g = toCreasedNormals(g, Math.PI / 5); } catch { g.computeVertexNormals(); }
-    const tx = this.hq ? textureFor(chunk.mat) : null; if (tx) addBoxUVs(g, tx[1]);
+    const tx = this.hq ? textureFor(chunk.mat) : null; if (tx) addBoxUVs(g, tx.mm);
     const info = this.plan!.mats[chunk.mat];
     const mesh = new THREE.Mesh(g, this._material(chunk.mat));
     if (info.a < 0.99) { mesh.renderOrder = 2; mesh.castShadow = false; } else mesh.castShadow = this.hq;
@@ -237,9 +345,8 @@ export class Viewer {
     const plan = this.plan; if (!plan) return;
     for (const [name, mat] of Object.entries(this.materials)) {
       if (!plan.mats[name]) continue;
-      const c = this._themeColour(name);
-      mat.color.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace);
-      if (plan.mats[name].e) mat.emissive.copy(mat.color);
+      this._applyColour(mat, name);
+      if (plan.mats[name].e) { const c = this._themeColour(name); mat.emissive.setRGB(c[0] / 255, c[1] / 255, c[2] / 255, THREE.SRGBColorSpace); }
     }
     this.invalidate(); void this._ensureVariants();
   }
@@ -297,16 +404,18 @@ export class Viewer {
     const n = o.night, hq = this.hq;
     this.scene.background = new THREE.Color(n ? NIGHT_BG : DAY_BG);
     this.scene.environment = hq ? this.envTex : null;
-    this.hemi.intensity = n ? 0.04 : hq ? 0.55 : 1.1;
-    this.sun.intensity = n ? 0 : hq ? 2.6 : 1.4; this.sun.castShadow = hq;
-    this.fill.intensity = n ? 0.02 : 0.25;
-    this.amb.intensity = n ? 0.04 : hq ? 0.12 : 0.3;
+    // realistic mode lights the rooms mostly with the soft environment (like daylight bouncing around a room)
+    this.hemi.intensity = n ? 0.04 : hq ? 0.25 : 1.1;
+    this.sun.intensity = n ? 0 : hq ? 3.0 : 1.4; this.sun.castShadow = hq;
+    this.fill.intensity = n ? 0.02 : hq ? 0.12 : 0.25;
+    this.amb.intensity = n ? 0.04 : hq ? 0.0 : 0.3;
     for (const L of this.nightLights) { L.intensity = n ? 0.9 : 0; L.visible = n; }
-    for (const m of Object.values(this.materials)) m.envMapIntensity = n ? 0.08 : 0.8;
+    for (const m of Object.values(this.materials)) m.envMapIntensity = n ? 0.08 : 1.05;
     for (const m of this.emissive) m.emissiveIntensity = n ? 2.4 : 0.35;
     this.renderer.toneMappingExposure = n ? 1.25 : 1.0;
     this.renderer.shadowMap.needsUpdate = true;
     this._buildLabels();
+    this.aoDone = false;
     this.invalidate();
   }
 
@@ -371,7 +480,9 @@ export class Viewer {
     this.renderer.setSize(w, h, false);
     this.camera.aspect = w / h;
     if (this.currentView) this.camera.fov = this._fovFor(this.currentView);
-    this.camera.updateProjectionMatrix(); this.invalidate();
+    this.camera.updateProjectionMatrix();
+    if (this.composer) { this.composer.setPixelRatio(this.renderer.getPixelRatio()); this.composer.setSize(w, h); }
+    this.aoDone = false; this.invalidate();
   }
 
   // ---------------------------------------------------------------- screenshots
@@ -393,13 +504,14 @@ export class Viewer {
     const nextFrame = (): Promise<void> => new Promise((r) => requestAnimationFrame(() => r()));
     let shot = this._grab();
     for (let attempt = 0; attempt < 4; attempt++) {
-      this.renderer.render(this.scene, this.camera); shot = this._grab(); if (!shot.blank) break;   // Chrome / Firefox
+      if (!this.photo) this._renderFinal(); shot = this._grab(); if (!shot.blank) break;   // Chrome / Firefox
       this.invalidate(); await nextFrame(); await nextFrame(); shot = this._grab(); if (!shot.blank) break;   // Safari
     }
     return type === 'image/jpeg' ? shot.canvas.toDataURL('image/jpeg', 0.92) : shot.canvas.toDataURL('image/png');
   }
 
   dispose(): void {
+    this.stopPhoto();
     this.renderer.setAnimationLoop(null);
     document.removeEventListener('visibilitychange', this._onVisible);
     this.tape.dispose(); this.nav.dispose(); this._clearModel(); this.renderer.dispose(); this.renderer.domElement.remove();

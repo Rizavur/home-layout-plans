@@ -12,6 +12,7 @@ import Landing from './components/Landing';
 import TopBar from './components/TopBar';
 import Stepper from './components/Stepper';
 import Toolbar, { ToolHint } from './components/Toolbar';
+import PhotoBar from './components/PhotoBar';
 import SidePanel from './components/SidePanel';
 import AiRenderDialog from './components/AiRenderDialog';
 import Icon from './components/Icon';
@@ -33,6 +34,7 @@ export default function App() {
   const [opts, setOpts] = useState(DEFAULT_OPTIONS);
   const [tool, setTool] = useState<Tool>('look');
   const [loading, setLoading] = useState<string | null>(null);
+  const [photo, setPhoto] = useState<{ samples: number; target: number } | null>(null);
   // ---- remembered choices
   const [theme, setTheme] = useStoredState<string>('theme', 'lux', (v) => typeof v === 'string' && !!THEMES[v]);
   const [ceiling, setCeiling] = useStoredState<string>('ceil', 'wave', (v) => typeof v === 'string' && !!CEILINGS[v]);
@@ -51,9 +53,10 @@ export default function App() {
 
   // ---------------------------------------------------------------- engine lifecycle
   useEffect(() => {
-    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading });
+    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading, onPhoto: (s, t) => setPhoto(s === null ? null : { samples: s, target: t }) });
     v.hq = hq; v.theme = theme; v.ceiling = ceiling;
     viewerRef.current = v;
+    (window as unknown as { __viewer?: Viewer }).__viewer = v;   // handy for debugging in the browser console
     const ro = new ResizeObserver(() => v.resize()); ro.observe(stageRef.current!);
     return () => { ro.disconnect(); v.dispose(); };
   }, []);   // eslint-disable-line react-hooks/exhaustive-deps
@@ -136,6 +139,18 @@ export default function App() {
     const blob = await (await fetch(url)).blob();
     setAiImage({ url, blob, fileName: `plan-${planKey}-${slug(plan.views[viewIndex].name)}.png` });
   };
+  const startPhoto = async () => {
+    const v = viewerRef.current; if (!v) return;
+    try { await v.startPhoto(); }
+    catch (e) { console.error(e); alert('Photo mode could not start on this device (it needs WebGL 2). Try the AI render button instead.'); }
+  };
+  const savePhoto = async () => {
+    const v = viewerRef.current; if (!v) return;
+    const url = await v.capture('image/png');
+    const name = `${PLANS.find((p) => p.key === planKey)?.short || 'Plan'} – ${plan?.views[viewIndex]?.name || 'view'} (photo).png`;
+    const a = document.createElement('a'); a.href = url; a.download = name.replace(/[\\/:*?"<>|]/g, ''); a.click();
+  };
+
   const exportZip = async () => {
     setAiImage(null);
     const { plan: p, planKey: key, viewIndex: keep, opts: o, theme: t, lighting: l } = live.current; if (!p || !key) return;
@@ -183,8 +198,9 @@ export default function App() {
           <div id="labels" ref={labelsRef} />
           <Stepper index={viewIndex} total={plan?.views.length || 0} onStep={stepView} />
           <Toolbar tool={tool} onTool={(t) => viewerRef.current?.setTool(t)} onFit={() => viewerRef.current?.zoomExtents()}
-            onAiRender={() => void openAiRender()} onZip={() => void exportZip()} />
+            onAiRender={() => void openAiRender()} onZip={() => void exportZip()} onPhoto={() => void startPhoto()} />
           <ToolHint tool={tool} />
+          <PhotoBar progress={photo} onSave={() => void savePhoto()} onClose={() => viewerRef.current?.stopPhoto()} />
         </div>
         <SidePanel open={panelOpen} title={planTitle} plan={plan} theme={theme} onTheme={setTheme} ceiling={ceiling} onCeiling={setCeiling}
           opts={opts} onOption={(o) => setOpts((cur) => ({ ...cur, ...o }))} hq={hq} onHq={setHq}

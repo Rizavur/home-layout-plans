@@ -64,7 +64,7 @@ VIEWS = VC.HEAD + [
  ('Study – two standing desks', (1600, 5350, 1650), (300, 5350, 1200), 85, ''),
  ('Study – from living through half glass', (2600, 3000, 1600), (900, 5500, 1000), 70, ''),
  ('Study – wall flush with shelter cabinets, sliding door', (3500, 5000, 1600), (2100, 6000, 1200), 75, ''),
- ('Hall – key niche by the study door', (3150, 5900, 1500), (2050, 6420, 1150), 60, ''),
+ ('Hall – key niche by the study door', (3500, 5650, 1550), (2050, 6420, 1100), 68, ''),
  ('Dining – table for 8 outside kitchen', (4300, 4100, 1600), (7000, 6000, 700), 80, ''),
  ('Dining – from pantry end', (7950, 4300, 1600), (4500, 6200, 800), 80, ''),
 ] + VC.KITCHEN_OPEN_VIEWS + VC.tail(True)

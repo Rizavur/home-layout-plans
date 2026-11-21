@@ -18,16 +18,17 @@ const HINTS: Record<Tool, string> = {
   tape: 'Tape measure (T): click two points to measure · Esc clears · right-drag to orbit · scroll to zoom',
 };
 
-/** Navigation tools (like SketchUp) plus the AI render buttons, bottom right. */
+/** Navigation tools (like SketchUp) plus the photo and AI render buttons, bottom right. */
 interface ToolbarProps {
   tool: Tool;
   onTool: (tool: Tool) => void;
   onFit: () => void;
   onAiRender: () => void;
   onZip: () => void;
+  onPhoto: () => void;
 }
 
-export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip }: ToolbarProps) {
+export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip, onPhoto }: ToolbarProps) {
   return (
     <div id="tools" className="glass">
       {TOOLS.map((t) => (
@@ -36,6 +37,7 @@ export default function Toolbar({ tool, onTool, onFit, onAiRender, onZip }: Tool
         </button>
       ))}
       <button title="Zoom extents (Shift+Z)" onClick={onFit}><Icon name="fit" size={17} /> <span className="t">Fit</span> <kbd>⇧Z</kbd></button>
+      <button className="ai" title="Photo: path-trace this view in the browser (real light bounces, glass, reflections)" onClick={onPhoto}><Icon name="camera" size={17} /> <span className="t">Photo</span></button>
       <button className="ai" title="Photo-real render with AI" onClick={onAiRender}><Icon name="sparkles" size={17} /> <span className="t">AI render</span></button>
       <button className="ai" title="Download every scene of this plan with its ChatGPT prompt (ZIP)" onClick={onZip}><Icon name="archive" size={17} /> <span className="t">All scenes ZIP</span></button>
     </div>

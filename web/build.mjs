@@ -18,7 +18,7 @@ const options = {
   format: 'esm',
   outfile: resolve(root, 'assets/app.js'),
   jsx: 'automatic',
-  external: ['three', 'three/addons/*'],
+  external: ['three', 'three/addons/*', 'three-gpu-pathtracer'],
   loader: { '.json': 'json' },
   define: { 'process.env.NODE_ENV': watch ? '"development"' : '"production"', __BUILD__: JSON.stringify(build) },
   minify: !watch,

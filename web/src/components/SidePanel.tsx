@@ -65,7 +65,7 @@ export default function SidePanel({ open, title, plan, theme, onTheme, ceiling, 
           {TOGGLES.map(([k, label]) => (
             <label key={k} className="tg">{label}<input type="checkbox" checked={!!opts[k]} onChange={(e) => onOption({ [k]: e.target.checked })} /></label>
           ))}
-          <label className="tg">High-quality rendering<input type="checkbox" checked={hq} onChange={(e) => onHq(e.target.checked)} /></label>
+          <label className="tg">Realistic rendering (off = light mode for older devices)<input type="checkbox" checked={hq} onChange={(e) => onHq(e.target.checked)} /></label>
         </div>
 
         <div className="sec">Views by room</div>

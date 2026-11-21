@@ -1,0 +1,16 @@
+{
+ "marble": 0.952,
+ "sintered": 0.924,
+ "quartz": 0.959,
+ "travertine": 0.898,
+ "walnut": 0.808,
+ "oak": 0.911,
+ "tile600": 0.956,
+ "tile300x600": 0.964,
+ "tile300": 0.956,
+ "paint": 0.99,
+ "fabric": 0.915,
+ "boucle": 0.86,
+ "rug": 0.82,
+ "leather": 0.895
+}

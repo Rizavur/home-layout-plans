@@ -39,7 +39,7 @@ KITCHEN_OPEN_VIEWS = [
  ('OPEN kitchen – stove side top cabinets', (6000, 7550, 1650), (6200, 9300, 1400), 80, '', 'open'),
  ('OPEN kitchen – towards dining and living', (6600, 8550, 1600), (4800, 4600, 1000), 85, '', 'open'),
  ('OPEN kitchen – from the service yard end', (7550, 8050, 1600), (3900, 7600, 1000), 85, '', 'open'),
- ('Kitchen (closed) – inside', (4300, 7150, 1650), (7800, 9250, 800), 88, '', 'closed'),
+ ('Kitchen (closed) – inside', (4250, 7650, 1650), (7800, 9050, 800), 88, '', 'closed'),
  ('Kitchen (closed) – from the service yard end', (7550, 8050, 1600), (3900, 7600, 1000), 85, '', 'closed'),
  ('Kitchen (closed) – towards the door', (7300, 8600, 1600), (4300, 6800, 1000), 85, '', 'closed'),
  ('Kitchen (closed) – door shut', (3000, 5200, 1600), (4600, 6900, 1100), 70, '', 'closed_door'),

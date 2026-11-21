@@ -427,11 +427,21 @@ def wallbed_folded(c, it, x0, x1, y0, y1):
     B(it, x0 + 20, x1, y0, y1, 2150, 2170, 'greige'); B(it, x0, x0 + 22, y0 + 3, y1 - 3, 60, 2147, 'greige')
     B(it, x0 - 4, x0, y0 + 60, y1 - 60, 1150, 1170, 'gold')
     for z in (700, 1400): B(it, x0 - 2, x0, y0 + 20, y1 - 20, z, z + 3, 'charcoal')
+    wallbed_top(c, it, x0, x1, y0, y1)
+
+def wallbed_top(c, it, x0, x1, y0, y1):
+    """Push-to-open cabinet above the wall bed up to the ceiling, so the bed reads as built-in joinery."""
+    B = c.B
+    B(it, x0 + 20, x1, y0, y1, 2170, 2650, 'greige')
+    B(it, x0 - 2, x0 + 20, y0 + 3, y1 - 3, 2175, 2645, 'greige')
+    B(it, x0 - 4, x0 - 2, (y0 + y1) / 2 - 1.5, (y0 + y1) / 2 + 1.5, 2175, 2645, 'charcoal')     # door split
+    B(it, x0 - 4, x0 - 2, y0 + 3, y1 - 3, 2170, 2174, 'charcoal')                                # shadow line over the bed
 
 def wallbed_down(c, it, x0, x1, y0, y1, foot):
     B, PRZ, RRECT = c.B, c.PRZ, c.RRECT
     B(it, x0, x1, y0, y1, 0, 60, 'charcoal'); B(it, x0 + 20, x1, y0, y0 + 20, 60, 2170, 'greige'); B(it, x0 + 20, x1, y1 - 20, y1, 60, 2170, 'greige')
     B(it, x0 + 20, x1, y0, y1, 2150, 2170, 'greige'); B(it, x1 - 20, x1, y0 + 20, y1 - 20, 60, 2150, 'greige')
+    wallbed_top(c, it, x0, x1, y0, y1)
     B(it, foot, x0 + 40, y0 + 25, y1 - 25, 330, 352, 'greige')        # fold-down panel (underside of bed)
     B(it, foot, foot + 40, y0 + 60, y1 - 60, 0, 330, 'metal')         # fold-out legs
     soft_slab(c, it, RRECT(foot + 10, x0 + 30, y0 + 40, y1 - 40, 60, 5), 352, 560, 'linen', 40, 3)
