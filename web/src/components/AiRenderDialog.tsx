@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Icon from './Icon';
+import { saveFile } from '../lib/save';
 import { LIGHTING } from '../config/prompts';
 import type { Lighting } from '../types';
 
@@ -40,7 +41,7 @@ export default function AiRenderDialog({ open, onClose, image, makePrompt, light
     try { await navigator.clipboard.write([new ClipboardItem({ 'image/png': image.blob })]); flash('img', 'Copied'); } catch { flash('img', 'Use Download'); }
   };
   const download = () => {
-    const a = document.createElement('a'); a.href = URL.createObjectURL(image.blob); a.download = image.fileName; a.click();
+    saveFile(image.blob, image.fileName);
     setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
   const share = async () => { try { await navigator.share({ files: [file], text: prompt }); } catch { /* cancelled */ } };

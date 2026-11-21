@@ -14,6 +14,7 @@ import Stepper from './components/Stepper';
 import Toolbar, { ToolHint } from './components/Toolbar';
 import PhotoBar from './components/PhotoBar';
 import WalkBar from './components/WalkBar';
+import { saveFile } from './lib/save';
 import SidePanel from './components/SidePanel';
 import AiRenderDialog from './components/AiRenderDialog';
 import Icon from './components/Icon';
@@ -55,7 +56,7 @@ export default function App() {
 
   // ---------------------------------------------------------------- engine lifecycle
   useEffect(() => {
-    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading, onPhoto: (s, t) => setPhoto(s === null ? null : { samples: s, target: t }), onWalk: () => setWalkVersion((n) => n + 1) });
+    const v = new Viewer(stageRef.current!, labelsRef.current!, { onTool: setTool, onLoading: setLoading, onPhoto: (s, t) => setPhoto(s === null ? null : { samples: s, target: t }), onWalk: () => setWalkVersion((n) => n + 1), onError: (m) => alert(m) });
     v.hq = hq; v.theme = theme; v.ceiling = ceiling;
     viewerRef.current = v;
     (window as unknown as { __viewer?: Viewer }).__viewer = v;   // handy for debugging in the browser console
@@ -146,11 +147,11 @@ export default function App() {
     try { await v.startPhoto(); }
     catch (e) { console.error(e); alert('Photo mode could not start on this device (it needs WebGL 2). Try the AI render button instead.'); }
   };
-  const savePhoto = async () => {
+  // straight from the tap (no awaits), so phones can show the share sheet
+  const savePhoto = () => {
     const v = viewerRef.current; if (!v) return;
-    const url = await v.capture('image/png');
-    const name = `${PLANS.find((p) => p.key === planKey)?.short || 'Plan'} – ${plan?.views[viewIndex]?.name || 'view'} (photo).png`;
-    const a = document.createElement('a'); a.href = url; a.download = name.replace(/[\\/:*?"<>|]/g, ''); a.click();
+    const name = `${PLANS.find((p) => p.key === planKey)?.short || 'Plan'} – ${plan?.views[viewIndex]?.name || 'view'} (photo).jpg`;
+    saveFile(v.grabNow('image/jpeg'), name);
   };
 
   const exportZip = async () => {
@@ -203,7 +204,7 @@ export default function App() {
             onAiRender={() => void openAiRender()} onZip={() => void exportZip()} onPhoto={() => void startPhoto()} onWalk={() => viewerRef.current?.walk.enter()} />
           <ToolHint tool={tool} />
           <WalkBar viewer={viewerRef.current} version={walkVersion} planShort={PLANS.find((p) => p.key === planKey)?.short || 'Plan'} />
-          <PhotoBar progress={photo} onSave={() => void savePhoto()} onClose={() => viewerRef.current?.stopPhoto()} />
+          <PhotoBar progress={photo} onSave={savePhoto} onClose={() => viewerRef.current?.stopPhoto()} />
         </div>
         <SidePanel open={panelOpen} title={planTitle} plan={plan} theme={theme} onTheme={setTheme} ceiling={ceiling} onCeiling={setCeiling}
           opts={opts} onOption={(o) => setOpts((cur) => ({ ...cur, ...o }))} hq={hq} onHq={setHq}

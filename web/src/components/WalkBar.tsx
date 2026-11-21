@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import Icon from './Icon';
 import type { Viewer } from '../engine/Viewer';
+import { saveFile } from '../lib/save';
 import { checkToken, getToken, savePanorama, setToken, REPO } from '../lib/github';
 
 interface WalkBarProps {
@@ -28,6 +29,8 @@ export default function WalkBar({ viewer, version, planShort }: WalkBarProps) {
   const [keyOpen, setKeyOpen] = useState(false);
   const [keyText, setKeyText] = useState(getToken());
   const cancel = useRef(false);
+  const [pending, setPending] = useState<{ blob: Blob; name: string } | null>(null);
+  const lastBlob = useRef<Blob | null>(null);
   void version;
   const w = viewer?.walk;
   if (!viewer || !w || !w.active) return null;
@@ -43,7 +46,7 @@ export default function WalkBar({ viewer, version, planShort }: WalkBarProps) {
       setJob({ point: p.name, n: k + 1, of: which.length, done: 0, total: q.samples });
       const blob = await viewer.bakePanorama(p.x, p.y, q.width, q.samples, (done, tot) => setJob((j) => (j ? { ...j, done, total: tot } : j)), () => cancel.current);
       if (!blob) { setJob(null); setMsg('Stopped.'); return; }
-      const url = URL.createObjectURL(blob);
+      const url = URL.createObjectURL(blob); lastBlob.current = blob;
       if (getToken()) {
         try {
           setJob((j) => (j ? { ...j, done: j.total } : j)); setMsg(`Saving ${p.name}…`);
@@ -51,19 +54,18 @@ export default function WalkBar({ viewer, version, planShort }: WalkBarProps) {
           w.showLocal(i, url);
           setMsg(`Saved ${p.name}. Other devices show it in about a minute.`);
         } catch (e) {
-          setMsg(`Could not save to GitHub (${(e as Error).message}). The photo was downloaded instead.`);
+          setMsg(`Could not save to GitHub (${(e as Error).message}). Use Save below to keep it.`);
           download(url, p.name);
         }
       } else {
         download(url, p.name);
-        setMsg('Downloaded. Add a GitHub key (key button) to save 360° photos for every device.');
+        setMsg('Ready to save. Add a GitHub key (key button) to save 360° photos for every device.');
       }
     }
     setJob(null);
   };
-  const download = (url: string, name: string) => {
-    const a = document.createElement('a'); a.href = url; a.download = `${planShort} – ${name} (360).jpg`.replace(/[\\/:*?"<>|]/g, ''); a.click();
-  };
+  // the render finished long after the tap, so phones need a fresh tap to save: keep it for the Save button
+  const download = (url: string, name: string) => { void url; setPending({ blob: lastBlob.current!, name: `${planShort} – ${name} (360).jpg` }); };
   const missing = w.points.map((_, i) => i).filter((i) => !w.hasSaved(i));
 
   const saveKey = async () => {
@@ -117,6 +119,7 @@ export default function WalkBar({ viewer, version, planShort }: WalkBarProps) {
         </div>
       )}
       {msg && <p className="wb-msg">{msg}</p>}
+      {pending && <div className="wb-actions"><button className="wb-btn" onClick={() => { saveFile(pending.blob, pending.name); setPending(null); }}><Icon name="download" size={15} /> Save {pending.name.split(' – ').pop()}</button></div>}
       <p className="wb-hint">Drag to look around · click a circle on the floor to walk there. Saved photos match this plan's theme, ceiling, layout option and day/night.</p>
     </div>
   );

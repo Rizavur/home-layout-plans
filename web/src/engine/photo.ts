@@ -95,6 +95,7 @@ export class PhotoRenderer {
   private denoise: FullScreenQuad | null = null;
   target: number;
 
+  private mobile = false;
   /** set for a 360° panorama: an equirectangular camera standing at this point */
   private equirectAt: THREE.Vector3 | null = null;
 
@@ -102,6 +103,7 @@ export class PhotoRenderer {
               private lights: { hemi: THREE.Light; amb: THREE.Light; fill: THREE.Light }, private night: boolean, mobile: boolean,
               opts: { equirectAt?: THREE.Vector3; samples?: number } = {}) {
     this.target = opts.samples || (mobile ? 200 : 500);
+    this.mobile = mobile;
     this.equirectAt = opts.equirectAt || null;
   }
 
@@ -169,6 +171,12 @@ export class PhotoRenderer {
     const t = new mod.WebGLPathTracer(this.renderer);
     t.bounces = 5; t.filteredGlossyFactor = 0.5; t.minSamples = 1; t.fadeDuration = 0; t.renderScale = 1;
     t.tiles.set(2, 2); t.renderToCanvas = true;
+    if (this.mobile && !this.equirectAt) {
+      // phones: smaller texture atlas and fewer pixels, so it fits in graphics memory and each frame stays short
+      (t as unknown as { textureSize: THREE.Vector2 }).textureSize.set(512, 512);
+      t.renderScale = Math.min(1, 1.6 / Math.max(1, this.renderer.getPixelRatio()));
+      t.bounces = 4; t.tiles.set(3, 3);   // shorter GPU bursts: iOS resets the graphics if one frame takes too long
+    }
     // edge-aware denoise on screen: strong while the image is young, lighter as passes add up
     const Denoise = (mod as unknown as { DenoiseMaterial: new (p: object) => THREE.ShaderMaterial }).DenoiseMaterial;
     this.denoise = new FullScreenQuad(new Denoise({ map: null, blending: THREE.CustomBlending, premultipliedAlpha: this.renderer.getContextAttributes().premultipliedAlpha }));

@@ -73,6 +73,8 @@ export interface ViewerEvents {
   onPhoto: (samples: number | null, target: number) => void;
   /** the 360° walk changed (started, ended, moved to another point, panorama shown) */
   onWalk: () => void;
+  /** something failed that the user should know about */
+  onError?: (msg: string) => void;
 }
 
 export class Viewer {
@@ -140,6 +142,14 @@ export class Viewer {
     this.tapeLayer = document.createElement('div'); this.tapeLayer.className = 'tape-labels'; this.container.appendChild(this.tapeLayer);
     this.tape = new TapeMeasure(this.scene, this.camera, this.renderer.domElement, this.root, this.tapeLayer, () => this.invalidate());
     this.walk = new Walk(this, { onChange: () => this.events.onWalk() });
+    // phones drop the graphics context when photo mode needs more memory than they have: say so and reload cleanly
+    this.renderer.domElement.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault();
+      const wasPhoto = !!this.photo; this.photo = null;
+      this.events.onPhoto(null, 0);
+      this.events.onLoading(wasPhoto ? 'This device ran out of graphics memory for the photo – reloading…' : 'Graphics reset – reloading…');
+      setTimeout(() => location.reload(), 1800);
+    });
     this._startLoop();
   }
 
@@ -191,7 +201,7 @@ export class Viewer {
       const moved = this.nav.update(now);
       if (this.photo) {                               // photo mode: every frame goes to the path tracer
         if (moved) { this.stopPhoto(); return; }
-        if (this.photo.tick()) this.events.onPhoto(this.photo.samples, this.photo.target);
+        if (this.photo.tick()) { this.events.onPhoto(this.photo.samples, this.photo.target); this._checkPhoto(); }
         else if (this.photo.samples >= this.photo.target) this.events.onPhoto(this.photo.target, this.photo.target);
         return;
       }
@@ -249,7 +259,24 @@ export class Viewer {
     try { await p.start(); }
     catch (e) { p.stop(); this.events.onLoading(null); this.events.onPhoto(null, 0); this.invalidate(); throw e; }
     this.events.onLoading(null);
-    this.photo = p; this.events.onPhoto(0, p.target);
+    this.photo = p; this.photoChecked = false; this.events.onPhoto(0, p.target);
+  }
+
+  /** After a few passes, make sure the photo is actually drawing (some phone GPUs leave a blank white/black screen). */
+  private photoChecked = false;
+  private _checkPhoto(): void {
+    const p = this.photo; if (!p || this.photoChecked || p.samples < 4) return;
+    this.photoChecked = true;
+    const c = document.createElement('canvas'); c.width = c.height = 24;
+    const g = c.getContext('2d', { willReadFrequently: true }); if (!g) return;
+    g.drawImage(this.renderer.domElement, 0, 0, 24, 24);
+    const d = g.getImageData(0, 0, 24, 24).data;
+    let lo = 255, hi = 0;
+    for (let i = 0; i < d.length; i += 4) { const v = (d[i] + d[i + 1] + d[i + 2]) / 3; lo = Math.min(lo, v); hi = Math.max(hi, v); }
+    if (hi - lo < 6) {
+      this.stopPhoto();
+      this.events.onError?.('Photo mode could not draw on this device\'s graphics. Use the 360° walk or the AI render instead.');
+    }
   }
 
   /** Camera flight that stays at eye height (no arc over the walls), for stepping between walk points. */
@@ -559,6 +586,13 @@ export class Viewer {
   }
 
   /** Screenshot of the current view as a data URL ('image/png' or 'image/jpeg'). */
+  /** The picture on screen right now, synchronously (for saving straight from a tap). */
+  grabNow(type: 'image/png' | 'image/jpeg' = 'image/jpeg'): string {
+    if (!this.photo) this._renderFinal();
+    const shot = this._grab();
+    return type === 'image/jpeg' ? shot.canvas.toDataURL('image/jpeg', 0.92) : shot.canvas.toDataURL('image/png');
+  }
+
   async capture(type: 'image/png' | 'image/jpeg' = 'image/png'): Promise<string> {
     const nextFrame = (): Promise<void> => new Promise((r) => requestAnimationFrame(() => r()));
     let shot = this._grab();
