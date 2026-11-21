@@ -85,7 +85,7 @@ Commit the rebuilt files and push – GitHub Pages serves the repo root.
 - **Look-around gestures** follow 360-viewer conventions: mouse and touch both drag the scene (it stays under the pointer),
   touch flicks carry on and slow down, pinch or scroll zooms the lens; the mouse cursor is an open / closed hand.
 - **Outside the windows**: the neighbouring blocks, courtyard and trees are laid out from the development's site plan
-  (8th storey), only while the camera is inside the flat.
+  at the flat's height, only while the camera is inside the flat.
 - Textures are tileable detail maps: the theme supplies the colour, so every theme keeps working. Regenerate them with
   `cd pipeline && python3 textures_gen.py`.
 

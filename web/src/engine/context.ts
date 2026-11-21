@@ -7,7 +7,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-/** height of the flat's floor above the ground (8th storey) */
+/** height of the flat's floor above the ground */
 export const FLOOR_HEIGHT = 20600;
 const STOREY = 2800, BAY = 4500;
 const PX = 261.4, OX = 518, OY = 250;
